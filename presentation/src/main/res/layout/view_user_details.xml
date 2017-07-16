@@ -14,7 +14,7 @@
 
   <TextView
       android:id="@+id/tv_fullname"
-      style="@style/AppTheme.TextViewHeader"
+      style="@style/Theme.InstaSearch.TextViewHeader"
       android:freezesText="true"
       />
 
@@ -26,7 +26,7 @@
       android:orientation="vertical"
       >
     <TextView
-        style="@style/AppTheme.TextViewTitle"
+        style="@style/Theme.InstaSearch.TextViewHeader"
         android:text="@string/view_text_email"
         />
     <TextView
@@ -36,7 +36,7 @@
         android:freezesText="true"
         />
     <TextView
-        style="@style/AppTheme.TextViewTitle"
+        style="@style/Theme.InstaSearch.TextViewHeader"
         android:text="@string/view_text_followers"
         />
     <TextView
@@ -47,7 +47,7 @@
         />
 
     <TextView
-        style="@style/AppTheme.TextViewTitle"
+        style="@style/Theme.InstaSearch.TextViewHeader"
         android:text="@string/view_text_description"
         />
     <TextView

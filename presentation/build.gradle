@@ -66,6 +66,9 @@ dependencies {
   compile project(':domain')
   compile project(':data')
 
+  compile (presentationDependencies.appCompatV7) {
+    exclude module: 'support-v4'
+  }
   apt presentationDependencies.daggerCompiler
   compile presentationDependencies.dagger
   compile presentationDependencies.butterKnife

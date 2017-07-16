@@ -1,10 +1,15 @@
 <resources>
 
   <!-- Base application theme. -->
-  <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">
+  <style name="Theme.InstaSearch.ViewMainHeader">
+    <item name="android:padding">@dimen/activity_vertical_margin</item>
+    <item name="android:background">@color/colorPrimary</item>
+    <item name="android:textStyle">bold</item>
+    <item name="android:textColor">@color/white</item>
+    <item name="android:gravity">center_vertical</item>
   </style>
 
-  <style name="AppTheme.ProgressBar">
+  <style name="Theme.InstaSearch.ProgressBar">
     <item name="android:layout_width">wrap_content</item>
     <item name="android:layout_height">wrap_content</item>
     <item name="android:layout_centerInParent">true</item>
@@ -12,7 +17,7 @@
     <item name="android:visibility">visible</item>
   </style>
 
-  <style name="AppTheme.Button">
+  <style name="Theme.InstaSearch.Button">
     <item name="android:layout_width">wrap_content</item>
     <item name="android:layout_height">wrap_content</item>
     <item name="android:layout_centerVertical">true</item>
@@ -20,7 +25,7 @@
     <item name="android:layout_gravity">center</item>
   </style>
 
-  <style name="AppTheme.TextViewHeader">
+  <style name="Theme.InstaSearch.TextViewHeader">
     <item name="android:layout_width">match_parent</item>
     <item name="android:layout_height">wrap_content</item>
     <item name="android:layout_marginBottom">@dimen/header_margin</item>
@@ -30,11 +35,19 @@
     <item name="android:background">@android:color/background_light</item>
   </style>
 
-  <style name="AppTheme.TextViewTitle">
+  <style name="Theme.InstaSearch.TextViewTitle">
     <item name="android:layout_width">match_parent</item>
     <item name="android:layout_height">wrap_content</item>
     <item name="android:layout_marginTop">@dimen/header_margin</item>
     <item name="android:textStyle">bold</item>
+  </style>
+
+
+  <!-- ****** -->
+  <!-- GENERAL STUFF STYLES -->
+  <!-- ****** -->
+  <style name="MarginPoint">
+    <item name="android:layout_width">match_parent</item>
   </style>
 
 </resources>
