@@ -38,6 +38,7 @@
           android:maxLines="1"
           android:padding="@dimen/login_edit_text_padding"
           android:textSize="@dimen/login_text_size"
+          android:hint="@string/view_text_username"
           tools:hint="Username"
           />
 
@@ -52,6 +53,7 @@
           android:maxLines="1"
           android:padding="@dimen/login_edit_text_padding"
           android:textSize="@dimen/login_text_size"
+          android:hint="@string/view_text_password"
           tools:hint="Password"
           />
 
@@ -59,6 +61,7 @@
           android:id="@+id/bt_login"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
+          android:text="@string/btn_login"
           />
 
     </LinearLayout>
