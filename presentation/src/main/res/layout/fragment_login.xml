@@ -38,7 +38,7 @@
           android:maxLines="1"
           android:padding="@dimen/login_edit_text_padding"
           android:textSize="@dimen/login_text_size"
-          tools:hint="Email"
+          tools:hint="Username"
           />
 
       <EditText
