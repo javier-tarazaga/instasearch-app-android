@@ -21,6 +21,11 @@
     <activity
         android:name=".view.activity.LoginActivity"
         android:label="@string/activity_title_login">
+    </activity>
+
+    <activity
+        android:name=".view.activity.InstagramOAuthActivity"
+        android:label="@string/activity_title_login">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
         <category android:name="android.intent.category.LAUNCHER" />
