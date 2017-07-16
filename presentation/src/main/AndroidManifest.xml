@@ -22,7 +22,7 @@
     </activity>
 
     <activity
-        android:name=".view.activity.UserListActivity"
+        android:name=".view.activity.PostListActivity"
         android:label="@string/activity_title_user_list">
     </activity>
 

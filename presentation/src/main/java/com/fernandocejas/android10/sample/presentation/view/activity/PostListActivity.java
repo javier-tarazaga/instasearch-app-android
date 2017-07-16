@@ -19,11 +19,11 @@ import com.fernandocejas.android10.sample.presentation.view.fragment.UserListFra
 /**
  * Activity that shows a list of Users.
  */
-public class UserListActivity extends BaseActivity implements HasComponent<UserComponent>,
+public class PostListActivity extends BaseActivity implements HasComponent<UserComponent>,
     UserListFragment.UserListListener {
 
   public static Intent getCallingIntent(Context context) {
-    return new Intent(context, UserListActivity.class);
+    return new Intent(context, PostListActivity.class);
   }
 
   private UserComponent userComponent;
