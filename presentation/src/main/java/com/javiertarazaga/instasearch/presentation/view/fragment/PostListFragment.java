@@ -29,7 +29,7 @@ import javax.inject.Inject;
 /**
  * Fragment that shows a list of Users.
  */
-public class UserListFragment extends BaseFragment implements UserListView {
+public class PostListFragment extends BaseFragment implements UserListView {
 
   /**
    * Interface for listening user list events.
@@ -48,7 +48,7 @@ public class UserListFragment extends BaseFragment implements UserListView {
 
   private UserListListener userListListener;
 
-  public UserListFragment() {
+  public PostListFragment() {
     setRetainInstance(true);
   }
 
@@ -158,14 +158,14 @@ public class UserListFragment extends BaseFragment implements UserListView {
   }
 
   @OnClick(com.javiertarazaga.instasearch.presentation.R.id.bt_retry) void onButtonRetryClick() {
-    UserListFragment.this.loadUserList();
+    PostListFragment.this.loadUserList();
   }
 
   private UsersAdapter.OnItemClickListener onItemClickListener =
       new UsersAdapter.OnItemClickListener() {
         @Override public void onUserItemClicked(UserModel userModel) {
-          if (UserListFragment.this.userListPresenter != null && userModel != null) {
-            UserListFragment.this.userListPresenter.onUserClicked(userModel);
+          if (PostListFragment.this.userListPresenter != null && userModel != null) {
+            PostListFragment.this.userListPresenter.onUserClicked(userModel);
           }
         }
       };

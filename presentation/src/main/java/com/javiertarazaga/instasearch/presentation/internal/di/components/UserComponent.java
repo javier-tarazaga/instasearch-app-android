@@ -19,7 +19,7 @@ import com.javiertarazaga.instasearch.presentation.internal.di.PerActivity;
 import com.javiertarazaga.instasearch.presentation.internal.di.modules.ActivityModule;
 import com.javiertarazaga.instasearch.presentation.internal.di.modules.UserModule;
 import com.javiertarazaga.instasearch.presentation.view.fragment.UserDetailsFragment;
-import com.javiertarazaga.instasearch.presentation.view.fragment.UserListFragment;
+import com.javiertarazaga.instasearch.presentation.view.fragment.PostListFragment;
 import dagger.Component;
 
 /**
@@ -29,6 +29,6 @@ import dagger.Component;
 @PerActivity
 @Component(dependencies = ApplicationComponent.class, modules = {ActivityModule.class, UserModule.class})
 public interface UserComponent extends ActivityComponent {
-  void inject(UserListFragment userListFragment);
+  void inject(PostListFragment postListFragment);
   void inject(UserDetailsFragment userDetailsFragment);
 }

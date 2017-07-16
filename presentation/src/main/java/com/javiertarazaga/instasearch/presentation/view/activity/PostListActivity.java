@@ -14,13 +14,13 @@ import com.javiertarazaga.instasearch.presentation.internal.di.HasComponent;
 import com.javiertarazaga.instasearch.presentation.internal.di.components.DaggerUserComponent;
 import com.javiertarazaga.instasearch.presentation.internal.di.components.UserComponent;
 import com.javiertarazaga.instasearch.presentation.model.UserModel;
-import com.javiertarazaga.instasearch.presentation.view.fragment.UserListFragment;
+import com.javiertarazaga.instasearch.presentation.view.fragment.PostListFragment;
 
 /**
  * Activity that shows a list of Users.
  */
 public class PostListActivity extends BaseActivity implements HasComponent<UserComponent>,
-    UserListFragment.UserListListener {
+    PostListFragment.UserListListener {
 
   public static Intent getCallingIntent(Context context) {
     return new Intent(context, PostListActivity.class);
@@ -35,7 +35,7 @@ public class PostListActivity extends BaseActivity implements HasComponent<UserC
 
     this.initializeInjector();
     if (savedInstanceState == null) {
-      addFragment(R.id.fragmentContainer, new UserListFragment());
+      addFragment(R.id.fragmentContainer, new PostListFragment());
     }
   }
 
