@@ -69,6 +69,7 @@ dependencies {
   compile (presentationDependencies.appCompatV7) {
     exclude module: 'support-v4'
   }
+  compile presentationDependencies.constraintLayout
   apt presentationDependencies.daggerCompiler
   compile presentationDependencies.dagger
   compile presentationDependencies.butterKnife

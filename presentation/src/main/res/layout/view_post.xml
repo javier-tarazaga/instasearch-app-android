@@ -1,0 +1,63 @@
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rl_progress"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:visibility="visible"
+    >
+
+  <ImageView
+      android:id="@+id/iv_user_image"
+      android:layout_width="30dp"
+      android:layout_height="30dp"
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      android:layout_margin="10dp"
+      android:background="@color/black"
+      tools:layout_editor_absoluteY="2dp"
+      tools:layout_editor_absoluteX="10dp"
+      />
+
+  <TextView
+      android:id="@+id/tv_username"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="Hola"
+      android:textColor="@color/black"
+      tools:text="Jatago"
+      app:layout_constraintLeft_toRightOf="@+id/iv_user_image"
+      app:layout_constraintTop_toTopOf="@+id/iv_user_image"
+      tools:layout_editor_absoluteY="7dp"
+      app:layout_constraintBottom_toBottomOf="@+id/iv_user_image"
+      tools:layout_editor_absoluteX="48dp"
+      android:layout_marginLeft="10dp"
+      />
+
+  <ImageView
+      android:background="@color/colorTertiary"
+      android:id="@+id/iv_post"
+      android:layout_width="match_parent"
+      android:layout_height="200dp"
+      android:scaleType="centerCrop"
+      app:layout_constraintEnd_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/iv_user_image"
+      android:layout_marginTop="10dp"
+      android:layout_marginBottom="10dp"
+      />
+
+  <TextView
+      android:id="@+id/tv_post_comment"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      tools:text="This is a super comment! This is really long and we are goign to test how this is behaving #socool"
+      android:layout_marginTop="8dp"
+      app:layout_constraintTop_toBottomOf="@+id/iv_post"
+      app:layout_constraintEnd_toEndOf="parent"
+      android:layout_marginEnd="10dp"
+      app:layout_constraintStart_toStartOf="parent"
+      android:layout_marginStart="10dp"
+      />
+
+</android.support.constraint.ConstraintLayout>
