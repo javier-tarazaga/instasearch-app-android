@@ -9,9 +9,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import com.javiertarazaga.instasearch.presentation.R;
 import com.javiertarazaga.instasearch.presentation.model.UserModel;
 import java.util.Collection;
 import java.util.Collections;
@@ -44,13 +46,13 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UserViewHold
   }
 
   @Override public UserViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-    final View view = this.layoutInflater.inflate(com.javiertarazaga.instasearch.presentation.R.layout.row_user, parent, false);
+    final View view = this.layoutInflater.inflate(R.layout.row_post, parent, false);
     return new UserViewHolder(view);
   }
 
   @Override public void onBindViewHolder(UserViewHolder holder, final int position) {
     final UserModel userModel = this.usersCollection.get(position);
-    holder.textViewTitle.setText(userModel.getFullName());
+    holder.tv_username.setText(userModel.getFullName());
     holder.itemView.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
         if (UsersAdapter.this.onItemClickListener != null) {
@@ -81,7 +83,10 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UserViewHold
   }
 
   static class UserViewHolder extends RecyclerView.ViewHolder {
-    @Bind(com.javiertarazaga.instasearch.presentation.R.id.title) TextView textViewTitle;
+    @Bind(R.id.iv_user_image) ImageView iv_user_image;
+    @Bind(R.id.tv_username) TextView tv_username;
+    @Bind(R.id.iv_post) ImageView iv_post;
+    @Bind(R.id.tv_post_comment) TextView tv_post_comment;
 
     UserViewHolder(View itemView) {
       super(itemView);

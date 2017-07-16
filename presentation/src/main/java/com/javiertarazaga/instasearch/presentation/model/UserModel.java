@@ -26,22 +26,21 @@ public class UserModel {
     this.userId = userId;
   }
 
-  private String coverUrl;
+  private String profilePicture;
   private String fullName;
-  private String email;
-  private String description;
-  private int followers;
+  private String username;
+  private String bio;
 
   public int getUserId() {
     return userId;
   }
 
-  public String getCoverUrl() {
-    return coverUrl;
+  public String getProfilePicture() {
+    return profilePicture;
   }
 
-  public void setCoverUrl(String coverUrl) {
-    this.coverUrl = coverUrl;
+  public void setProfilePicture(String profilePicture) {
+    this.profilePicture = profilePicture;
   }
 
   public String getFullName() {
@@ -52,27 +51,19 @@ public class UserModel {
     this.fullName = fullName;
   }
 
-  public String getEmail() {
-    return email;
+  public String getUsername() {
+    return username;
   }
 
-  public void setEmail(String email) {
-    this.email = email;
+  public void setUsername(String username) {
+    this.username = username;
   }
 
-  public String getDescription() {
-    return description;
+  public String getBio() {
+    return bio;
   }
 
-  public void setDescription(String description) {
-    this.description = description;
-  }
-
-  public int getFollowers() {
-    return followers;
-  }
-
-  public void setFollowers(int followers) {
-    this.followers = followers;
+  public void setBio(String bio) {
+    this.bio = bio;
   }
 }
