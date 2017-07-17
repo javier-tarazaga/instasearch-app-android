@@ -1,0 +1,21 @@
+def getGitSha() {
+    def p = 'git rev-parse --short HEAD'.execute([], project.rootDir)
+    p.waitFor()
+    if (p.exitValue() != 0) {
+        throw new RuntimeException(p.errorStream.text)
+    }
+
+    return p.text.trim()
+}
+
+hockeyapp {
+    commitSha = getGitSha()
+    notify = 1
+    status = 2
+    notesType = 1
+    apiToken = "5bd88f774e5f41e9ad40f66d28926d01"
+    // notes = rootProject.file('mobile/CHANGELOG.md').getText('UTF-8')
+    variantToApplicationId = [
+        "debug": "c6720c02a0b943b588aac446fd995a34"
+    ]
+}

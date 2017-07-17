@@ -1,13 +1,12 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'io.fabric'
+apply plugin: 'de.felixschulze.gradle.hockeyapp'
+apply from: rootProject.file('buildsystem/plugin-config.gradle')
 
 repositories {
   maven { url 'https://maven.fabric.io/public' }
 }
-
-def isCi = 'true'.equals(System.getenv('CI'))
-def preDexEnabled = 'true'.equals(System.getProperty('pre-dex', 'true'))
 
 android {
   def globalConfiguration = rootProject.extensions.getByName("ext")
@@ -28,7 +27,8 @@ android {
 
   dexOptions {
     // Skip pre-dexing when running on Circle CI or when disabled via -Dpre-dex=false.
-    preDexLibraries = preDexEnabled && !isCi
+    preDexLibraries = globalConfiguration.getAt("isPreDexEnabled") && !globalConfiguration.getAt(
+        "isCiEnvironment")
   }
 
   compileOptions {
@@ -48,10 +48,10 @@ android {
     quiet true
     abortOnError false
     ignoreWarnings true
-    disable 'InvalidPackage'            //Some libraries have issues with this.
-    disable 'OldTargetApi'              //Lint gives this warning but SDK 20 would be Android L Beta.
-    disable 'IconDensities'             //For testing purpose. This is safe to remove.
-    disable 'IconMissingDensityFolder'  //For testing purpose. This is safe to remove.
+    disable 'InvalidPackage' //Some libraries have issues with this.
+    disable 'OldTargetApi' //Lint gives this warning but SDK 20 would be Android L Beta.
+    disable 'IconDensities' //For testing purpose. This is safe to remove.
+    disable 'IconMissingDensityFolder' //For testing purpose. This is safe to remove.
   }
 
   signingConfigs {
@@ -65,6 +65,11 @@ android {
 
   buildTypes {
     debug {
+      applicationIdSuffix '.DEBUG'
+      signingConfig signingConfigs.debug
+    }
+
+    release {
       signingConfig signingConfigs.debug
     }
   }
@@ -78,7 +83,7 @@ dependencies {
   compile project(':domain')
   compile project(':data')
 
-  compile (presentationDependencies.appCompatV7) {
+  compile(presentationDependencies.appCompatV7) {
     exclude module: 'support-v4'
   }
   compile presentationDependencies.designLibrary
@@ -102,6 +107,19 @@ dependencies {
 
   //Development
   compile developmentDependencies.leakCanary
+}
+
+task publishToHockey(type: Exec) {
+  def globalConfiguration = rootProject.extensions.getByName("ext")
+  def versionCodeApp = globalConfiguration.getAt("androidVersionCode")
+
+  workingDir "$projectDir/"
+
+  if (project.hasProperty("versionTypeApp")) {
+    commandLine "sh", "../scripts/hockey_deploy.sh", versionCodeApp, versionTypeApp;
+  } else {
+    commandLine "sh", "../scripts/hockey_deploy.sh", versionCodeApp, "release";
+  }
 }
 
 //android.applicationVariants.all { variant ->

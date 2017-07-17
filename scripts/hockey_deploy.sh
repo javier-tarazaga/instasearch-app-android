@@ -4,7 +4,7 @@ developVersion=$(curl -H "X-HockeyAppToken: 5bd88f774e5f41e9ad40f66d28926d01" ht
 
 nothingToDo="The version of the application is not greater than the one in HockeyApp. Nothing to do."
 
-echo "Current version on hockey app is: $V"
+echo "Current version on hockey app is: $"
 echo "Current app version is: $1"
 echo "Current type of teh application: $2"
 

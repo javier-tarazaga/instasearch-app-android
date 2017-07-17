@@ -1,7 +1,7 @@
 // Manifest version information!
 def versionMajor = 0
 def versionMinor = 0
-def versionPatch = 1
+def versionPatch = 3
 def versionCodeApp = versionMajor * 10000 + versionMinor * 1000 + versionPatch * 100
 
 apply from: 'buildsystem/ci.gradle'
@@ -17,8 +17,32 @@ buildscript {
     classpath 'com.android.tools.build:gradle:2.2.2'
     classpath 'com.neenbedankt.gradle.plugins:android-apt:1.4'
     classpath 'io.fabric.tools:gradle:1.21.6'
+    classpath 'de.felixschulze.gradle:gradle-hockeyapp-plugin:3.5'
   }
 }
+
+def getGitSha() {
+  def p = 'git rev-parse --short HEAD'.execute([], project.rootDir)
+  p.waitFor()
+  if (p.exitValue() != 0) {
+    throw new RuntimeException(p.errorStream.text)
+  }
+
+  return p.text.trim()
+}
+
+def getGitTimestamp() {
+  def p = 'git log -n 1 --format=%at'.execute([], rootDir)
+  p.waitFor()
+  if (p.exitValue() != 0) {
+    throw new RuntimeException(p.errorStream.text)
+  }
+
+  return p.text.trim()
+}
+
+def isCI = 'true'.equals(System.getenv('CI'))
+def preDexEnabled = 'true'.equals(System.getProperty('pre-dex', 'true'))
 
 allprojects {
   ext {
@@ -27,6 +51,10 @@ allprojects {
     androidVersionName = "${versionMajor}.${versionMinor}.${versionPatch}"
     testInstrumentationRunner = 'android.support.test.runner.AndroidJUnitRunner'
     testApplicationId = 'com.javiertarazaga.instasearch.presentation.test'
+    gitSha = getGitSha()
+    gitTimeStamp = getGitTimestamp()
+    isCiEnvironment = isCI
+    isPreDexEnabled = preDexEnabled
   }
 }
 
@@ -44,15 +72,5 @@ task runUnitTests(dependsOn: ['runDomainUnitTests', 'runDataUnitTests']) {
 
 task runAcceptanceTests(dependsOn: [':presentation:connectedAndroidTest']) {
   description 'Run application acceptance tests.'
-}
-
-task publishToHockey(type: Exec) {
-  workingDir "$projectDir/"
-
-  if (project.hasProperty("versionTypeApp")) {
-    commandLine "sh", "./scripts/hockey_deploy.sh", versionCodeApp, versionTypeApp;
-  } else {
-    commandLine "sh", "./scripts/hockey_deploy.sh", versionCodeApp, "release";
-  }
 }
 
