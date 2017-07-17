@@ -42,7 +42,6 @@ jobs:
 
     stages:
       deployment:
-        workDir: /home/ubuntu/my-project
         steps:
           - type: deploy
               name: "Deploy to HockeyApp"
