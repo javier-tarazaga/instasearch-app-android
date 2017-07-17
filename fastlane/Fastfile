@@ -1,0 +1,28 @@
+# More documentation about how to customize your build
+# can be found here:
+# https://docs.fastlane.tools
+fastlane_version "1.109.0"
+
+# This value helps us track success metrics for Fastfiles
+# we automatically generate. Feel free to remove this line
+# once you get things running smoothly!
+generated_fastfile_id "f0e3f4c7-e726-4cc6-8675-16c0d834eaee"
+
+default_platform :android
+
+# Fastfile actions accept additional configuration, but
+# don't worry, fastlane will prompt you for required
+# info which you can add here later
+lane :beta do
+  # build the release variant
+  gradle(task: "assembleDebug")
+
+  # upload to HockeyApp
+  hockey(
+    api_token: "5bd88f774e5f41e9ad40f66d28926d01"
+  )
+
+  # slack(
+  #   slack_url: "https://hooks.slack.com/services/IDS"
+  # )
+end
