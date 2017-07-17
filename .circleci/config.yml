@@ -39,8 +39,11 @@ jobs:
           destination: reports
       - store_test_results:
           path: app/build/test-results
+      - run:
+          name: Install fastlane
+          command: gem install fastlane
       - deploy:
-          name: "Deploy to HockeyApp"
+          name: Deploy to HockeyApp
           command: |
             if [ "${CIRCLE_BRANCH}" == "master" ];
               then fastlane beta
