@@ -44,7 +44,7 @@ public class PostListActivityTest extends ActivityInstrumentationTestCase2<PostL
 
   public void testContainsUserListFragment() {
     Fragment userListFragment =
-        postListActivity.getFragmentManager().findFragmentById(com.javiertarazaga.instasearch.presentation.R.id.fragmentContainer);
+        postListActivity.getFragmentManager().findFragmentById(com.javiertarazaga.instasearch.presentation.R.id.fragment_container);
     assertThat(userListFragment, is(notNullValue()));
   }
 

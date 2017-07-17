@@ -14,7 +14,7 @@ import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import com.javiertarazaga.instasearch.presentation.R;
-import com.javiertarazaga.instasearch.presentation.internal.di.components.PreferencesComponent;
+import com.javiertarazaga.instasearch.presentation.internal.di.components.MainComponent;
 import com.javiertarazaga.instasearch.presentation.presenter.PreferencesPresenter;
 import com.javiertarazaga.instasearch.presentation.view.PreferencesView;
 import javax.inject.Inject;
@@ -35,7 +35,7 @@ public class PreferencesFragment extends BaseFragment implements PreferencesView
 
   @Override public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    this.getComponent(PreferencesComponent.class).inject(this);
+    this.getComponent(MainComponent.class).inject(this);
   }
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,

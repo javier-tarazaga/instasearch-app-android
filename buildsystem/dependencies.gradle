@@ -13,7 +13,8 @@ ext {
 
   // Android
   androidSupportVersion = '23.2.1'
-  androidConstraintLayout = '1.0.2'
+  androidDesignLibraryVersion = '25.3.1'
+  androidConstraintLayoutVersion = '1.0.2'
 
   //Libraries
   daggerVersion = '2.8'
@@ -42,7 +43,8 @@ ext {
 
   presentationDependencies = [
       appCompatV7:        "com.android.support:appcompat-v7:${androidSupportVersion}",
-      constraintLayout:    "com.android.support.constraint:constraint-layout:${androidConstraintLayout}",
+      designLibrary:      "com.android.support:design:${androidDesignLibraryVersion}",
+      constraintLayout:   "com.android.support.constraint:constraint-layout:${androidConstraintLayoutVersion}",
       daggerCompiler:     "com.google.dagger:dagger-compiler:${daggerVersion}",
       dagger:             "com.google.dagger:dagger:${daggerVersion}",
       butterKnife:        "com.jakewharton:butterknife:${butterKnifeVersion}",

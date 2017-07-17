@@ -35,7 +35,7 @@ public class PostListActivity extends BaseActivity implements HasComponent<UserC
 
     this.initializeInjector();
     if (savedInstanceState == null) {
-      addFragment(R.id.fragmentContainer, new PostListFragment());
+      addFragment(R.id.fragment_container, new PostListFragment());
     }
   }
 

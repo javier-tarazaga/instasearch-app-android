@@ -34,7 +34,7 @@ public class PreferencesActivity extends BaseActivity implements HasComponent<Pr
    */
   private void initializeActivity(Bundle savedInstanceState) {
     if (savedInstanceState == null) {
-      addFragment(R.id.fragmentContainer, new PreferencesFragment());
+      addFragment(R.id.fragment_container, new PreferencesFragment());
     }
   }
 

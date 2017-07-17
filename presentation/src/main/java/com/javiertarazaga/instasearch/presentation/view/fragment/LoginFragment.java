@@ -16,7 +16,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.javiertarazaga.instasearch.presentation.R;
-import com.javiertarazaga.instasearch.presentation.internal.di.components.UserComponent;
+import com.javiertarazaga.instasearch.presentation.internal.di.components.MainComponent;
 import com.javiertarazaga.instasearch.presentation.presenter.LoginPresenter;
 import com.javiertarazaga.instasearch.presentation.view.LoginView;
 import javax.inject.Inject;
@@ -38,7 +38,7 @@ public class LoginFragment extends BaseFragment implements LoginView {
 
   @Override public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    this.getComponent(UserComponent.class).inject(this);
+    this.getComponent(MainComponent.class).inject(this);
   }
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
