@@ -23,6 +23,15 @@ import java.util.List;
  * Interface that represents a Repository for getting {@link User} related data.
  */
 public interface UserRepository {
+
+  /**
+   * Get an {@link Observable} which will emit a {@link User}.
+   *
+   * @param userName The user name used to perform the login with
+   * @param password The user password used to perform the login with.
+   */
+  Observable<User> login(final String userName, final String password);
+
   /**
    * Get an {@link Observable} which will emit a List of {@link User}.
    */

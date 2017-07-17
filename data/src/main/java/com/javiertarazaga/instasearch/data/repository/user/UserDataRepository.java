@@ -13,11 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.javiertarazaga.instasearch.data.repository;
+package com.javiertarazaga.instasearch.data.repository.user;
 
 import com.javiertarazaga.instasearch.data.entity.mapper.UserEntityDataMapper;
-import com.javiertarazaga.instasearch.data.repository.datasource.UserDataStore;
-import com.javiertarazaga.instasearch.data.repository.datasource.UserDataStoreFactory;
+import com.javiertarazaga.instasearch.data.repository.user.datasource.UserDataStore;
+import com.javiertarazaga.instasearch.data.repository.user.datasource.UserDataStoreFactory;
 import com.javiertarazaga.instasearch.domain.User;
 import com.javiertarazaga.instasearch.domain.repository.UserRepository;
 import io.reactivex.Observable;
@@ -45,6 +45,10 @@ public class UserDataRepository implements UserRepository {
       UserEntityDataMapper userEntityDataMapper) {
     this.userDataStoreFactory = dataStoreFactory;
     this.userEntityDataMapper = userEntityDataMapper;
+  }
+
+  @Override public Observable<User> login(String userName, String password) {
+    return null;
   }
 
   @Override public Observable<List<User>> users() {

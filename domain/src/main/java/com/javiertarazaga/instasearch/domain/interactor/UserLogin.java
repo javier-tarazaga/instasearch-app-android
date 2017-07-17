@@ -23,14 +23,13 @@ import com.javiertarazaga.instasearch.domain.executor.PostExecutionThread;
 import com.javiertarazaga.instasearch.domain.executor.ThreadExecutor;
 import com.javiertarazaga.instasearch.domain.repository.UserRepository;
 import io.reactivex.Observable;
-import java.util.List;
 import javax.inject.Inject;
 
 /**
  * This class is an implementation of {@link UseCase} that represents a use case for
  * login the {@link User} using username and password.
  */
-public class UserLogin extends UseCase<List<User>, Void> {
+public class UserLogin extends UseCase<User, Void> {
 
   private final UserRepository userRepository;
   private String username;
@@ -64,8 +63,8 @@ public class UserLogin extends UseCase<List<User>, Void> {
    * <li>{@link UserException} if an unknown error occurs</li>
    * </ul>
    */
-  @Override Observable<List<User>> buildUseCaseObservable(Void unused) {
-    return this.userRepository.users();
+  @Override Observable<User> buildUseCaseObservable(Void unused) {
+    return this.userRepository.login(this.username, this.password);
   }
 
   //private Observable validate() {

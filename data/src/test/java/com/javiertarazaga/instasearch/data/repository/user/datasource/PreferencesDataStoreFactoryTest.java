@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.javiertarazaga.instasearch.data.repository.datasource;
+package com.javiertarazaga.instasearch.data.repository.user.datasource;
 
 import com.javiertarazaga.instasearch.data.ApplicationTestCase;
 import com.javiertarazaga.instasearch.data.cache.UserCache;
@@ -29,7 +29,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 
-public class UserDataStoreFactoryTest extends ApplicationTestCase {
+public class PreferencesDataStoreFactoryTest extends ApplicationTestCase {
 
   private static final int FAKE_USER_ID = 11;
 

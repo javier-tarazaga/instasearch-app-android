@@ -17,8 +17,9 @@ package com.javiertarazaga.instasearch.data.repository;
 
 import com.javiertarazaga.instasearch.data.entity.UserEntity;
 import com.javiertarazaga.instasearch.data.entity.mapper.UserEntityDataMapper;
-import com.javiertarazaga.instasearch.data.repository.datasource.UserDataStore;
-import com.javiertarazaga.instasearch.data.repository.datasource.UserDataStoreFactory;
+import com.javiertarazaga.instasearch.data.repository.user.datasource.UserDataStore;
+import com.javiertarazaga.instasearch.data.repository.user.datasource.UserDataStoreFactory;
+import com.javiertarazaga.instasearch.data.repository.user.UserDataRepository;
 import com.javiertarazaga.instasearch.domain.User;
 import io.reactivex.Observable;
 import java.util.ArrayList;
@@ -34,7 +35,7 @@ import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
-public class UserDataRepositoryTest {
+public class PreferencesDataRepositoryTest {
 
   private static final int FAKE_USER_ID = 123;
 

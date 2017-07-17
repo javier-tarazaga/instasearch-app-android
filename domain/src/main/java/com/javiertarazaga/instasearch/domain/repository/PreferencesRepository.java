@@ -13,25 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.javiertarazaga.instasearch.data.repository.datasource;
+package com.javiertarazaga.instasearch.domain.repository;
 
-import com.javiertarazaga.instasearch.data.entity.UserEntity;
+import com.javiertarazaga.instasearch.domain.User;
 import io.reactivex.Observable;
-import java.util.List;
 
 /**
- * Interface that represents a data store from where data is retrieved.
+ * Interface that represents a Repository for getting {@link User} related data.
  */
-public interface UserDataStore {
-  /**
-   * Get an {@link Observable} which will emit a List of {@link UserEntity}.
-   */
-  Observable<List<UserEntity>> userEntityList();
+public interface PreferencesRepository {
 
   /**
-   * Get an {@link Observable} which will emit a {@link UserEntity} by its id.
+   * Save the radio distance to be used in order to search for the medias uploaded by other users
+   * within that range.
    *
-   * @param userId The id to retrieve user data.
+   * @param distance The distance to be saved
    */
-  Observable<UserEntity> userEntityDetails(final int userId);
+  Observable<Integer> saveDistance(final int distance);
+
+
+  /**
+   * Get an {@link Observable} which will emit a {@link Integer} representing the distance between
+   * the user and the medias available.
+   */
+  Observable<Integer> getDistance();
+
 }
