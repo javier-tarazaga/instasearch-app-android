@@ -17,8 +17,8 @@ package com.javiertarazaga.instasearch.presentation.presenter;
 
 import android.support.annotation.NonNull;
 import com.javiertarazaga.instasearch.domain.interactor.DefaultObserver;
-import com.javiertarazaga.instasearch.domain.interactor.GetDistance;
-import com.javiertarazaga.instasearch.domain.interactor.SaveDistance;
+import com.javiertarazaga.instasearch.domain.interactor.GetMaxDistance;
+import com.javiertarazaga.instasearch.domain.interactor.SaveMaxDistance;
 import com.javiertarazaga.instasearch.presentation.view.PreferencesView;
 import javax.inject.Inject;
 
@@ -30,14 +30,14 @@ public class PreferencesPresenter implements Presenter {
 
   private PreferencesView preferencesView;
 
-  private final GetDistance getDistance;
-  private final SaveDistance saveDistance;
+  private final GetMaxDistance getMaxDistance;
+  private final SaveMaxDistance saveMaxDistance;
 
   @Inject
-  public PreferencesPresenter(GetDistance getDistance,
-      SaveDistance saveDistance) {
-    this.getDistance = getDistance;
-    this.saveDistance = saveDistance;
+  public PreferencesPresenter(GetMaxDistance getMaxDistance,
+      SaveMaxDistance saveMaxDistance) {
+    this.getMaxDistance = getMaxDistance;
+    this.saveMaxDistance = saveMaxDistance;
   }
 
   public void setView(@NonNull PreferencesView view) {
@@ -49,8 +49,8 @@ public class PreferencesPresenter implements Presenter {
   @Override public void pause() {}
 
   @Override public void destroy() {
-    this.getDistance.dispose();
-    this.saveDistance.dispose();
+    this.getMaxDistance.dispose();
+    this.saveMaxDistance.dispose();
     this.preferencesView = null;
   }
 
@@ -62,11 +62,11 @@ public class PreferencesPresenter implements Presenter {
   }
 
   public void saveDistance(int distance) {
-    this.saveDistance.execute(new DistanceObserver(), SaveDistance.Params.forDistance(distance));
+    this.saveMaxDistance.execute(new DistanceObserver(), SaveMaxDistance.Params.forDistance(distance));
   }
 
   private void getDistance() {
-    this.getDistance.execute(new DistanceObserver(), null);
+    this.getMaxDistance.execute(new DistanceObserver(), null);
   }
 
   private void updateDistance(int distance) {

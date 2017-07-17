@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -15,6 +15,7 @@
  */
 package com.javiertarazaga.instasearch.domain.interactor;
 
+import com.fernandocejas.arrow.checks.Preconditions;
 import com.javiertarazaga.instasearch.domain.exception.preferences.PreferenceException;
 import com.javiertarazaga.instasearch.domain.executor.PostExecutionThread;
 import com.javiertarazaga.instasearch.domain.executor.ThreadExecutor;
@@ -24,13 +25,13 @@ import javax.inject.Inject;
 
 /**
  * This class is an implementation of {@link UseCase} that represents a use case for
- * getting the distance to be used while searching for medias.
+ * saving the distance to be used while searching for medias.
  */
-public class GetDistance extends UseCase<Integer, Void> {
+public class SaveMaxDistance extends UseCase<Integer, SaveMaxDistance.Params> {
 
   private final PreferencesRepository preferencesRepository;
 
-  @Inject GetDistance(PreferencesRepository preferencesRepository, ThreadExecutor threadExecutor,
+  @Inject SaveMaxDistance(PreferencesRepository preferencesRepository, ThreadExecutor threadExecutor,
       PostExecutionThread postExecutionThread) {
     super(threadExecutor, postExecutionThread);
     this.preferencesRepository = preferencesRepository;
@@ -42,7 +43,20 @@ public class GetDistance extends UseCase<Integer, Void> {
    * <li>{@link PreferenceException} if an unknown error occurs</li>
    * </ul>
    */
-  @Override Observable<Integer> buildUseCaseObservable(Void unused) {
-    return this.preferencesRepository.getDistance();
+  @Override Observable<Integer> buildUseCaseObservable(SaveMaxDistance.Params params) {
+    Preconditions.checkNotNull(params);
+    return this.preferencesRepository.saveDistance(params.distance);
+  }
+
+  public static final class Params {
+    private final int distance;
+
+    private Params(int distance) {
+      this.distance = distance;
+    }
+
+    public static Params forDistance(int distance) {
+      return new Params(distance);
+    }
   }
 }

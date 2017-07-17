@@ -31,11 +31,9 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.verifyZeroInteractions;
 
 @RunWith(MockitoJUnitRunner.class)
-public class SaveDistanceTest {
+public class GetMaxDistanceTest {
 
-  private static final int DISTANCE = 1000;
-
-  private SaveDistance saveDistance;
+  private GetMaxDistance getMaxDistance;
 
   @Mock private PreferencesRepository mockPreferencesRepository;
   @Mock private ThreadExecutor mockThreadExecutor;
@@ -45,23 +43,17 @@ public class SaveDistanceTest {
 
   @Before
   public void setUp() {
-    saveDistance = new SaveDistance(mockPreferencesRepository, mockThreadExecutor,
+    getMaxDistance = new GetMaxDistance(mockPreferencesRepository, mockThreadExecutor,
         mockPostExecutionThread);
   }
 
   @Test
   public void testGetUserDetailsUseCaseObservableHappyCase() {
-    saveDistance.buildUseCaseObservable(SaveDistance.Params.forDistance(DISTANCE));
+    getMaxDistance.buildUseCaseObservable(null);
 
-    verify(mockPreferencesRepository).saveDistance(DISTANCE);
+    verify(mockPreferencesRepository).getDistance();
     verifyNoMoreInteractions(mockPreferencesRepository);
     verifyZeroInteractions(mockPostExecutionThread);
     verifyZeroInteractions(mockThreadExecutor);
-  }
-
-  @Test
-  public void testShouldFailWhenNoOrEmptyParameters() {
-    expectedException.expect(NullPointerException.class);
-    saveDistance.buildUseCaseObservable(null);
   }
 }
