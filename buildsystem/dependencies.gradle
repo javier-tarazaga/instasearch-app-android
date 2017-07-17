@@ -28,6 +28,7 @@ ext {
   okHttpVersion = '2.5.0'
   androidAnnotationsVersion = '21.0.3'
   arrowVersion = '1.0.0'
+  crashalyticsVersion = '2.6.8@aar'
 
   //Testing
   robolectricVersion = '3.1.1'
@@ -51,7 +52,8 @@ ext {
       recyclerView:       "com.android.support:recyclerview-v7:${recyclerViewVersion}",
       rxJava:             "io.reactivex.rxjava2:rxjava:${rxJavaVersion}",
       rxAndroid:          "io.reactivex.rxjava2:rxandroid:${rxAndroidVersion}",
-      javaxAnnotation:    "javax.annotation:jsr250-api:${javaxAnnotationVersion}"
+      javaxAnnotation:    "javax.annotation:jsr250-api:${javaxAnnotationVersion}",
+      crashalytics:       "com.crashlytics.sdk.android:crashlytics:${crashalyticsVersion}"
   ]
 
   presentationTestDependencies = [

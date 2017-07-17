@@ -95,7 +95,7 @@ dependencies {
   compile presentationDependencies.rxJava
   compile presentationDependencies.rxAndroid
   provided presentationDependencies.javaxAnnotation
-  compile('com.crashlytics.sdk.android:crashlytics:2.6.8@aar') {
+  compile (presentationDependencies.crashalytics) {
     transitive = true;
   }
 
