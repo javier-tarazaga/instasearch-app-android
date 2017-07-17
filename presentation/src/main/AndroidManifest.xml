@@ -44,6 +44,10 @@
         android:label="@string/activity_title_user_list">
     </activity>
 
+    <meta-data
+        android:name="io.fabric.ApiKey"
+        android:value="fd6a569b09bb162d7510cc8456d581b60376d7a3" />
+
   </application>
 
 </manifest>

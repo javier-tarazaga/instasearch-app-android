@@ -16,10 +16,12 @@
 package com.javiertarazaga.instasearch.presentation;
 
 import android.app.Application;
+import com.crashlytics.android.Crashlytics;
 import com.javiertarazaga.instasearch.presentation.internal.di.components.ApplicationComponent;
 import com.javiertarazaga.instasearch.presentation.internal.di.components.DaggerApplicationComponent;
 import com.javiertarazaga.instasearch.presentation.internal.di.modules.ApplicationModule;
 import com.squareup.leakcanary.LeakCanary;
+import io.fabric.sdk.android.Fabric;
 
 /**
  * Android Main Application
@@ -30,8 +32,14 @@ public class AndroidApplication extends Application {
 
   @Override public void onCreate() {
     super.onCreate();
+
+    this.initializeCrashReporting();
     this.initializeInjector();
     this.initializeLeakDetection();
+  }
+
+  private void initializeCrashReporting() {
+    Fabric.with(this, new Crashlytics());
   }
 
   private void initializeInjector() {
