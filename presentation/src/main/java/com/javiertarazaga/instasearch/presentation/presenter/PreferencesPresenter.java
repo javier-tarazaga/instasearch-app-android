@@ -64,7 +64,7 @@ public class PreferencesPresenter implements Presenter {
   }
 
   public void saveDistance(int distance) {
-    this.saveDistance.execute(null, SaveDistance.Params.forDistance(distance));
+    this.saveDistance.execute(new DistanceObserver(), SaveDistance.Params.forDistance(distance));
   }
 
   private void getDistance() {

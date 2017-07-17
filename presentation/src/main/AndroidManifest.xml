@@ -21,6 +21,11 @@
     <activity
         android:name=".view.activity.LoginActivity"
         android:label="@string/activity_title_login">
+    </activity>
+
+    <activity
+        android:name=".view.activity.PreferencesActivity"
+        android:label="@string/activity_title_preferences">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
         <category android:name="android.intent.category.LAUNCHER" />

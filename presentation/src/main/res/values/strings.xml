@@ -4,6 +4,7 @@
   <string name="url">http://www.android10.org/</string>
 
   <string name="activity_title_login">Login</string>
+  <string name="activity_title_preferences">Preferences</string>
   <string name="activity_title_user_list">Users List</string>
   <string name="activity_title_user_details">User Details</string>
 
@@ -16,8 +17,9 @@
   <string name="view_text_email">Email:</string>
   <string name="view_text_followers">Followers:</string>
   <string name="view_text_description">Description:</string>
-  <string name="view_text_preferences_distance">Distance</string>
-  <string name="view_text_preferences_distance_m">%dm</string>
+  <string name="view_text_preferences_distance">Maximum Distance</string>
+  <string name="view_text_preferences_distance_m">%d m.</string>
+  <string name="view_text_preferences_distance_km">%.1f km.</string>
 
   <string name="string_content_description">Non accessible view</string>
 

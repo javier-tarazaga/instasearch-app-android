@@ -7,7 +7,7 @@ import com.javiertarazaga.instasearch.presentation.R;
 import com.javiertarazaga.instasearch.presentation.internal.di.HasComponent;
 import com.javiertarazaga.instasearch.presentation.internal.di.components.DaggerPreferencesComponent;
 import com.javiertarazaga.instasearch.presentation.internal.di.components.PreferencesComponent;
-import com.javiertarazaga.instasearch.presentation.view.fragment.LoginFragment;
+import com.javiertarazaga.instasearch.presentation.view.fragment.PreferencesFragment;
 
 /**
  * Login screen. This is the app login entry point to the user's Instagram.
@@ -34,7 +34,7 @@ public class PreferencesActivity extends BaseActivity implements HasComponent<Pr
    */
   private void initializeActivity(Bundle savedInstanceState) {
     if (savedInstanceState == null) {
-      addFragment(R.id.fragmentContainer, new LoginFragment());
+      addFragment(R.id.fragmentContainer, new PreferencesFragment());
     }
   }
 

@@ -49,6 +49,7 @@ public class PreferencesFragment extends BaseFragment implements PreferencesView
   @Override public void onViewCreated(View view, Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
     this.preferencesPresenter.setView(this);
+
     if (savedInstanceState == null) {
       this.loadPreferences();
     }
@@ -75,6 +76,13 @@ public class PreferencesFragment extends BaseFragment implements PreferencesView
   }
 
   @Override public void updateDistance(int distance) {
+
+    // This case requires this special treat as when progress is 0, OnProgressChanged of the Seekbar
+    // does not get triggered.
+    if (distance == 0) {
+      this.setDistanceText(0);
+    }
+
     this.sb_distance.setProgress(distance);
   }
 
@@ -82,7 +90,7 @@ public class PreferencesFragment extends BaseFragment implements PreferencesView
     this.sb_distance.setMax(5000);
     this.sb_distance.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
       @Override public void onProgressChanged(SeekBar seekBar, int progress, boolean b) {
-        PreferencesFragment.this.tv_distance.setText(progress);
+        PreferencesFragment.this.setDistanceText(progress);
       }
 
       @Override public void onStartTrackingTouch(SeekBar seekBar) {
@@ -93,6 +101,17 @@ public class PreferencesFragment extends BaseFragment implements PreferencesView
         PreferencesFragment.this.saveDistance(seekBar.getProgress());
       }
     });
+  }
+
+  private void setDistanceText(int distance) {
+    if (distance >= 1000) {
+      float distanceKm = (float) distance / 1000;
+      this.tv_distance.setText(
+          getResources().getString(R.string.view_text_preferences_distance_km, distanceKm));
+    } else {
+      this.tv_distance.setText(
+          getResources().getString(R.string.view_text_preferences_distance_m, distance));
+    }
   }
 
   private void loadPreferences() {
