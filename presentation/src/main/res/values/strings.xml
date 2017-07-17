@@ -16,6 +16,8 @@
   <string name="view_text_email">Email:</string>
   <string name="view_text_followers">Followers:</string>
   <string name="view_text_description">Description:</string>
+  <string name="view_text_preferences_distance">Distance</string>
+  <string name="view_text_preferences_distance_m">%dm</string>
 
   <string name="string_content_description">Non accessible view</string>
 

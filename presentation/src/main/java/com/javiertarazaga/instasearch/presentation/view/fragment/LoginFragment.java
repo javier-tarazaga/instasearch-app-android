@@ -114,21 +114,21 @@ public class LoginFragment extends BaseFragment implements LoginView {
   }
 
   private void initEditTexts() {
-    //et_username.addTextChangedListener(this.loginPresenter.getTextWatcher());
-    //et_password.addTextChangedListener(this.loginPresenter.getTextWatcher());
+    //et_username.addTextChangedListener(this.preferencesPresenter.getTextWatcher());
+    //et_password.addTextChangedListener(this.preferencesPresenter.getTextWatcher());
 
     ////EditText hint text disappears by touching. In other word by getting focused hint text disappears
     //et_username.setOnFocusChangeListener(new View.OnFocusChangeListener() {
     //  @Override
     //  public void onFocusChange(View v, boolean hasFocus) {
-    //    LoginFragment.this.loginPresenter.onUserNameEditTextFocusChanged(
+    //    LoginFragment.this.preferencesPresenter.onUserNameEditTextFocusChanged(
     //        ((EditText) v).getText().toString(), hasFocus);
     //  }
     //});
     //et_password.setOnFocusChangeListener(new View.OnFocusChangeListener() {
     //  @Override
     //  public void onFocusChange(View v, boolean hasFocus) {
-    //    LoginFragment.this.loginPresenter.onPasswordEditTextFocusChanged(
+    //    LoginFragment.this.preferencesPresenter.onPasswordEditTextFocusChanged(
     //        ((EditText) v).getText().toString(), hasFocus);
     //  }
     //});

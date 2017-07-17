@@ -16,8 +16,10 @@
 package com.javiertarazaga.instasearch.presentation.internal.di.components;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import com.javiertarazaga.instasearch.domain.executor.PostExecutionThread;
 import com.javiertarazaga.instasearch.domain.executor.ThreadExecutor;
+import com.javiertarazaga.instasearch.domain.repository.PreferencesRepository;
 import com.javiertarazaga.instasearch.domain.repository.UserRepository;
 import com.javiertarazaga.instasearch.presentation.internal.di.modules.ApplicationModule;
 import com.javiertarazaga.instasearch.presentation.view.activity.BaseActivity;
@@ -36,5 +38,7 @@ public interface ApplicationComponent {
   Context context();
   ThreadExecutor threadExecutor();
   PostExecutionThread postExecutionThread();
+  SharedPreferences sharedPreferences();
+  PreferencesRepository preferencesRepository();
   UserRepository userRepository();
 }
