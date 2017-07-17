@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2015 Fernando Cejas Open Source Project
+ * Copyright (C) 2017 Javier Tarazaga Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@
 package com.javiertarazaga.instasearch.presentation.internal.di.modules;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import com.javiertarazaga.instasearch.data.cache.UserCache;
 import com.javiertarazaga.instasearch.data.cache.UserCacheImpl;
 import com.javiertarazaga.instasearch.data.executor.JobExecutor;
@@ -30,6 +31,8 @@ import com.javiertarazaga.instasearch.presentation.UIThread;
 import dagger.Module;
 import dagger.Provides;
 import javax.inject.Singleton;
+
+import static android.content.Context.MODE_PRIVATE;
 
 /**
  * Dagger module that provides objects which will live during the application lifecycle.
@@ -51,6 +54,10 @@ import javax.inject.Singleton;
 
   @Provides @Singleton PostExecutionThread providePostExecutionThread(UIThread uiThread) {
     return uiThread;
+  }
+
+  @Provides @Singleton SharedPreferences provideSharedPreferences() {
+    return this.application.getSharedPreferences("Instasearch", MODE_PRIVATE);
   }
 
   @Provides @Singleton UserCache provideUserCache(UserCacheImpl userCache) {

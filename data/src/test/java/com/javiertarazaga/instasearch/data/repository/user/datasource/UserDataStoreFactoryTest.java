@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2015 Fernando Cejas Open Source Project
+ * Copyright (C) 2017 Javier Tarazaga Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,7 +29,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 
-public class PreferencesDataStoreFactoryTest extends ApplicationTestCase {
+public class UserDataStoreFactoryTest extends ApplicationTestCase {
 
   private static final int FAKE_USER_ID = 11;
 

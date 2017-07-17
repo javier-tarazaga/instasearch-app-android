@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2015 Fernando Cejas Open Source Project
+ * Copyright (C) 2017 Javier Tarazaga Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -40,8 +40,7 @@ public class UserDataRepository implements UserRepository {
    * @param dataStoreFactory A factory to construct different data source implementations.
    * @param userEntityDataMapper {@link UserEntityDataMapper}.
    */
-  @Inject
-  UserDataRepository(UserDataStoreFactory dataStoreFactory,
+  @Inject public UserDataRepository(UserDataStoreFactory dataStoreFactory,
       UserEntityDataMapper userEntityDataMapper) {
     this.userDataStoreFactory = dataStoreFactory;
     this.userEntityDataMapper = userEntityDataMapper;
