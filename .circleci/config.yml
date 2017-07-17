@@ -39,7 +39,7 @@ jobs:
           destination: reports
       - store_test_results:
           path: app/build/test-results
-      - type: deploy
+      - deploy:
           name: "Deploy to HockeyApp"
           command: |
             if [ "${CIRCLE_BRANCH}" == "master" ];
