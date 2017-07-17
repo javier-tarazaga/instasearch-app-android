@@ -34,6 +34,7 @@ public class PreferencesPresenter implements Presenter {
 
   private final GetDistance getDistance;
   private final SaveDistance saveDistance;
+  private int distance;
 
   @Inject
   public PreferencesPresenter(GetDistance getDistance,
@@ -73,6 +74,15 @@ public class PreferencesPresenter implements Presenter {
 
   private void updateDistance(int distance) {
     this.preferencesView.updateDistance(distance);
+  }
+
+  public void setDistance(int distance) {
+    if (distance >= 1000) {
+      float distanceKm = (float) distance / 1000;
+      this.preferencesView.setDistanceInKm(distanceKm);
+    } else {
+      this.preferencesView.setDistanceInM(distance);
+    }
   }
 
   private final class DistanceObserver extends DefaultObserver<Integer> {

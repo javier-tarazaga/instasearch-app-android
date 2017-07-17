@@ -24,7 +24,7 @@ import javax.inject.Inject;
  */
 public class PreferencesFragment extends BaseFragment implements PreferencesView {
 
-  @Inject PreferencesPresenter preferencesPresenter;
+  @Inject PreferencesPresenter presenter;
 
   @Bind(R.id.tv_distance) TextView tv_distance;
   @Bind(R.id.sb_distance) SeekBar sb_distance;
@@ -48,7 +48,7 @@ public class PreferencesFragment extends BaseFragment implements PreferencesView
 
   @Override public void onViewCreated(View view, Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
-    this.preferencesPresenter.setView(this);
+    this.presenter.setView(this);
 
     if (savedInstanceState == null) {
       this.loadPreferences();
@@ -57,12 +57,12 @@ public class PreferencesFragment extends BaseFragment implements PreferencesView
 
   @Override public void onResume() {
     super.onResume();
-    this.preferencesPresenter.resume();
+    this.presenter.resume();
   }
 
   @Override public void onPause() {
     super.onPause();
-    this.preferencesPresenter.pause();
+    this.presenter.pause();
   }
 
   @Override public void onDestroyView() {
@@ -72,7 +72,7 @@ public class PreferencesFragment extends BaseFragment implements PreferencesView
 
   @Override public void onDestroy() {
     super.onDestroy();
-    this.preferencesPresenter.destroy();
+    this.presenter.destroy();
   }
 
   @Override public void updateDistance(int distance) {
@@ -80,7 +80,7 @@ public class PreferencesFragment extends BaseFragment implements PreferencesView
     // This case requires this special treat as when progress is 0, OnProgressChanged of the Seekbar
     // does not get triggered.
     if (distance == 0) {
-      this.setDistanceText(0);
+      this.presenter.setDistance(0);
     }
 
     this.sb_distance.setProgress(distance);
@@ -90,7 +90,7 @@ public class PreferencesFragment extends BaseFragment implements PreferencesView
     this.sb_distance.setMax(5000);
     this.sb_distance.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
       @Override public void onProgressChanged(SeekBar seekBar, int progress, boolean b) {
-        PreferencesFragment.this.setDistanceText(progress);
+        PreferencesFragment.this.presenter.setDistance(progress);
       }
 
       @Override public void onStartTrackingTouch(SeekBar seekBar) {
@@ -103,22 +103,21 @@ public class PreferencesFragment extends BaseFragment implements PreferencesView
     });
   }
 
-  private void setDistanceText(int distance) {
-    if (distance >= 1000) {
-      float distanceKm = (float) distance / 1000;
-      this.tv_distance.setText(
-          getResources().getString(R.string.view_text_preferences_distance_km, distanceKm));
-    } else {
-      this.tv_distance.setText(
-          getResources().getString(R.string.view_text_preferences_distance_m, distance));
-    }
+  @Override public void setDistanceInKm(float distanceInKm) {
+    this.tv_distance.setText(
+        getResources().getString(R.string.view_text_preferences_distance_km, distanceInKm));
+  }
+
+  @Override public void setDistanceInM(int distanceInM) {
+    this.tv_distance.setText(
+        getResources().getString(R.string.view_text_preferences_distance_m, distanceInM));
   }
 
   private void loadPreferences() {
-    this.preferencesPresenter.initialize();
+    this.presenter.initialize();
   }
 
   private void saveDistance(int distance) {
-    this.preferencesPresenter.saveDistance(distance);
+    this.presenter.saveDistance(distance);
   }
 }
