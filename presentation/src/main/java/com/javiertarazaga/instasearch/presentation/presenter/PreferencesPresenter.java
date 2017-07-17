@@ -19,7 +19,6 @@ import android.support.annotation.NonNull;
 import com.javiertarazaga.instasearch.domain.interactor.DefaultObserver;
 import com.javiertarazaga.instasearch.domain.interactor.GetDistance;
 import com.javiertarazaga.instasearch.domain.interactor.SaveDistance;
-import com.javiertarazaga.instasearch.presentation.internal.di.PerActivity;
 import com.javiertarazaga.instasearch.presentation.view.PreferencesView;
 import javax.inject.Inject;
 
@@ -27,14 +26,12 @@ import javax.inject.Inject;
  * {@link Presenter} that controls communication between views and models of the presentation
  * layer.
  */
-@PerActivity
 public class PreferencesPresenter implements Presenter {
 
   private PreferencesView preferencesView;
 
   private final GetDistance getDistance;
   private final SaveDistance saveDistance;
-  private int distance;
 
   @Inject
   public PreferencesPresenter(GetDistance getDistance,
