@@ -48,7 +48,7 @@ public class GetMaxDistanceTest {
   }
 
   @Test
-  public void testGetUserDetailsUseCaseObservableHappyCase() {
+  public void testGetMaxDistanceUseCaseObservableHappyCase() {
     getMaxDistance.buildUseCaseObservable(null);
 
     verify(mockPreferencesRepository).getDistance();

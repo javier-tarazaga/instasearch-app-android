@@ -50,7 +50,7 @@ public class SaveMaxDistanceTest {
   }
 
   @Test
-  public void testGetUserDetailsUseCaseObservableHappyCase() {
+  public void testMaxDistanceUseCaseObservableHappyCase() {
     saveMaxDistance.buildUseCaseObservable(SaveMaxDistance.Params.forDistance(DISTANCE));
 
     verify(mockPreferencesRepository).saveDistance(DISTANCE);
