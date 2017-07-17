@@ -5,6 +5,7 @@
  */
 package com.javiertarazaga.instasearch.presentation.view.fragment;
 
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +29,7 @@ public class PreferencesFragment extends BaseFragment implements PreferencesView
 
   @Bind(R.id.tv_distance) TextView tv_distance;
   @Bind(R.id.sb_distance) SeekBar sb_distance;
+  @Bind(R.id.tv_app_version) TextView tv_app_version;
 
   public PreferencesFragment() {
     setRetainInstance(true);
@@ -86,6 +88,16 @@ public class PreferencesFragment extends BaseFragment implements PreferencesView
     this.sb_distance.setProgress(distance);
   }
 
+  @Override public void setDistanceInKm(float distanceInKm) {
+    this.tv_distance.setText(
+        getResources().getString(R.string.view_text_preferences_distance_km, distanceInKm));
+  }
+
+  @Override public void setDistanceInM(int distanceInM) {
+    this.tv_distance.setText(
+        getResources().getString(R.string.view_text_preferences_distance_m, distanceInM));
+  }
+
   private void initPreferences() {
     this.sb_distance.setMax(5000);
     this.sb_distance.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -103,18 +115,20 @@ public class PreferencesFragment extends BaseFragment implements PreferencesView
     });
   }
 
-  @Override public void setDistanceInKm(float distanceInKm) {
-    this.tv_distance.setText(
-        getResources().getString(R.string.view_text_preferences_distance_km, distanceInKm));
-  }
-
-  @Override public void setDistanceInM(int distanceInM) {
-    this.tv_distance.setText(
-        getResources().getString(R.string.view_text_preferences_distance_m, distanceInM));
-  }
-
   private void loadPreferences() {
     this.presenter.initialize();
+    this.setApplicationVersionNumber();
+  }
+
+  private void setApplicationVersionNumber() {
+    String versionNumber = "";
+    try {
+      versionNumber = getActivity().getPackageManager().getPackageInfo(getActivity().getPackageName(), 0).versionName;
+    } catch (PackageManager.NameNotFoundException e) {
+      e.printStackTrace();
+    }
+
+    tv_app_version.setText(versionNumber);
   }
 
   private void saveDistance(int distance) {

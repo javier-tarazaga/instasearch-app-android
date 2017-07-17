@@ -20,6 +20,7 @@
   <string name="view_text_preferences_distance">Maximum Distance</string>
   <string name="view_text_preferences_distance_m">%d m.</string>
   <string name="view_text_preferences_distance_km">%.1f km.</string>
+  <string name="view_text_preferences_app_version">Application Version</string>
 
   <string name="string_content_description">Non accessible view</string>
 
