@@ -13,13 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.javiertarazaga.instasearch.data.repository;
+package com.javiertarazaga.instasearch.data.repository.user;
 
 import com.javiertarazaga.instasearch.data.entity.UserEntity;
 import com.javiertarazaga.instasearch.data.entity.mapper.UserEntityDataMapper;
 import com.javiertarazaga.instasearch.data.repository.user.datasource.UserDataStore;
 import com.javiertarazaga.instasearch.data.repository.user.datasource.UserDataStoreFactory;
-import com.javiertarazaga.instasearch.data.repository.user.UserDataRepository;
 import com.javiertarazaga.instasearch.domain.User;
 import io.reactivex.Observable;
 import java.util.ArrayList;
