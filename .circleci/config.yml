@@ -43,7 +43,7 @@ jobs:
           name: "Deploy to HockeyApp"
           command: |
             if [ "${CIRCLE_BRANCH}" == "master" ];
-              then ./gradlew mobile:publishToHockey -PversionTypeApp="debug"
+              then ./gradlew presentation:publishToHockey -PversionTypeApp="debug"
             fi
 
 

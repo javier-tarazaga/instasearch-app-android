@@ -103,3 +103,9 @@ dependencies {
   //Development
   compile developmentDependencies.leakCanary
 }
+
+//android.applicationVariants.all { variant ->
+//  if (variant.buildType.name == 'release') {
+//    variant.mergedFlavor.versionName = "${versionMajor}.${versionMinor}.${versionPatch}";
+//  }
+//}

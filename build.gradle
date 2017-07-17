@@ -46,3 +46,13 @@ task runAcceptanceTests(dependsOn: [':presentation:connectedAndroidTest']) {
   description 'Run application acceptance tests.'
 }
 
+task publishToHockey(type: Exec) {
+  workingDir "$projectDir/"
+
+  if (project.hasProperty("versionTypeApp")) {
+    commandLine "sh", "./scripts/hockey_deploy.sh", versionCodeApp, versionTypeApp;
+  } else {
+    commandLine "sh", "./scripts/hockey_deploy.sh", versionCodeApp, "release";
+  }
+}
+
