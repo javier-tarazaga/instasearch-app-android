@@ -130,6 +130,8 @@ public class LoginFragment extends BaseFragment implements LoginView {
     wv_login.setWebViewClient(new WebViewClient() {
 
       @Override public boolean shouldOverrideUrlLoading(WebView view, String url) {
+
+        // TODO - Fix double shouldOverrideUrlLoading call
         return LoginFragment.this.loginPresenter.shouldOverrideUrlLoading(url)
             && super.shouldOverrideUrlLoading(view, url);
       }

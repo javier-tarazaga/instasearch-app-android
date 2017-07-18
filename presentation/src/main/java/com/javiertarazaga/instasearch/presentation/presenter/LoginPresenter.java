@@ -152,7 +152,6 @@ import javax.inject.Inject;
       LoginPresenter.this.hideViewLoading();
 
       if (e instanceof UserNeedsAuthenticationException || e instanceof UserException) {
-        // TODO - Handle this case
         // LoginPresenter.this.goToLoginView();
       } else {
         LoginPresenter.this.showErrorMessage(new DefaultErrorBundle((Exception) e));
