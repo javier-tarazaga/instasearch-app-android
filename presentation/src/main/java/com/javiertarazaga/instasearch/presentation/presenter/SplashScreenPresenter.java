@@ -47,9 +47,7 @@ public class SplashScreenPresenter implements Presenter {
     this.splashScreenView = view;
   }
 
-  @Override public void resume() {
-    this.initialize();
-  }
+  @Override public void resume() {}
 
   @Override public void pause() {}
 
