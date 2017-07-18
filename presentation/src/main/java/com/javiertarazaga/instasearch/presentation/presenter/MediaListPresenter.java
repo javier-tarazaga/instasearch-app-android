@@ -130,7 +130,7 @@ public class MediaListPresenter implements Presenter {
     }
 
     @Override public void onNext(List<Media> mediaList) {
-      //MediaListPresenter.this.showUsersCollectionInView(users);
+      MediaListPresenter.this.showMediaCollectionInView(mediaList);
     }
   }
 }

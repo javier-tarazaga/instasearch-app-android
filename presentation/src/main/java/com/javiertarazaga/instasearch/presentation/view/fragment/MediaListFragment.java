@@ -18,7 +18,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.javiertarazaga.instasearch.presentation.R;
-import com.javiertarazaga.instasearch.presentation.internal.di.components.UserComponent;
+import com.javiertarazaga.instasearch.presentation.internal.di.components.MainComponent;
 import com.javiertarazaga.instasearch.presentation.model.MediaModel;
 import com.javiertarazaga.instasearch.presentation.presenter.MediaListPresenter;
 import com.javiertarazaga.instasearch.presentation.view.MediaListView;
@@ -62,7 +62,7 @@ public class MediaListFragment extends BaseFragment implements MediaListView {
 
   @Override public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    this.getComponent(UserComponent.class).inject(this);
+    this.getComponent(MainComponent.class).inject(this);
   }
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
