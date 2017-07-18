@@ -44,14 +44,15 @@ public class UserModelDataMapper {
       throw new IllegalArgumentException("Cannot transform a null value");
     }
     final UserModel userModel = new UserModel(user.getUserId());
-    userModel.setProfilePicture(user.getCoverUrl());
-    userModel.setFullName(user.getFullName());
-    userModel.setUsername(user.getEmail());
-    userModel.setBio(user.getDescription());
+    userModel.setProfilePicture(user.getProfilePicture());
+    userModel.setFullName(user.getFullname());
+    userModel.setUsername(user.getUsername());
+    userModel.setBio(user.getBio());
 
     return userModel;
   }
 
+  // TODO - Remove when done with posts
   /**
    * Transform a Collection of {@link User} into a Collection of {@link UserModel}.
    *

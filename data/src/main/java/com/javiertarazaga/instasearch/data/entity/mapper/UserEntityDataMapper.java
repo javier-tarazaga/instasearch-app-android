@@ -43,15 +43,15 @@ public class UserEntityDataMapper {
     User user = null;
     if (userEntity != null) {
       user = new User(userEntity.getUserId());
-      user.setCoverUrl(userEntity.getCoverUrl());
-      user.setFullName(userEntity.getFullname());
-      user.setDescription(userEntity.getDescription());
-      user.setFollowers(userEntity.getFollowers());
-      user.setEmail(userEntity.getEmail());
+      user.setUsername(userEntity.getUsername());
+      user.setProfilePicture(userEntity.getProfilePicture());
+      user.setFullname(userEntity.getFullname());
+      user.setBio(userEntity.getBio());
     }
     return user;
   }
 
+  // TODO - Remove when done with posts
   /**
    * Transform a List of {@link UserEntity} into a Collection of {@link User}.
    *

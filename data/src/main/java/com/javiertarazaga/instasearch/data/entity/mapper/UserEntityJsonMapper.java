@@ -47,6 +47,7 @@ public class UserEntityJsonMapper {
     return this.gson.fromJson(userJsonResponse, userEntityType);
   }
 
+  // TODO - Remove when posts is done
   /**
    * Transform from valid json string to List of {@link UserEntity}.
    *

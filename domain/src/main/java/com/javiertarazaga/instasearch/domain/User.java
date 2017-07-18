@@ -20,59 +20,50 @@ package com.javiertarazaga.instasearch.domain;
  */
 public class User {
 
-  private final int userId;
+  private final String userId;
 
-  public User(int userId) {
+  private String username;
+  private String profilePicture;
+  private String fullname;
+  private String bio;
+
+  public User(String userId) {
     this.userId = userId;
   }
 
-  private String coverUrl;
-  private String fullName;
-  private String email;
-  private String description;
-  private int followers;
-
-  public int getUserId() {
+  public String getUserId() {
     return userId;
   }
 
-  public String getCoverUrl() {
-    return coverUrl;
+  public String getUsername() {
+    return username;
   }
 
-  public void setCoverUrl(String coverUrl) {
-    this.coverUrl = coverUrl;
+  public void setUsername(String username) {
+    this.username = username;
   }
 
-  public String getFullName() {
-    return fullName;
+  public String getProfilePicture() {
+    return profilePicture;
   }
 
-  public void setFullName(String fullName) {
-    this.fullName = fullName;
+  public void setProfilePicture(String profilePicture) {
+    this.profilePicture = profilePicture;
   }
 
-  public String getEmail() {
-    return email;
+  public String getFullname() {
+    return fullname;
   }
 
-  public void setEmail(String email) {
-    this.email = email;
+  public void setFullname(String fullname) {
+    this.fullname = fullname;
   }
 
-  public String getDescription() {
-    return description;
+  public String getBio() {
+    return bio;
   }
 
-  public void setDescription(String description) {
-    this.description = description;
-  }
-
-  public int getFollowers() {
-    return followers;
-  }
-
-  public void setFollowers(int followers) {
-    this.followers = followers;
+  public void setBio(String bio) {
+    this.bio = bio;
   }
 }

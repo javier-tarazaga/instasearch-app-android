@@ -66,12 +66,8 @@ public class RestApiImpl implements RestApi {
     });
   }
 
-  private String getUserEntitiesFromApi() throws MalformedURLException {
-    return ApiConnection.createGET(API_URL_GET_USER_LIST).requestSyncCall();
-  }
-
   private String getUserFromApi() throws MalformedURLException {
-    String apiUrl = API_URL_GET_USER_DETAILS  + ".json";
+    String apiUrl = API_URL_GET_USER  + "?access_token=18754436.974bc37.cbfa1756cf6c444db653af92a2771647";
     return ApiConnection.createGET(apiUrl).requestSyncCall();
   }
 

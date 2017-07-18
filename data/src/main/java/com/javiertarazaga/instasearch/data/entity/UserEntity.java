@@ -23,37 +23,46 @@ import com.google.gson.annotations.SerializedName;
 public class UserEntity {
 
   @SerializedName("id")
-  private int userId;
+  private String userId;
 
-  @SerializedName("cover_url")
-  private String coverUrl;
+  @SerializedName("username")
+  private String username;
+
+  @SerializedName("profile_picture")
+  private String profilePicture;
 
   @SerializedName("full_name")
   private String fullname;
 
-  @SerializedName("description")
-  private String description;
-
-  @SerializedName("followers")
-  private int followers;
-
-  @SerializedName("email")
-  private String email;
+  @SerializedName("bio")
+  private String bio;
 
   public UserEntity() {
     //empty
   }
 
-  public int getUserId() {
+  public String getUserId() {
     return userId;
   }
 
-  public void setUserId(int userId) {
+  public void setUserId(String userId) {
     this.userId = userId;
   }
 
-  public String getCoverUrl() {
-    return coverUrl;
+  public String getUsername() {
+    return username;
+  }
+
+  public void setUsername(String username) {
+    this.username = username;
+  }
+
+  public String getProfilePicture() {
+    return profilePicture;
+  }
+
+  public void setProfilePicture(String profilePicture) {
+    this.profilePicture = profilePicture;
   }
 
   public String getFullname() {
@@ -64,15 +73,11 @@ public class UserEntity {
     this.fullname = fullname;
   }
 
-  public String getDescription() {
-    return description;
+  public String getBio() {
+    return bio;
   }
 
-  public int getFollowers() {
-    return followers;
-  }
-
-  public String getEmail() {
-    return email;
+  public void setBio(String bio) {
+    this.bio = bio;
   }
 }

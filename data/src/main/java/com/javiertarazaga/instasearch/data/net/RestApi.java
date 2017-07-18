@@ -22,13 +22,10 @@ import io.reactivex.Observable;
  * RestApi for retrieving data from the network.
  */
 public interface RestApi {
-  String API_BASE_URL =
-      "https://raw.githubusercontent.com/android10/Sample-Data/master/Android-CleanArchitecture/";
+  String API_BASE_URL = "https://api.instagram.com/v1/";
 
   /** Api url for getting all users */
-  String API_URL_GET_USER_LIST = API_BASE_URL + "users.json";
-  /** Api url for getting a user profile: Remember to concatenate id + 'json' */
-  String API_URL_GET_USER_DETAILS = API_BASE_URL + "user_";
+  String API_URL_GET_USER = API_BASE_URL + "users/self/";
 
   /**
    * Retrieves an {@link Observable} which will emit a {@link UserEntity}.
