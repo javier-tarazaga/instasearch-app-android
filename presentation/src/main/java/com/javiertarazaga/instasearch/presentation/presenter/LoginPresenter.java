@@ -73,6 +73,7 @@ import javax.inject.Inject;
    * Initializes the presenter. Empty for the moment
    */
   public void initialize() {
+    this.loginView.loadUrl(AUTH_URI);
   }
 
   public boolean shouldOverrideUrlLoading(String url) {
@@ -97,8 +98,6 @@ import javax.inject.Inject;
       this.showErrorMessage(new DefaultErrorBundle(new InstagramAuthErrorException("Auth Failed")));
       return true;
     }
-
-    this.loginView.loadUrl(url);
 
     return false;
   }

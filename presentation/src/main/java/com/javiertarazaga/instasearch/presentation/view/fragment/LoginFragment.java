@@ -36,17 +36,6 @@ public class LoginFragment extends BaseFragment implements LoginView {
 
   @Bind(R.id.wv_login) WebView wv_login;
 
-  private static final String TAG = "LoginFragment";
-
-  private static final String CLIENT_ID = "974bc375f6ac4f0b883484e72d786e24";
-  private static final String REDIRECT_URI = "http://instasearchapp.com/auth/instagram/callback";
-  private static final String FAILURE_URL = "http://instasearchapp.com/auth/failure";
-  private static final String AUTH_URI = "https://instagram.com/oauth/authorize/?client_id="
-      + CLIENT_ID
-      + "&redirect_uri="
-      + REDIRECT_URI
-      + "&response_type=token&scope=public_content";
-
   private LoginFragmentListener loginFragmentListener;
 
   public LoginFragment() {
@@ -77,6 +66,10 @@ public class LoginFragment extends BaseFragment implements LoginView {
   @Override public void onViewCreated(View view, Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
     this.loginPresenter.setView(this);
+
+    if (savedInstanceState == null) {
+      this.initialize();
+    }
   }
 
   @Override public void onResume() {
@@ -141,5 +134,9 @@ public class LoginFragment extends BaseFragment implements LoginView {
             && super.shouldOverrideUrlLoading(view, url);
       }
     });
+  }
+
+  private void initialize() {
+    this.loginPresenter.initialize();
   }
 }
