@@ -61,7 +61,7 @@ public class MediaListFragment extends BaseFragment implements MediaListView {
   }
 
   @Override public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(gsavedInstanceState);
+    super.onCreate(savedInstanceState);
     this.getComponent(UserComponent.class).inject(this);
   }
 
