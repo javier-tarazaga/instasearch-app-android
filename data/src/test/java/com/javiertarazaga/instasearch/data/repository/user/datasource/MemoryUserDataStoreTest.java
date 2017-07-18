@@ -27,11 +27,9 @@ import org.mockito.runners.MockitoJUnitRunner;
 import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
-public class SharedUserDataStoreTest {
+public class MemoryUserDataStoreTest {
 
-  private static final int FAKE_USER_ID = 11;
-
-  private DiskUserDataStore diskUserDataStore;
+  private UserMemoryDataStore userMemoryDataStore;
 
   @Mock private UserCache mockUserCache;
 
@@ -39,18 +37,12 @@ public class SharedUserDataStoreTest {
 
   @Before
   public void setUp() {
-    diskUserDataStore = new DiskUserDataStore(mockUserCache);
-  }
-
-  @Test
-  public void testGetUserEntityListUnsupported() {
-    expectedException.expect(UnsupportedOperationException.class);
-    diskUserDataStore.userEntityList();
+    userMemoryDataStore = new UserMemoryDataStore(mockUserCache);
   }
 
   @Test
   public void testGetUserEntityDetailesFromCache() {
-    diskUserDataStore.userEntityDetails(FAKE_USER_ID);
-    verify(mockUserCache).get(FAKE_USER_ID);
+    userMemoryDataStore.user();
+    verify(mockUserCache).get();
   }
 }

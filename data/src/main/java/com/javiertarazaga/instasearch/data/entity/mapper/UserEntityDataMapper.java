@@ -17,9 +17,6 @@ package com.javiertarazaga.instasearch.data.entity.mapper;
 
 import com.javiertarazaga.instasearch.data.entity.UserEntity;
 import com.javiertarazaga.instasearch.domain.User;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -49,23 +46,5 @@ public class UserEntityDataMapper {
       user.setBio(userEntity.getBio());
     }
     return user;
-  }
-
-  // TODO - Remove when done with posts
-  /**
-   * Transform a List of {@link UserEntity} into a Collection of {@link User}.
-   *
-   * @param userEntityCollection Object Collection to be transformed.
-   * @return {@link User} if valid {@link UserEntity} otherwise null.
-   */
-  public List<User> transform(Collection<UserEntity> userEntityCollection) {
-    final List<User> userList = new ArrayList<>(20);
-    for (UserEntity userEntity : userEntityCollection) {
-      final User user = transform(userEntity);
-      if (user != null) {
-        userList.add(user);
-      }
-    }
-    return userList;
   }
 }

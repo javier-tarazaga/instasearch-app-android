@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -25,42 +25,42 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
-@RunWith(MockitoJUnitRunner.class)
-public class SerializerTest {
+@RunWith(MockitoJUnitRunner.class) public class SerializerTest {
 
   private static final String JSON_RESPONSE = "{\n"
       + "    \"id\": 1,\n"
-      + "    \"cover_url\": \"http://www.android10.org/myapi/cover_1.jpg\",\n"
+      + "    \"username\": \"jatago\",\n"
       + "    \"full_name\": \"Simon Hill\",\n"
-      + "    \"description\": \"Curabitur gravida nisi at nibh. In hac habitasse platea dictumst. Aliquam augue quam, sollicitudin vitae, consectetuer eget, rutrum at, lorem.\\n\\nInteger tincidunt ante vel ipsum. Praesent blandit lacinia erat. Vestibulum sed magna at nunc commodo placerat.\\n\\nPraesent blandit. Nam nulla. Integer pede justo, lacinia eget, tincidunt eget, tempus vel, pede.\",\n"
-      + "    \"followers\": 7484,\n"
-      + "    \"email\": \"jcooper@babbleset.edu\"\n"
+      + "    \"profile_picture\": \"https://scontent.cdninstagram.com/t51.2885-19/s150x150/19984598_110325572952662_1760547274049454080_a.jpg\",\n"
+      + "    \"bio\": \"I am the best!\"\n"
       + "}";
 
   private Serializer serializer;
 
-  @Before
-  public void setUp() {
+  @Before public void setUp() {
     serializer = new Serializer();
   }
 
-  @Test
-  public void testSerializeHappyCase() {
+  @Test public void testSerializeHappyCase() {
     final UserEntity userEntityOne = serializer.deserialize(JSON_RESPONSE, UserEntity.class);
     final String jsonString = serializer.serialize(userEntityOne, UserEntity.class);
     final UserEntity userEntityTwo = serializer.deserialize(jsonString, UserEntity.class);
 
     assertThat(userEntityOne.getUserId(), is(userEntityTwo.getUserId()));
+    assertThat(userEntityOne.getUsername(), is(equalTo(userEntityTwo.getUsername())));
     assertThat(userEntityOne.getFullname(), is(equalTo(userEntityTwo.getFullname())));
-    assertThat(userEntityOne.getFollowers(), is(userEntityTwo.getFollowers()));
+    assertThat(userEntityOne.getProfilePicture(), is(userEntityTwo.getProfilePicture()));
+    assertThat(userEntityOne.getBio(), is(userEntityTwo.getBio()));
   }
 
-  @Test
-  public void testDesearializeHappyCase() {
+  @Test public void testDeserializeHappyCase() {
     final UserEntity userEntity = serializer.deserialize(JSON_RESPONSE, UserEntity.class);
 
-    assertThat(userEntity.getUserId(), is(1));
+    assertThat(userEntity.getUserId(), is("1"));
+    assertThat(userEntity.getUsername(), is("jatago"));
     assertThat(userEntity.getFullname(), is("Simon Hill"));
-    assertThat(userEntity.getFollowers(), is(7484));
+    assertThat(userEntity.getProfilePicture(),
+        is("https://scontent.cdninstagram.com/t51.2885-19/s150x150/19984598_110325572952662_1760547274049454080_a.jpg"));
+    assertThat(userEntity.getBio(), is("I am the best!"));
   }
 }

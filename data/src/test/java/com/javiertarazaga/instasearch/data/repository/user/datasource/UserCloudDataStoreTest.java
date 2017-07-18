@@ -31,8 +31,6 @@ import static org.mockito.Mockito.verify;
 @RunWith(MockitoJUnitRunner.class)
 public class UserCloudDataStoreTest {
 
-  private static final int FAKE_USER_ID = 765;
-
   private UserCloudDataStore userCloudDataStore;
 
   @Mock private RestApi mockRestApi;
@@ -44,19 +42,13 @@ public class UserCloudDataStoreTest {
   }
 
   @Test
-  public void testGetUserEntityListFromApi() {
-    userCloudDataStore.userEntityList();
-    verify(mockRestApi).userEntityList();
-  }
-
-  @Test
   public void testGetUserEntityDetailsFromApi() {
     UserEntity fakeUserEntity = new UserEntity();
     Observable<UserEntity> fakeObservable = Observable.just(fakeUserEntity);
-    given(mockRestApi.userEntityById(FAKE_USER_ID)).willReturn(fakeObservable);
+    given(mockRestApi.user()).willReturn(fakeObservable);
 
-    userCloudDataStore.userEntityDetails(FAKE_USER_ID);
+    userCloudDataStore.user();
 
-    verify(mockRestApi).userEntityById(FAKE_USER_ID);
+    verify(mockRestApi).user();
   }
 }

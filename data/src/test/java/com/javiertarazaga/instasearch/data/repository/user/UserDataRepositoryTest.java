@@ -21,8 +21,6 @@ import com.javiertarazaga.instasearch.data.repository.user.datasource.UserDataSt
 import com.javiertarazaga.instasearch.data.repository.user.datasource.UserDataStoreFactory;
 import com.javiertarazaga.instasearch.domain.User;
 import io.reactivex.Observable;
-import java.util.ArrayList;
-import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -30,13 +28,10 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UserDataRepositoryTest {
-
-  private static final int FAKE_USER_ID = 123;
 
   private UserDataRepository userDataRepository;
 
@@ -49,29 +44,17 @@ public class UserDataRepositoryTest {
   @Before
   public void setUp() {
     userDataRepository = new UserDataRepository(mockUserDataStoreFactory, mockUserEntityDataMapper);
-    given(mockUserDataStoreFactory.create(anyInt())).willReturn(mockUserDataStore);
+    given(mockUserDataStoreFactory.create()).willReturn(mockUserDataStore);
     given(mockUserDataStoreFactory.createCloudDataStore()).willReturn(mockUserDataStore);
-  }
-
-  @Test
-  public void testGetUsersHappyCase() {
-    List<UserEntity> usersList = new ArrayList<>();
-    usersList.add(new UserEntity());
-    given(mockUserDataStore.userEntityList()).willReturn(Observable.just(usersList));
-
-    userDataRepository.users();
-
-    verify(mockUserDataStoreFactory).createCloudDataStore();
-    verify(mockUserDataStore).userEntityList();
   }
 
   @Test
   public void testGetUserHappyCase() {
     UserEntity userEntity = new UserEntity();
-    given(mockUserDataStore.userEntityDetails(FAKE_USER_ID)).willReturn(Observable.just(userEntity));
-    userDataRepository.user(FAKE_USER_ID);
+    given(mockUserDataStore.user()).willReturn(Observable.just(userEntity));
+    userDataRepository.user();
 
-    verify(mockUserDataStoreFactory).create(FAKE_USER_ID);
-    verify(mockUserDataStore).userEntityDetails(FAKE_USER_ID);
+    verify(mockUserDataStoreFactory).create();
+    verify(mockUserDataStore).user();
   }
 }
