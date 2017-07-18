@@ -15,43 +15,25 @@
  */
 package com.javiertarazaga.instasearch.presentation.model;
 
-public class MediaModel {
+public class CaptionModel {
 
-  private final String mediaId;
+  private final String captionId;
 
-  private UserModel user;
-  private ImagesModel images;
-  private CaptionModel caption;
+  private String text;
 
-  public MediaModel(String mediaId) {
-    this.mediaId = mediaId;
+  public CaptionModel(String captionId) {
+    this.captionId = captionId;
   }
 
-  public String getMediaId() {
-    return mediaId;
+  public String getCaptionId() {
+    return captionId;
   }
 
-  public UserModel getUser() {
-    return user;
+  public String getText() {
+    return text;
   }
 
-  public void setUser(UserModel user) {
-    this.user = user;
-  }
-
-  public ImagesModel getImages() {
-    return images;
-  }
-
-  public void setImages(ImagesModel imagesModel) {
-    this.images = imagesModel;
-  }
-
-  public CaptionModel getCaption() {
-    return caption;
-  }
-
-  public void setCaption(CaptionModel captionModel) {
-    this.caption = captionModel;
+  public void setText(String text) {
+    this.text = text;
   }
 }

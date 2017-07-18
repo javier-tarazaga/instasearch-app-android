@@ -104,9 +104,9 @@ public class MediaListPresenter implements Presenter {
   }
 
   private void showMediaCollectionInView(Collection<Media> mediaCollection) {
-    //final Collection<UserModel> userModelsCollection =
-    //    this.mediaModelDataMapper.transform(mediaCollection);
-    //this.viewListView.renderUserList(userModelsCollection);
+    final Collection<MediaModel> mediaModelCollection =
+        this.mediaModelDataMapper.transform(mediaCollection);
+    this.viewListView.renderMediaList(mediaModelCollection);
   }
 
   private void getMediaList() {

@@ -51,7 +51,7 @@ public class MediasAdapter extends RecyclerView.Adapter<MediasAdapter.MediaViewH
 
   @Override public void onBindViewHolder(MediaViewHolder holder, final int position) {
     final MediaModel mediaModel = this.mediaCollection.get(position);
-    holder.tv_username.setText(mediaModel.getUserModel().getUsername());
+    holder.tv_username.setText(mediaModel.getUser().getUsername());
     holder.itemView.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
         if (MediasAdapter.this.onItemClickListener != null) {

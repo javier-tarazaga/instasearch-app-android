@@ -1,76 +1,67 @@
-/**
- * Copyright (C) 2017 Javier Tarazaga Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package com.javiertarazaga.instasearch.presentation.mapper;
 
-import com.javiertarazaga.instasearch.domain.User;
+import com.javiertarazaga.instasearch.domain.Media;
 import com.javiertarazaga.instasearch.presentation.internal.di.PerActivity;
-import com.javiertarazaga.instasearch.presentation.model.UserModel;
+import com.javiertarazaga.instasearch.presentation.model.MediaModel;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import javax.inject.Inject;
 
 /**
- * Mapper class used to transform {@link User} (in the domain layer) to {@link UserModel} in the
+ * Mapper class used to transform {@link Media} (in the data layer) to {@link MediaModel} in the
  * presentation layer.
  */
 @PerActivity
 public class MediaModelDataMapper {
 
-  @Inject
-  public MediaModelDataMapper() {}
+  private final UserModelDataMapper userModelDataMapper;
+  private final ImagesModelDataMapper imagesModelDataMapper;
+  private final CaptionModelDataMapper captionModelDataMapper;
 
-  /**
-   * Transform a {@link User} into an {@link UserModel}.
-   *
-   * @param user Object to be transformed.
-   * @return {@link UserModel}.
-   */
-  public UserModel transform(User user) {
-    if (user == null) {
-      throw new IllegalArgumentException("Cannot transform a null value");
-    }
-    final UserModel userModel = new UserModel(user.getUserId());
-    userModel.setProfilePicture(user.getProfilePicture());
-    userModel.setFullName(user.getFullname());
-    userModel.setUsername(user.getUsername());
-    userModel.setBio(user.getBio());
-
-    return userModel;
+  @Inject MediaModelDataMapper(UserModelDataMapper userModelDataMapper,
+      ImagesModelDataMapper imagesModelDataMapper,
+      CaptionModelDataMapper captionModelDataMapper) {
+    this.userModelDataMapper = userModelDataMapper;
+    this.imagesModelDataMapper = imagesModelDataMapper;
+    this.captionModelDataMapper = captionModelDataMapper;
   }
 
-  // TODO - Remove when done with posts
   /**
-   * Transform a Collection of {@link User} into a Collection of {@link UserModel}.
+   * Transform a {@link Media} into an {@link MediaModel}.
    *
-   * @param usersCollection Objects to be transformed.
-   * @return List of {@link UserModel}.
+   * @param media Object to be transformed.
+   * @return {@link MediaModel} if valid {@link Media} otherwise null.
    */
-  public Collection<UserModel> transform(Collection<User> usersCollection) {
-    Collection<UserModel> userModelsCollection;
+  public MediaModel transform(Media media) {
+    MediaModel mediaModel = null;
+    if (media != null) {
+      mediaModel = new MediaModel(media.getMediaId());
+      mediaModel.setUser(this.userModelDataMapper.transform(media.getUser()));
+      mediaModel.setImages(this.imagesModelDataMapper.transform(media.getImages()));
+      mediaModel.setCaption(this.captionModelDataMapper.transform(media.getCaption()));
+    }
+    return mediaModel;
+  }
 
-    if (usersCollection != null && !usersCollection.isEmpty()) {
-      userModelsCollection = new ArrayList<>();
-      for (User user : usersCollection) {
-        userModelsCollection.add(transform(user));
+  /**
+   * Transform a Collection of {@link Media} into a Collection of {@link MediaModel}.
+   *
+   * @param mediaCollection Objects to be transformed.
+   * @return List of {@link MediaModel}.
+   */
+  public Collection<MediaModel> transform(Collection<Media> mediaCollection) {
+    Collection<MediaModel> mediaModelCollection;
+
+    if (mediaCollection != null && !mediaCollection.isEmpty()) {
+      mediaModelCollection = new ArrayList<>();
+      for (Media media : mediaCollection) {
+        mediaModelCollection.add(transform(media));
       }
     } else {
-      userModelsCollection = Collections.emptyList();
+      mediaModelCollection = Collections.emptyList();
     }
 
-    return userModelsCollection;
+    return mediaModelCollection;
   }
 }

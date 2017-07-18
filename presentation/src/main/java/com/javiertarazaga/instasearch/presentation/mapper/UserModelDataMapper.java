@@ -18,9 +18,6 @@ package com.javiertarazaga.instasearch.presentation.mapper;
 import com.javiertarazaga.instasearch.domain.User;
 import com.javiertarazaga.instasearch.presentation.internal.di.PerActivity;
 import com.javiertarazaga.instasearch.presentation.model.UserModel;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import javax.inject.Inject;
 
 /**
@@ -50,27 +47,5 @@ public class UserModelDataMapper {
     userModel.setBio(user.getBio());
 
     return userModel;
-  }
-
-  // TODO - Remove when done with posts
-  /**
-   * Transform a Collection of {@link User} into a Collection of {@link UserModel}.
-   *
-   * @param usersCollection Objects to be transformed.
-   * @return List of {@link UserModel}.
-   */
-  public Collection<UserModel> transform(Collection<User> usersCollection) {
-    Collection<UserModel> userModelsCollection;
-
-    if (usersCollection != null && !usersCollection.isEmpty()) {
-      userModelsCollection = new ArrayList<>();
-      for (User user : usersCollection) {
-        userModelsCollection.add(transform(user));
-      }
-    } else {
-      userModelsCollection = Collections.emptyList();
-    }
-
-    return userModelsCollection;
   }
 }
