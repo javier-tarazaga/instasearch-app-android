@@ -21,12 +21,14 @@ import com.javiertarazaga.instasearch.domain.User;
 import com.javiertarazaga.instasearch.domain.exception.DefaultErrorBundle;
 import com.javiertarazaga.instasearch.domain.exception.ErrorBundle;
 import com.javiertarazaga.instasearch.domain.exception.user.InstagramAuthErrorException;
+import com.javiertarazaga.instasearch.domain.exception.user.UserException;
+import com.javiertarazaga.instasearch.domain.exception.user.UserNeedsAuthenticationException;
 import com.javiertarazaga.instasearch.domain.interactor.DefaultObserver;
+import com.javiertarazaga.instasearch.domain.interactor.GetUser;
 import com.javiertarazaga.instasearch.presentation.exception.ErrorMessageFactory;
 import com.javiertarazaga.instasearch.presentation.internal.di.PerActivity;
 import com.javiertarazaga.instasearch.presentation.mapper.UserModelDataMapper;
 import com.javiertarazaga.instasearch.presentation.view.LoginView;
-import java.util.List;
 import javax.inject.Inject;
 
 /**
@@ -46,11 +48,13 @@ import javax.inject.Inject;
 
   private LoginView loginView;
 
+  private final GetUser getUser;
   private final UserModelDataMapper userModelDataMapper;
   private final SharedPreferences sharedPreferences;
 
-  @Inject
-  public LoginPresenter(UserModelDataMapper userModelDataMapper, SharedPreferences sharedPreferences) {
+  @Inject public LoginPresenter(GetUser getUser, UserModelDataMapper userModelDataMapper,
+      SharedPreferences sharedPreferences) {
+    this.getUser = getUser;
     this.userModelDataMapper = userModelDataMapper;
     this.sharedPreferences = sharedPreferences;
   }
@@ -66,6 +70,7 @@ import javax.inject.Inject;
   }
 
   @Override public void destroy() {
+    this.getUser.dispose();
     this.loginView = null;
   }
 
@@ -84,6 +89,7 @@ import javax.inject.Inject;
         // TODO - change for StringPreference!
         this.sharedPreferences.edit().putString("access_token", accessToken).apply();
 
+        this.loadUserData();
         // Save the token and notify the view
         this.loginView.loginSuccessful();
       } else if (url.contains("error_reason")) {
@@ -100,6 +106,10 @@ import javax.inject.Inject;
     }
 
     return false;
+  }
+
+  private void loadUserData() {
+    this.getUser.execute(new UserObserver(), null);
   }
 
   private String extractAccessToken(String url) {
@@ -128,7 +138,11 @@ import javax.inject.Inject;
     this.loginView.showError(errorMessage);
   }
 
-  private final class UserListObserver extends DefaultObserver<List<User>> {
+  private void loginSuccessful() {
+    this.loginView.loginSuccessful();
+  }
+
+  private final class UserObserver extends DefaultObserver<User> {
 
     @Override public void onComplete() {
       LoginPresenter.this.hideViewLoading();
@@ -136,12 +150,18 @@ import javax.inject.Inject;
 
     @Override public void onError(Throwable e) {
       LoginPresenter.this.hideViewLoading();
-      LoginPresenter.this.showErrorMessage(new DefaultErrorBundle((Exception) e));
-      LoginPresenter.this.showViewRetry();
+
+      if (e instanceof UserNeedsAuthenticationException || e instanceof UserException) {
+        // TODO - Handle this case
+        // LoginPresenter.this.goToLoginView();
+      } else {
+        LoginPresenter.this.showErrorMessage(new DefaultErrorBundle((Exception) e));
+        LoginPresenter.this.showViewRetry();
+      }
     }
 
-    @Override public void onNext(List<User> users) {
-      // LoginPresenter.this.showUsersCollectionInView(users);
+    @Override public void onNext(User user) {
+      LoginPresenter.this.loginSuccessful();
     }
   }
 }

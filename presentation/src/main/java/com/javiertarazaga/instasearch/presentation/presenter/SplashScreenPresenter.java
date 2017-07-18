@@ -89,7 +89,7 @@ public class SplashScreenPresenter implements Presenter {
   private void initApp() {
     this.hideViewRetry();
     this.showViewLoading();
-    this.getUser.execute(new IsUserAuthenticatedObserver(), null);
+    this.getUser.execute(new GetUserObserver(), null);
   }
 
   private void goToMainView() {
@@ -100,7 +100,7 @@ public class SplashScreenPresenter implements Presenter {
     this.splashScreenView.goToLoginView();
   }
 
-  private final class IsUserAuthenticatedObserver extends DefaultObserver<User> {
+  private final class GetUserObserver extends DefaultObserver<User> {
 
     @Override public void onComplete() {
       SplashScreenPresenter.this.hideViewLoading();
