@@ -14,7 +14,6 @@ import com.javiertarazaga.instasearch.presentation.internal.di.HasComponent;
 import com.javiertarazaga.instasearch.presentation.internal.di.components.DaggerMainComponent;
 import com.javiertarazaga.instasearch.presentation.internal.di.components.MainComponent;
 import com.javiertarazaga.instasearch.presentation.view.fragment.BaseFragment;
-import com.javiertarazaga.instasearch.presentation.view.fragment.LoginFragment;
 import com.javiertarazaga.instasearch.presentation.view.fragment.PreferencesFragment;
 
 /**
@@ -53,10 +52,10 @@ public class MainActivity extends BaseActivity implements HasComponent<MainCompo
             Log.d("Main", "Here!");
             switch (item.getItemId()) {
               case R.id.action_home:
-                switchContent(new LoginFragment());
+                switchContent(new PreferencesFragment());
                 break;
               case R.id.action_recents:
-                switchContent(new LoginFragment());
+                switchContent(new PreferencesFragment());
                 break;
               case R.id.action_settings:
                 switchContent(new PreferencesFragment());

@@ -31,7 +31,7 @@ public class LoginFragment extends BaseFragment implements LoginView {
    * Interface for listening login events.
    */
   public interface LoginFragmentListener {
-    void finish();
+    void loginSuccessful();
   }
 
   @Inject LoginPresenter loginPresenter;
@@ -146,6 +146,12 @@ public class LoginFragment extends BaseFragment implements LoginView {
           if (url.contains("access_token")) {
             String accessToken = url.split("#access_token=")[1];
             Log.d(TAG, "Instagram TOKEN: " + accessToken);
+
+
+            // Save the token and try to get the user!
+            if (LoginFragment.this.loginFragmentListener != null) {
+              LoginFragment.this.loginFragmentListener.loginSuccessful();
+            }
           } else if (url.contains("error_reason")) {
             String error =
                 url.contains("user_denied") ? "User denied access" : "Authentication failed";
@@ -153,16 +159,17 @@ public class LoginFragment extends BaseFragment implements LoginView {
             Log.e(TAG, error);
             Toast.makeText(LoginFragment.this.context(), "Access denied to Instagram", Toast.LENGTH_SHORT).show();
 
-            if (LoginFragment.this.loginFragmentListener != null) {
-              LoginFragment.this.loginFragmentListener.finish();
-            }
+            // TODO: Improve this
+            //if (LoginFragment.this.loginFragmentListener != null) {
+            //  LoginFragment.this.loginFragmentListener.finish();
+            //}
           }
           return true;
         } else if (url.startsWith(FAILURE_URL)) {
           // TODO: Alert unknown error
-          if (LoginFragment.this.loginFragmentListener != null) {
-            LoginFragment.this.loginFragmentListener.finish();
-          }
+          //if (LoginFragment.this.loginFragmentListener != null) {
+          //  LoginFragment.this.loginFragmentListener.finish();
+          //}
           return true;
         }
         return super.shouldOverrideUrlLoading(view, url);

@@ -12,7 +12,8 @@ import com.javiertarazaga.instasearch.presentation.view.fragment.LoginFragment;
 /**
  * Login screen. This is the app login entry point to the user's Instagram.
  */
-public class LoginActivity extends BaseActivity implements HasComponent<UserComponent> {
+public class LoginActivity extends BaseActivity implements HasComponent<UserComponent>,
+    LoginFragment.LoginFragmentListener {
 
   private UserComponent userComponent;
 
@@ -44,5 +45,9 @@ public class LoginActivity extends BaseActivity implements HasComponent<UserComp
 
   @Override public UserComponent getComponent() {
     return this.userComponent;
+  }
+
+  @Override public void loginSuccessful() {
+    this.navigator.navigateToMainView(this);
   }
 }
