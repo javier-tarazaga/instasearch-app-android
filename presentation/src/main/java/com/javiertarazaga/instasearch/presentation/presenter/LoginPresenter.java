@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -15,10 +15,12 @@
  */
 package com.javiertarazaga.instasearch.presentation.presenter;
 
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import com.javiertarazaga.instasearch.domain.User;
 import com.javiertarazaga.instasearch.domain.exception.DefaultErrorBundle;
 import com.javiertarazaga.instasearch.domain.exception.ErrorBundle;
+import com.javiertarazaga.instasearch.domain.exception.user.InstagramAuthErrorException;
 import com.javiertarazaga.instasearch.domain.interactor.DefaultObserver;
 import com.javiertarazaga.instasearch.presentation.exception.ErrorMessageFactory;
 import com.javiertarazaga.instasearch.presentation.internal.di.PerActivity;
@@ -31,31 +33,37 @@ import javax.inject.Inject;
  * {@link Presenter} that controls communication between views and models of the presentation
  * layer.
  */
-@PerActivity
-public class LoginPresenter implements Presenter {
+@PerActivity public class LoginPresenter implements Presenter {
 
-  private static final String CLIENT_ID       = "974bc375f6ac4f0b883484e72d786e24";
-  private static final String REDIRECT_URI    = "http://instasearchapp.com/auth/instagram/callback";
-  private static final String FAILURE_URL     = "http://instasearchapp.com/auth/failure";
-  private static final String AUTH_URI        = "https://instagram.com/oauth/authorize/?client_id="
-      + CLIENT_ID + "&redirect_uri=" + REDIRECT_URI + "&response_type=token&scope=public_content";
+  private static final String CLIENT_ID = "974bc375f6ac4f0b883484e72d786e24";
+  private static final String REDIRECT_URI = "http://instasearchapp.com/auth/instagram/callback";
+  private static final String FAILURE_URL = "http://instasearchapp.com/auth/failure";
+  private static final String AUTH_URI = "https://instagram.com/oauth/authorize/?client_id="
+      + CLIENT_ID
+      + "&redirect_uri="
+      + REDIRECT_URI
+      + "&response_type=token&scope=public_content";
 
   private LoginView loginView;
 
   private final UserModelDataMapper userModelDataMapper;
+  private final SharedPreferences sharedPreferences;
 
   @Inject
-  public LoginPresenter(UserModelDataMapper userModelDataMapper) {
+  public LoginPresenter(UserModelDataMapper userModelDataMapper, SharedPreferences sharedPreferences) {
     this.userModelDataMapper = userModelDataMapper;
+    this.sharedPreferences = sharedPreferences;
   }
 
   public void setView(@NonNull LoginView view) {
     this.loginView = view;
   }
 
-  @Override public void resume() {}
+  @Override public void resume() {
+  }
 
-  @Override public void pause() {}
+  @Override public void pause() {
+  }
 
   @Override public void destroy() {
     this.loginView = null;
@@ -64,10 +72,39 @@ public class LoginPresenter implements Presenter {
   /**
    * Initializes the presenter. Empty for the moment
    */
-  public void initialize() {}
+  public void initialize() {
+  }
 
-  public void login(String username, String password) {
+  public boolean shouldOverrideUrlLoading(String url) {
+    if (url.startsWith(REDIRECT_URI)) {
+      if (url.contains("access_token")) {
+        String accessToken = this.extractAccessToken(url);
 
+        // TODO - change for StringPreference!
+        this.sharedPreferences.edit().putString("access_token", accessToken).apply();
+
+        // Save the token and notify the view
+        this.loginView.loginSuccessful();
+      } else if (url.contains("error_reason")) {
+        String error = url.contains("user_denied") ? "User denied access" : "Authentication failed";
+
+        this.showErrorMessage(new DefaultErrorBundle(new InstagramAuthErrorException(error)));
+      }
+
+      return true;
+    } else if (url.startsWith(FAILURE_URL)) {
+
+      this.showErrorMessage(new DefaultErrorBundle(new InstagramAuthErrorException("Auth Failed")));
+      return true;
+    }
+
+    this.loginView.loadUrl(url);
+
+    return false;
+  }
+
+  private String extractAccessToken(String url) {
+    return url.split("#access_token=")[1];
   }
 
   private void showViewLoading() {
@@ -87,8 +124,8 @@ public class LoginPresenter implements Presenter {
   }
 
   private void showErrorMessage(ErrorBundle errorBundle) {
-    String errorMessage = ErrorMessageFactory.create(this.loginView.context(),
-                                                     errorBundle.getException());
+    String errorMessage =
+        ErrorMessageFactory.create(this.loginView.context(), errorBundle.getException());
     this.loginView.showError(errorMessage);
   }
 

@@ -1,26 +1,28 @@
 package com.javiertarazaga.instasearch.presentation.view;
 
+import android.content.Context;
+
 /**
  * Interface representing the login view.
  */
 public interface LoginView extends LoadDataView {
 
-  /**
-   * Render the invalid email error message
-   *
-   * @param errorMessage The error message to display
-   */
-  void showInvalidUserName(String errorMessage);
-
-  /**
-   * Render the invalid password error message
-   *
-   * @param errorMessage The error message to display
-   */
-  void showInvalidPassword(String errorMessage);
+  void loadUrl(String url);
 
   /**
    * The login was completed successfully.
    */
   void loginSuccessful();
+
+  /**
+   * Show an error message
+   *
+   * @param message A string representing an error.
+   */
+  void showError(String message);
+
+  /**
+   * Get a {@link android.content.Context}.
+   */
+  Context context();
 }

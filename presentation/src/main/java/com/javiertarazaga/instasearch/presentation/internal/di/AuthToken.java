@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ *      http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -13,15 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.javiertarazaga.instasearch.presentation.internal.di.modules;
+package com.javiertarazaga.instasearch.presentation.internal.di;
 
-import dagger.Module;
+import java.lang.annotation.Retention;
+import javax.inject.Qualifier;
+
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
- * Dagger module that provides user related collaborators.
+ * A scoping annotation to distinguish between multiple string preferences in which to store the
+ * auth token given by the api
  */
-@Module public class UserModule {
-
-  public UserModule() {
-  }
-}
+@Qualifier
+@Retention(RUNTIME)
+public @interface AuthToken {}

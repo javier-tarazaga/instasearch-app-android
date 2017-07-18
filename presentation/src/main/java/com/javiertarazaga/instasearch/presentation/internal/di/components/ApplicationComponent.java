@@ -41,4 +41,5 @@ public interface ApplicationComponent {
   SharedPreferences sharedPreferences();
   PreferencesRepository preferencesRepository();
   UserRepository userRepository();
+  //SharedPreferences authToken();
 }

@@ -18,6 +18,7 @@ package com.javiertarazaga.instasearch.presentation.exception;
 import android.content.Context;
 import com.javiertarazaga.instasearch.data.exception.NetworkConnectionException;
 import com.javiertarazaga.instasearch.data.exception.UserNotFoundException;
+import com.javiertarazaga.instasearch.domain.exception.user.InstagramAuthErrorException;
 import com.javiertarazaga.instasearch.presentation.R;
 
 /**
@@ -42,6 +43,8 @@ public class ErrorMessageFactory {
     if (exception instanceof NetworkConnectionException) {
       message = context.getString(R.string.exception_message_no_connection);
     } else if (exception instanceof UserNotFoundException) {
+      message = context.getString(R.string.exception_message_user_not_found);
+    } else if (exception instanceof InstagramAuthErrorException) {
       message = context.getString(R.string.exception_message_user_not_found);
     }
 

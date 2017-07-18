@@ -20,6 +20,7 @@ import android.content.SharedPreferences;
 import com.javiertarazaga.instasearch.data.cache.UserCache;
 import com.javiertarazaga.instasearch.data.cache.UserMemoryCacheImpl;
 import com.javiertarazaga.instasearch.data.executor.JobExecutor;
+import com.javiertarazaga.instasearch.data.prefs.StringPreference;
 import com.javiertarazaga.instasearch.data.repository.preferences.PreferencesDataRepository;
 import com.javiertarazaga.instasearch.data.repository.user.UserDataRepository;
 import com.javiertarazaga.instasearch.domain.executor.PostExecutionThread;
@@ -71,5 +72,10 @@ import static android.content.Context.MODE_PRIVATE;
   @Provides @Singleton PreferencesRepository providesPreferencesRepository(
       PreferencesDataRepository preferencesDataRepository) {
     return preferencesDataRepository;
+  }
+
+  @Provides @Singleton StringPreference providesAuthToken(
+      SharedPreferences preferences) {
+    return new StringPreference(preferences, "auth_token");
   }
 }

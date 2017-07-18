@@ -7,13 +7,11 @@ package com.javiertarazaga.instasearch.presentation.view.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.Toast;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import com.javiertarazaga.instasearch.presentation.R;
@@ -50,7 +48,6 @@ public class LoginFragment extends BaseFragment implements LoginView {
       + "&response_type=token&scope=public_content";
 
   private LoginFragmentListener loginFragmentListener;
-
 
   public LoginFragment() {
     setRetainInstance(true);
@@ -102,6 +99,16 @@ public class LoginFragment extends BaseFragment implements LoginView {
     this.loginPresenter.destroy();
   }
 
+  @Override public void loadUrl(String url) {
+
+  }
+
+  @Override public void loginSuccessful() {
+    if (this.loginFragmentListener != null) {
+      LoginFragment.this.loginFragmentListener.loginSuccessful();
+    }
+  }
+
   @Override public void showLoading() {
 
   }
@@ -122,18 +129,6 @@ public class LoginFragment extends BaseFragment implements LoginView {
 
   }
 
-  @Override public void showInvalidUserName(String errorMessage) {
-
-  }
-
-  @Override public void showInvalidPassword(String errorMessage) {
-
-  }
-
-  @Override public void loginSuccessful() {
-
-  }
-
   @Override public Context context() {
     return this.getActivity().getApplicationContext();
   }
@@ -142,40 +137,9 @@ public class LoginFragment extends BaseFragment implements LoginView {
     wv_login.setWebViewClient(new WebViewClient() {
 
       @Override public boolean shouldOverrideUrlLoading(WebView view, String url) {
-        if (url.startsWith(REDIRECT_URI)) {
-          if (url.contains("access_token")) {
-            String accessToken = url.split("#access_token=")[1];
-            Log.d(TAG, "Instagram TOKEN: " + accessToken);
-
-
-            // Save the token and try to get the user!
-            if (LoginFragment.this.loginFragmentListener != null) {
-              LoginFragment.this.loginFragmentListener.loginSuccessful();
-            }
-          } else if (url.contains("error_reason")) {
-            String error =
-                url.contains("user_denied") ? "User denied access" : "Authentication failed";
-            // Utils.notify(new RuntimeException(error + " at " + TAG));
-            Log.e(TAG, error);
-            Toast.makeText(LoginFragment.this.context(), "Access denied to Instagram", Toast.LENGTH_SHORT).show();
-
-            // TODO: Improve this
-            //if (LoginFragment.this.loginFragmentListener != null) {
-            //  LoginFragment.this.loginFragmentListener.finish();
-            //}
-          }
-          return true;
-        } else if (url.startsWith(FAILURE_URL)) {
-          // TODO: Alert unknown error
-          //if (LoginFragment.this.loginFragmentListener != null) {
-          //  LoginFragment.this.loginFragmentListener.finish();
-          //}
-          return true;
-        }
-        return super.shouldOverrideUrlLoading(view, url);
+        return LoginFragment.this.loginPresenter.shouldOverrideUrlLoading(url)
+            && super.shouldOverrideUrlLoading(view, url);
       }
     });
-
-    wv_login.loadUrl(AUTH_URI);
   }
 }

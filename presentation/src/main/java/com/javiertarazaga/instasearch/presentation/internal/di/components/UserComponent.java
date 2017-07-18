@@ -31,5 +31,4 @@ import dagger.Component;
 public interface UserComponent extends ActivityComponent {
   void inject(LoginFragment loginFragment);
   void inject(MediaListFragment mediaListFragment);
-
 }
