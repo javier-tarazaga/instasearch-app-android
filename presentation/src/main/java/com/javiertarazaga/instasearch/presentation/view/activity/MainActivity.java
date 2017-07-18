@@ -1,5 +1,7 @@
 package com.javiertarazaga.instasearch.presentation.view.activity;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -23,6 +25,10 @@ public class MainActivity extends BaseActivity implements HasComponent<MainCompo
   @Bind(R.id.bottom_navigation) BottomNavigationView bottom_nav;
 
   private MainComponent mainComponent;
+
+  public static Intent getCallingIntent(Context context) {
+    return new Intent(context, MainActivity.class);
+  }
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);

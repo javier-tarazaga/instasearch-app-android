@@ -1,6 +1,8 @@
 package com.javiertarazaga.instasearch.presentation.view.activity;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.webkit.WebView;
@@ -16,6 +18,10 @@ public class InstagramOAuthActivity extends BaseActivity {
   private static final String FAILURE_URL     = "http://instasearchapp.com/auth/failure";
   private static final String AUTH_URI        = "https://instagram.com/oauth/authorize/?client_id="
       + CLIENT_ID + "&redirect_uri=" + REDIRECT_URI + "&response_type=token&scope=public_content";
+
+  public static Intent getCallingIntent(Context context) {
+    return new Intent(context, InstagramOAuthActivity.class);
+  }
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);

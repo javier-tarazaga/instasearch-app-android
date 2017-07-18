@@ -17,7 +17,8 @@ package com.javiertarazaga.instasearch.presentation.navigation;
 
 import android.content.Context;
 import android.content.Intent;
-import com.javiertarazaga.instasearch.presentation.view.activity.PostListActivity;
+import com.javiertarazaga.instasearch.presentation.view.activity.InstagramOAuthActivity;
+import com.javiertarazaga.instasearch.presentation.view.activity.MainActivity;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -33,27 +34,26 @@ public class Navigator {
   }
 
   /**
-   * Goes to the user list screen.
+   * Goes to the main view of the app.
    *
    * @param context A Context needed to open the destiny activity.
    */
-  public void navigateToUserList(Context context) {
+  public void navigateToMainView(Context context) {
     if (context != null) {
-      Intent intentToLaunch = PostListActivity.getCallingIntent(context);
+      Intent intentToLaunch = MainActivity.getCallingIntent(context);
       context.startActivity(intentToLaunch);
     }
   }
 
   /**
-   * Goes to the user details screen.
+   * Goes to the login screen.
    *
    * @param context A Context needed to open the destiny activity.
    */
-  public void navigateToUserDetails(Context context, int userId) {
-    // TODO
-    //if (context != null) {
-    //  Intent intentToLaunch = UserDetailsActivity.getCallingIntent(context, userId);
-    //  context.startActivity(intentToLaunch);
-    //}
+  public void navigateToLoginView(Context context) {
+    if (context != null) {
+      Intent intentToLaunch = InstagramOAuthActivity.getCallingIntent(context);
+      context.startActivity(intentToLaunch);
+    }
   }
 }

@@ -8,7 +8,6 @@ package com.javiertarazaga.instasearch.presentation.view.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Window;
 import com.javiertarazaga.instasearch.presentation.R;
 import com.javiertarazaga.instasearch.presentation.internal.di.HasComponent;
 import com.javiertarazaga.instasearch.presentation.internal.di.components.DaggerUserComponent;
@@ -30,7 +29,6 @@ public class PostListActivity extends BaseActivity implements HasComponent<UserC
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
     setContentView(R.layout.activity_layout);
 
     this.initializeInjector();
@@ -51,6 +49,6 @@ public class PostListActivity extends BaseActivity implements HasComponent<UserC
   }
 
   @Override public void onUserClicked(UserModel userModel) {
-    this.navigator.navigateToUserDetails(this, userModel.getUserId());
+    // this.navigator.navigateToLoginView(this, userModel.getUserId());
   }
 }

@@ -26,14 +26,33 @@ import javax.inject.Inject;
  */
 public class SplashScreenFragment extends BaseFragment implements SplashScreenView {
 
+  /**
+   * Interface for listening splash screen events.
+   */
+  public interface SplashFragmentListener {
+    void goToLoginView();
+    void goToMainView();
+  }
+
   @Inject SplashScreenPresenter presenter;
 
   @Bind(R.id.rl_progress) RelativeLayout rl_progress;
   @Bind(R.id.rl_retry) RelativeLayout rl_retry;
   @Bind(R.id.bt_retry) Button bt_retry;
 
+  private SplashFragmentListener splashFragmentListener;
+
   public SplashScreenFragment() {
     setRetainInstance(true);
+  }
+
+  @Override
+  public void onAttach(Context context) {
+    super.onAttach(context);
+
+    if (context instanceof SplashFragmentListener) {
+      this.splashFragmentListener = (SplashFragmentListener) context;
+    }
   }
 
   @Override public void onCreate(Bundle savedInstanceState) {
@@ -78,6 +97,7 @@ public class SplashScreenFragment extends BaseFragment implements SplashScreenVi
 
   @Override public void onDetach() {
     super.onDetach();
+    this.splashFragmentListener = null;
   }
 
   @Override public void showLoading() {
@@ -105,11 +125,15 @@ public class SplashScreenFragment extends BaseFragment implements SplashScreenVi
   }
 
   @Override public void goToLoginView() {
-
+    if (this.splashFragmentListener != null) {
+      this.splashFragmentListener.goToLoginView();
+    }
   }
 
   @Override public void goToMainView() {
-
+    if (this.splashFragmentListener != null) {
+      this.splashFragmentListener.goToMainView();
+    }
   }
 
   /**

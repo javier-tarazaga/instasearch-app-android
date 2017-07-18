@@ -11,7 +11,8 @@ import com.javiertarazaga.instasearch.presentation.view.fragment.SplashScreenFra
 /**
  * Splash screen. This is the app entry point.
  */
-public class SplashScreenActivity extends BaseActivity implements HasComponent<MainComponent> {
+public class SplashScreenActivity extends BaseActivity implements HasComponent<MainComponent>,
+    SplashScreenFragment.SplashFragmentListener {
 
   private MainComponent mainComponent;
 
@@ -39,5 +40,13 @@ public class SplashScreenActivity extends BaseActivity implements HasComponent<M
 
   @Override public MainComponent getComponent() {
     return this.mainComponent;
+  }
+
+  @Override public void goToLoginView() {
+    this.navigator.navigateToLoginView(this);
+  }
+
+  @Override public void goToMainView() {
+    this.navigator.navigateToMainView(this);
   }
 }
