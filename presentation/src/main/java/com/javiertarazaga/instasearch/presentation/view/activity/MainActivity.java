@@ -16,7 +16,7 @@ import com.javiertarazaga.instasearch.presentation.view.fragment.LoginFragment;
 import com.javiertarazaga.instasearch.presentation.view.fragment.PreferencesFragment;
 
 /**
- * Main application screen. This is the app entry point.
+ * Main application screen. This is the main interaction view of the app.
  */
 public class MainActivity extends BaseActivity implements HasComponent<MainComponent> {
 

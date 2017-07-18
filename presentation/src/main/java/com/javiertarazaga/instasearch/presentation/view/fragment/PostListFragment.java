@@ -17,6 +17,7 @@ import android.widget.RelativeLayout;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import com.javiertarazaga.instasearch.presentation.R;
 import com.javiertarazaga.instasearch.presentation.internal.di.components.UserComponent;
 import com.javiertarazaga.instasearch.presentation.model.UserModel;
 import com.javiertarazaga.instasearch.presentation.presenter.UserListPresenter;
@@ -41,10 +42,10 @@ public class PostListFragment extends BaseFragment implements UserListView {
   @Inject UserListPresenter userListPresenter;
   @Inject UsersAdapter usersAdapter;
 
-  @Bind(com.javiertarazaga.instasearch.presentation.R.id.rv_users) RecyclerView rv_users;
-  @Bind(com.javiertarazaga.instasearch.presentation.R.id.rl_progress) RelativeLayout rl_progress;
-  @Bind(com.javiertarazaga.instasearch.presentation.R.id.rl_retry) RelativeLayout rl_retry;
-  @Bind(com.javiertarazaga.instasearch.presentation.R.id.bt_retry) Button bt_retry;
+  @Bind(R.id.rv_users) RecyclerView rv_users;
+  @Bind(R.id.rl_progress) RelativeLayout rl_progress;
+  @Bind(R.id.rl_retry) RelativeLayout rl_retry;
+  @Bind(R.id.bt_retry) Button bt_retry;
 
   private UserListListener userListListener;
 
@@ -157,7 +158,7 @@ public class PostListFragment extends BaseFragment implements UserListView {
     this.userListPresenter.initialize();
   }
 
-  @OnClick(com.javiertarazaga.instasearch.presentation.R.id.bt_retry) void onButtonRetryClick() {
+  @OnClick(R.id.bt_retry) void onButtonRetryClick() {
     PostListFragment.this.loadUserList();
   }
 

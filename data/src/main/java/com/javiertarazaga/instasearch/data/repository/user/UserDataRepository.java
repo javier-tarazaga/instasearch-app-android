@@ -60,4 +60,8 @@ public class UserDataRepository implements UserRepository {
     final UserDataStore userDataStore = this.userDataStoreFactory.create(userId);
     return userDataStore.userEntityDetails(userId).map(this.userEntityDataMapper::transform);
   }
+
+  @Override public Observable<User> user() {
+    return Observable.create(emitter -> emitter.onError(new RuntimeException("TODO!")));
+  }
 }

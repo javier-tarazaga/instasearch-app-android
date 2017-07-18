@@ -29,6 +29,7 @@ public class InstagramOAuthActivity extends BaseActivity {
 
   private void setClient(final Activity act, WebView webView) {
     webView.setWebViewClient(new WebViewClient() {
+
       @Override
       public boolean shouldOverrideUrlLoading(WebView view, String url) {
         Log.d(TAG, "URL : " + url);
@@ -38,7 +39,7 @@ public class InstagramOAuthActivity extends BaseActivity {
             Log.d(TAG, "Instagram TOKEN: " + accessToken);
           } else if (url.contains("error_reason")) {
             String error = url.contains("user_denied") ? "User denied access" : "Authentication failed";
-            //Utils.notify(new RuntimeException(error + " at " + TAG));
+            // Utils.notify(new RuntimeException(error + " at " + TAG));
             Log.e(TAG, error);
             Toast.makeText(act, "Access denied to Instagram", Toast.LENGTH_SHORT).show();
             finish();

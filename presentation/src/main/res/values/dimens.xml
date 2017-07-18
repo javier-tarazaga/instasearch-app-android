@@ -15,6 +15,12 @@
   <dimen name="lv_row_icon_padding">5dp</dimen>
 
   <!-- ****** -->
+  <!-- SPLASH SCREEN DIMENSIONS -->
+  <!-- ****** -->
+  <dimen name="splash_loading_margin_bottom">30dp</dimen>
+  <dimen name="splash_button_retry_text">20sp</dimen>
+
+  <!-- ****** -->
   <!-- LOGIN DIMENSIONS -->
   <!-- ****** -->
   <dimen name="login_layout_padding">20dp</dimen>

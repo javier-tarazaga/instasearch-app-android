@@ -29,20 +29,17 @@ public class LoginActivity extends BaseActivity implements HasComponent<UserComp
     this.initializeActivity(savedInstanceState);
   }
 
-  /**
-   * Initializes this activity.
-   */
-  private void initializeActivity(Bundle savedInstanceState) {
-    if (savedInstanceState == null) {
-      addFragment(R.id.fragment_container, new LoginFragment());
-    }
-  }
-
   private void initializeInjector() {
     this.userComponent = DaggerUserComponent.builder()
         .applicationComponent(getApplicationComponent())
         .activityModule(getActivityModule())
         .build();
+  }
+
+  private void initializeActivity(Bundle savedInstanceState) {
+    if (savedInstanceState == null) {
+      addFragment(R.id.fragment_container, new LoginFragment());
+    }
   }
 
   @Override public UserComponent getComponent() {

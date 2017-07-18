@@ -43,4 +43,9 @@ public interface UserRepository {
    * @param userId The user id used to retrieve user data.
    */
   Observable<User> user(final int userId);
+
+  /**
+   * Get an {@link Observable} which will emit a {@link User}.
+   */
+  Observable<User> user();
 }

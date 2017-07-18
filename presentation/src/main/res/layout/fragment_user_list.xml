@@ -11,12 +11,8 @@
       android:layout_height="match_parent"
       />
 
-  <include
-      layout="@layout/view_progress"
-      />
+  <include layout="@layout/view_progress"/>
 
-  <include
-      layout="@layout/view_retry"
-      />
+  <include layout="@layout/view_retry"/>
 
 </RelativeLayout>
