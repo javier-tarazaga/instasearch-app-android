@@ -7,16 +7,17 @@ package com.javiertarazaga.instasearch.presentation.view.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
+import android.widget.Toast;
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import com.javiertarazaga.instasearch.presentation.R;
-import com.javiertarazaga.instasearch.presentation.internal.di.components.MainComponent;
+import com.javiertarazaga.instasearch.presentation.internal.di.components.UserComponent;
 import com.javiertarazaga.instasearch.presentation.presenter.LoginPresenter;
 import com.javiertarazaga.instasearch.presentation.view.LoginView;
 import javax.inject.Inject;
@@ -26,35 +27,59 @@ import javax.inject.Inject;
  */
 public class LoginFragment extends BaseFragment implements LoginView {
 
+  /**
+   * Interface for listening login events.
+   */
+  public interface LoginFragmentListener {
+    void finish();
+  }
+
   @Inject LoginPresenter loginPresenter;
 
-  @Bind(R.id.et_username) EditText et_username;
-  @Bind(R.id.et_password) EditText et_password;
-  @Bind(R.id.bt_login) Button bt_login;
+  @Bind(R.id.wv_login) WebView wv_login;
+
+  private static final String TAG = "LoginFragment";
+
+  private static final String CLIENT_ID = "974bc375f6ac4f0b883484e72d786e24";
+  private static final String REDIRECT_URI = "http://instasearchapp.com/auth/instagram/callback";
+  private static final String FAILURE_URL = "http://instasearchapp.com/auth/failure";
+  private static final String AUTH_URI = "https://instagram.com/oauth/authorize/?client_id="
+      + CLIENT_ID
+      + "&redirect_uri="
+      + REDIRECT_URI
+      + "&response_type=token&scope=public_content";
+
+  private LoginFragmentListener loginFragmentListener;
+
 
   public LoginFragment() {
     setRetainInstance(true);
   }
 
+  @Override public void onAttach(Context context) {
+    super.onAttach(context);
+
+    if (context instanceof LoginFragmentListener) {
+      this.loginFragmentListener = (LoginFragmentListener) context;
+    }
+  }
+
   @Override public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    this.getComponent(MainComponent.class).inject(this);
+    this.getComponent(UserComponent.class).inject(this);
   }
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     final View fragmentView = inflater.inflate(R.layout.fragment_login, container, false);
     ButterKnife.bind(this, fragmentView);
-    initEditTexts();
+    initWebView();
     return fragmentView;
   }
 
   @Override public void onViewCreated(View view, Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
     this.loginPresenter.setView(this);
-    if (savedInstanceState == null) {
-      // TODO
-    }
   }
 
   @Override public void onResume() {
@@ -113,38 +138,37 @@ public class LoginFragment extends BaseFragment implements LoginView {
     return this.getActivity().getApplicationContext();
   }
 
-  private void initEditTexts() {
-    //et_username.addTextChangedListener(this.presenter.getTextWatcher());
-    //et_password.addTextChangedListener(this.presenter.getTextWatcher());
+  private void initWebView() {
+    wv_login.setWebViewClient(new WebViewClient() {
 
-    ////EditText hint text disappears by touching. In other word by getting focused hint text disappears
-    //et_username.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-    //  @Override
-    //  public void onFocusChange(View v, boolean hasFocus) {
-    //    LoginFragment.this.presenter.onUserNameEditTextFocusChanged(
-    //        ((EditText) v).getText().toString(), hasFocus);
-    //  }
-    //});
-    //et_password.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-    //  @Override
-    //  public void onFocusChange(View v, boolean hasFocus) {
-    //    LoginFragment.this.presenter.onPasswordEditTextFocusChanged(
-    //        ((EditText) v).getText().toString(), hasFocus);
-    //  }
-    //});
-  }
+      @Override public boolean shouldOverrideUrlLoading(WebView view, String url) {
+        if (url.startsWith(REDIRECT_URI)) {
+          if (url.contains("access_token")) {
+            String accessToken = url.split("#access_token=")[1];
+            Log.d(TAG, "Instagram TOKEN: " + accessToken);
+          } else if (url.contains("error_reason")) {
+            String error =
+                url.contains("user_denied") ? "User denied access" : "Authentication failed";
+            // Utils.notify(new RuntimeException(error + " at " + TAG));
+            Log.e(TAG, error);
+            Toast.makeText(LoginFragment.this.context(), "Access denied to Instagram", Toast.LENGTH_SHORT).show();
 
+            if (LoginFragment.this.loginFragmentListener != null) {
+              LoginFragment.this.loginFragmentListener.finish();
+            }
+          }
+          return true;
+        } else if (url.startsWith(FAILURE_URL)) {
+          // TODO: Alert unknown error
+          if (LoginFragment.this.loginFragmentListener != null) {
+            LoginFragment.this.loginFragmentListener.finish();
+          }
+          return true;
+        }
+        return super.shouldOverrideUrlLoading(view, url);
+      }
+    });
 
-  @OnClick(R.id.bt_login) void onButtonLoginClick() {
-
-    // Reset errors
-    et_username.setError(null);
-    et_password.setError(null);
-
-    // Check if the username or password are not empty and check if the email it is a valid email.
-    String username = et_username.getText().toString();
-    String password = et_password.getText().toString();
-
-    this.loginPresenter.login(username, password);
+    wv_login.loadUrl(AUTH_URI);
   }
 }

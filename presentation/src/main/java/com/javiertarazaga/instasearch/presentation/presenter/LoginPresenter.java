@@ -34,6 +34,12 @@ import javax.inject.Inject;
 @PerActivity
 public class LoginPresenter implements Presenter {
 
+  private static final String CLIENT_ID       = "974bc375f6ac4f0b883484e72d786e24";
+  private static final String REDIRECT_URI    = "http://instasearchapp.com/auth/instagram/callback";
+  private static final String FAILURE_URL     = "http://instasearchapp.com/auth/failure";
+  private static final String AUTH_URI        = "https://instagram.com/oauth/authorize/?client_id="
+      + CLIENT_ID + "&redirect_uri=" + REDIRECT_URI + "&response_type=token&scope=public_content";
+
   private LoginView loginView;
 
   private final UserModelDataMapper userModelDataMapper;

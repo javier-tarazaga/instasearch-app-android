@@ -1,72 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<WebView
+    android:id="@+id/wv_login"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    >
-
-  <TextView
-      android:id="@+id/header_login"
-      style="@style/Theme.InstaSearch.ViewMainHeader"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:textAllCaps="false"
-      tools:text="Log in"
-      />
-
-  <ScrollView
-      android:id="@+id/sv_login"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:background="@color/colorWindowBackground"
-      >
-
-    <LinearLayout
-        style="@style/MarginPoint"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="@dimen/login_layout_padding"
-        >
-
-      <EditText
-          android:id="@+id/et_username"
-          android:layout_width="match_parent"
-          android:layout_height="@dimen/login_edit_text_height"
-          android:drawablePadding="@dimen/login_edit_text_drawable_padding"
-          android:inputType="textEmailAddress"
-          android:maxLines="1"
-          android:padding="@dimen/login_edit_text_padding"
-          android:textSize="@dimen/login_text_size"
-          android:hint="@string/view_text_username"
-          tools:hint="Username"
-          />
-
-      <EditText
-          android:id="@+id/et_password"
-          android:layout_width="match_parent"
-          android:layout_height="@dimen/login_edit_text_height"
-          android:drawablePadding="@dimen/login_edit_text_drawable_padding"
-          android:imeActionId="@+id/login"
-          android:imeOptions="actionUnspecified"
-          android:inputType="textPassword"
-          android:maxLines="1"
-          android:padding="@dimen/login_edit_text_padding"
-          android:textSize="@dimen/login_text_size"
-          android:hint="@string/view_text_password"
-          tools:hint="Password"
-          />
-
-      <Button
-          android:id="@+id/bt_login"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:text="@string/btn_login"
-          />
-
-    </LinearLayout>
-
-  </ScrollView>
-
-</LinearLayout>
-
+    />

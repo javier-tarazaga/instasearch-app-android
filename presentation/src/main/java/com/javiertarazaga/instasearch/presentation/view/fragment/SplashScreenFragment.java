@@ -144,6 +144,11 @@ public class SplashScreenFragment extends BaseFragment implements SplashScreenVi
   }
 
   @OnClick(R.id.bt_retry) void onButtonRetryClick() {
-    this.initApplication();
+    //this.initApplication();
+
+    // TODO - Obviously this does not go here!!
+    if (this.splashFragmentListener != null) {
+      this.splashFragmentListener.goToLoginView();
+    }
   }
 }

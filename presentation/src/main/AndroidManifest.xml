@@ -40,11 +40,6 @@
     </activity>
 
     <activity
-        android:name=".view.activity.InstagramOAuthActivity"
-        android:label="@string/activity_title_login">
-    </activity>
-
-    <activity
         android:name=".view.activity.PostListActivity"
         android:label="@string/activity_title_user_list">
     </activity>

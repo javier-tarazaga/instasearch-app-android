@@ -17,7 +17,7 @@ package com.javiertarazaga.instasearch.presentation.navigation;
 
 import android.content.Context;
 import android.content.Intent;
-import com.javiertarazaga.instasearch.presentation.view.activity.InstagramOAuthActivity;
+import com.javiertarazaga.instasearch.presentation.view.activity.LoginActivity;
 import com.javiertarazaga.instasearch.presentation.view.activity.MainActivity;
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -52,7 +52,7 @@ public class Navigator {
    */
   public void navigateToLoginView(Context context) {
     if (context != null) {
-      Intent intentToLaunch = InstagramOAuthActivity.getCallingIntent(context);
+      Intent intentToLaunch = LoginActivity.getCallingIntent(context);
       context.startActivity(intentToLaunch);
     }
   }
