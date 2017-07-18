@@ -109,12 +109,10 @@ public class MediaListFragment extends BaseFragment implements MediaListView {
 
   @Override public void showLoading() {
     this.rl_progress.setVisibility(View.VISIBLE);
-    this.getActivity().setProgressBarIndeterminateVisibility(true);
   }
 
   @Override public void hideLoading() {
     this.rl_progress.setVisibility(View.GONE);
-    this.getActivity().setProgressBarIndeterminateVisibility(false);
   }
 
   @Override public void showRetry() {

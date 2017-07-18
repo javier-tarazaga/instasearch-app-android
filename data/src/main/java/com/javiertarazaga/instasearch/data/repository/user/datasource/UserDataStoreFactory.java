@@ -19,7 +19,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import com.javiertarazaga.instasearch.data.cache.UserCache;
-import com.javiertarazaga.instasearch.data.entity.mapper.UserEntityJsonMapper;
+import com.javiertarazaga.instasearch.data.entity.mapper.json.UserEntityJsonMapper;
 import com.javiertarazaga.instasearch.data.net.RestApi;
 import com.javiertarazaga.instasearch.data.net.RestApiImpl;
 import javax.inject.Inject;

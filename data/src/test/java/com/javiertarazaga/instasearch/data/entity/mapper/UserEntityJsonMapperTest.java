@@ -17,6 +17,7 @@ package com.javiertarazaga.instasearch.data.entity.mapper;
 
 import com.javiertarazaga.instasearch.data.entity.UserEntity;
 import com.google.gson.JsonSyntaxException;
+import com.javiertarazaga.instasearch.data.entity.mapper.json.UserEntityJsonMapper;
 import java.util.Collection;
 import org.junit.Before;
 import org.junit.Rule;
@@ -63,7 +64,7 @@ public class UserEntityJsonMapperTest {
 
   @Test
   public void testTransformUserEntityHappyCase() {
-    UserEntity userEntity = userEntityJsonMapper.transformUserEntity(JSON_RESPONSE_USER_DETAILS);
+    UserEntity userEntity = userEntityJsonMapper.transformUserApiResponseEntity(JSON_RESPONSE_USER_DETAILS);
 
     assertThat(userEntity.getUserId(), is(1));
     assertThat(userEntity.getFullname(), is(equalTo("Simon Hill")));
@@ -84,7 +85,7 @@ public class UserEntityJsonMapperTest {
   @Test
   public void testTransformUserEntityNotValidResponse() {
     expectedException.expect(JsonSyntaxException.class);
-    userEntityJsonMapper.transformUserEntity("ironman");
+    userEntityJsonMapper.transformUserApiResponseEntity("ironman");
   }
 
   @Test

@@ -20,7 +20,8 @@ import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import com.javiertarazaga.instasearch.data.entity.UserEntity;
-import com.javiertarazaga.instasearch.data.entity.mapper.UserEntityJsonMapper;
+import com.javiertarazaga.instasearch.data.entity.api.UserApiResponseEntity;
+import com.javiertarazaga.instasearch.data.entity.mapper.json.UserEntityJsonMapper;
 import com.javiertarazaga.instasearch.data.exception.NetworkConnectionException;
 import com.javiertarazaga.instasearch.domain.exception.user.UserException;
 import com.squareup.okhttp.Response;
@@ -58,7 +59,9 @@ public class RestApiImpl implements RestApi {
         try {
           Response responseUser = getUserFromApi();
           if (responseUser.isSuccessful()) {
-            emitter.onNext(userEntityJsonMapper.transformUserEntity(responseUser.body().string()));
+            UserApiResponseEntity apiResponse =
+                userEntityJsonMapper.transformUserApiResponseEntity(responseUser.body().string());
+            emitter.onNext(apiResponse.getData());
             emitter.onComplete();
           } else {
             emitter.onError(new UserException());

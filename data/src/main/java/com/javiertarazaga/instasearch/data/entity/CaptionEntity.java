@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ *      http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -17,48 +17,30 @@ package com.javiertarazaga.instasearch.data.entity;
 
 import com.google.gson.annotations.SerializedName;
 
-/**
- * User Entity used in the data layer.
- */
-public class ResponseEntity<T> {
+public class CaptionEntity {
 
-  @SerializedName("data") private T data;
+  @SerializedName("id")
+  private String captionId;
 
-  @SerializedName("meta") private Meta meta;
+  @SerializedName("text")
+  private String text;
 
-  public ResponseEntity() {
-    //empty
+  public CaptionEntity() {
   }
 
-  public T getData() {
-    return data;
+  public String getCaptionId() {
+    return captionId;
   }
 
-  public void setData(T data) {
-    this.data = data;
+  public void setCaptionId(String captionId) {
+    this.captionId = captionId;
   }
 
-  public Meta getMeta() {
-    return meta;
+  public String getText() {
+    return text;
   }
 
-  public void setMeta(Meta meta) {
-    this.meta = meta;
-  }
-
-  static class Meta {
-
-    @SerializedName("code") private int code;
-
-    public Meta() {
-    }
-
-    public int getCode() {
-      return code;
-    }
-
-    public void setCode(int code) {
-      this.code = code;
-    }
+  public void setText(String text) {
+    this.text = text;
   }
 }

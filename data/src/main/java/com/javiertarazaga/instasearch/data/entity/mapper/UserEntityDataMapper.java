@@ -42,11 +42,11 @@ public class UserEntityDataMapper {
   public User transform(UserEntity userEntity) {
     User user = null;
     if (userEntity != null) {
-      user = new User(userEntity.getData().getUserId());
-      user.setUsername(userEntity.getData().getUsername());
-      user.setProfilePicture(userEntity.getData().getProfilePicture());
-      user.setFullname(userEntity.getData().getFullname());
-      user.setBio(userEntity.getData().getBio());
+      user = new User(userEntity.getUserId());
+      user.setUsername(userEntity.getUsername());
+      user.setProfilePicture(userEntity.getProfilePicture());
+      user.setFullname(userEntity.getFullname());
+      user.setBio(userEntity.getBio());
     }
     return user;
   }

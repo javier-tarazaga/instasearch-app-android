@@ -22,7 +22,6 @@ import com.javiertarazaga.instasearch.domain.exception.ErrorBundle;
 import com.javiertarazaga.instasearch.domain.interactor.DefaultObserver;
 import com.javiertarazaga.instasearch.domain.interactor.GetMediaList;
 import com.javiertarazaga.instasearch.presentation.exception.ErrorMessageFactory;
-import com.javiertarazaga.instasearch.presentation.internal.di.PerActivity;
 import com.javiertarazaga.instasearch.presentation.mapper.UserModelDataMapper;
 import com.javiertarazaga.instasearch.presentation.model.UserModel;
 import com.javiertarazaga.instasearch.presentation.view.MediaListView;
@@ -33,7 +32,6 @@ import javax.inject.Inject;
  * {@link Presenter} that controls communication between views and models of the presentation
  * layer.
  */
-@PerActivity
 public class MediaListPresenter implements Presenter {
 
   private MediaListView viewListView;
