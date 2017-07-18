@@ -110,11 +110,7 @@ public class MediaListPresenter implements Presenter {
   }
 
   private void getMediaList() {
-    this.searchMediasByArea.execute(new MediaListObserver(), SearchMediasByArea.Params.forArea(
-        39.470574,
-        -0.365920,
-        5000
-    ));
+    this.searchMediasByArea.execute(new MediaListObserver(), null);
   }
 
   private final class MediaListObserver extends DefaultObserver<List<Media>> {

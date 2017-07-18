@@ -15,12 +15,14 @@
  */
 package com.javiertarazaga.instasearch.domain.interactor;
 
-import com.fernandocejas.arrow.checks.Preconditions;
 import com.javiertarazaga.instasearch.domain.Media;
 import com.javiertarazaga.instasearch.domain.executor.PostExecutionThread;
 import com.javiertarazaga.instasearch.domain.executor.ThreadExecutor;
 import com.javiertarazaga.instasearch.domain.repository.MediaRepository;
+import com.javiertarazaga.instasearch.domain.repository.PreferencesRepository;
 import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
+import io.reactivex.functions.Function;
 import java.util.List;
 import javax.inject.Inject;
 
@@ -28,35 +30,26 @@ import javax.inject.Inject;
  * Interactor which will perform a search for {@link List<Media>} in a given area. This area will be
  * determined by the lat,lng passed as well as the maxDistance to be used as radius.
  */
-public class SearchMediasByArea extends UseCase<List<Media>, SearchMediasByArea.Params> {
+public class SearchMediasByArea extends UseCase<List<Media>, Void> {
 
+  private final PreferencesRepository preferencesRepository;
   private final MediaRepository mediaRepository;
 
-  @Inject SearchMediasByArea(MediaRepository mediaRepository, ThreadExecutor threadExecutor,
+  @Inject SearchMediasByArea(PreferencesRepository preferencesRepository,
+      MediaRepository mediaRepository, ThreadExecutor threadExecutor,
       PostExecutionThread postExecutionThread) {
     super(threadExecutor, postExecutionThread);
+    this.preferencesRepository = preferencesRepository;
     this.mediaRepository = mediaRepository;
   }
 
-  @Override Observable<List<Media>> buildUseCaseObservable(Params params) {
-    Preconditions.checkNotNull(params);
-    return this.mediaRepository.searchByArea(params.lat, params.lng, params.maxDistance);
+  @Override Observable<List<Media>> buildUseCaseObservable(Void aVoid) {
+    return this.preferencesRepository.getDistance()
+        .flatMap(new Function<Integer, ObservableSource<List<Media>>>() {
+          @Override public ObservableSource<List<Media>> apply(Integer maxDistance) throws Exception {
+            return SearchMediasByArea.this.mediaRepository.searchByArea(39.470574, -0.365920,
+                maxDistance);
+          }
+        });
   }
-
-  public static final class Params {
-    private final double lat;
-    private final double lng;
-    private final int maxDistance;
-
-    private Params(double lat, double lng, int maxDistance) {
-      this.lat = lat;
-      this.lng = lng;
-      this.maxDistance = maxDistance;
-    }
-
-    public static Params forArea(double lat, double lng, int maxDistance) {
-      return new Params(lat, lng, maxDistance);
-    }
-  }
-
 }
