@@ -64,7 +64,7 @@ public class UserEntityJsonMapperTest {
 
   @Test
   public void testTransformUserEntityHappyCase() {
-    UserEntity userEntity = userEntityJsonMapper.transformUserApiResponseEntity(JSON_RESPONSE_USER_DETAILS);
+    UserEntity userEntity = userEntityJsonMapper.transformUserApiResponse(JSON_RESPONSE_USER_DETAILS);
 
     assertThat(userEntity.getUserId(), is(1));
     assertThat(userEntity.getFullname(), is(equalTo("Simon Hill")));
@@ -85,7 +85,7 @@ public class UserEntityJsonMapperTest {
   @Test
   public void testTransformUserEntityNotValidResponse() {
     expectedException.expect(JsonSyntaxException.class);
-    userEntityJsonMapper.transformUserApiResponseEntity("ironman");
+    userEntityJsonMapper.transformUserApiResponse("ironman");
   }
 
   @Test

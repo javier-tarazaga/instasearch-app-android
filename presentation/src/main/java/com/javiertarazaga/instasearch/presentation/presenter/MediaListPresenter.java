@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,16 +16,17 @@
 package com.javiertarazaga.instasearch.presentation.presenter;
 
 import android.support.annotation.NonNull;
-import com.javiertarazaga.instasearch.domain.User;
+import com.javiertarazaga.instasearch.domain.Media;
 import com.javiertarazaga.instasearch.domain.exception.DefaultErrorBundle;
 import com.javiertarazaga.instasearch.domain.exception.ErrorBundle;
 import com.javiertarazaga.instasearch.domain.interactor.DefaultObserver;
-import com.javiertarazaga.instasearch.domain.interactor.GetMediaList;
+import com.javiertarazaga.instasearch.domain.interactor.SearchMediasByArea;
 import com.javiertarazaga.instasearch.presentation.exception.ErrorMessageFactory;
-import com.javiertarazaga.instasearch.presentation.mapper.UserModelDataMapper;
-import com.javiertarazaga.instasearch.presentation.model.UserModel;
+import com.javiertarazaga.instasearch.presentation.mapper.MediaModelDataMapper;
+import com.javiertarazaga.instasearch.presentation.model.MediaModel;
 import com.javiertarazaga.instasearch.presentation.view.MediaListView;
 import java.util.Collection;
+import java.util.List;
 import javax.inject.Inject;
 
 /**
@@ -36,26 +37,27 @@ public class MediaListPresenter implements Presenter {
 
   private MediaListView viewListView;
 
-  private final GetMediaList getMediaList;
-  private final UserModelDataMapper userModelDataMapper;
+  private final SearchMediasByArea searchMediasByArea;
+  private final MediaModelDataMapper mediaModelDataMapper;
 
-  @Inject
-  public MediaListPresenter(GetMediaList getMediaList,
-      UserModelDataMapper userModelDataMapper) {
-    this.getMediaList = getMediaList;
-    this.userModelDataMapper = userModelDataMapper;
+  @Inject public MediaListPresenter(SearchMediasByArea searchMediasByArea,
+      MediaModelDataMapper mediaModelDataMapper) {
+    this.searchMediasByArea = searchMediasByArea;
+    this.mediaModelDataMapper = mediaModelDataMapper;
   }
 
   public void setView(@NonNull MediaListView view) {
     this.viewListView = view;
   }
 
-  @Override public void resume() {}
+  @Override public void resume() {
+  }
 
-  @Override public void pause() {}
+  @Override public void pause() {
+  }
 
   @Override public void destroy() {
-    this.getMediaList.dispose();
+    this.searchMediasByArea.dispose();
     this.viewListView = null;
   }
 
@@ -63,20 +65,20 @@ public class MediaListPresenter implements Presenter {
    * Initializes the presenter by start retrieving the user list.
    */
   public void initialize() {
-    this.loadUserList();
+    this.loadMediaList();
   }
 
   /**
    * Loads all users.
    */
-  private void loadUserList() {
+  private void loadMediaList() {
     this.hideViewRetry();
     this.showViewLoading();
-    this.getUserList();
+    this.getMediaList();
   }
 
-  public void onUserClicked(UserModel userModel) {
-    this.viewListView.viewUser(userModel);
+  public void onUserClicked(MediaModel mediaModel) {
+    this.viewListView.viewMedia(mediaModel);
   }
 
   private void showViewLoading() {
@@ -96,22 +98,26 @@ public class MediaListPresenter implements Presenter {
   }
 
   private void showErrorMessage(ErrorBundle errorBundle) {
-    String errorMessage = ErrorMessageFactory.create(this.viewListView.context(),
-                                                     errorBundle.getException());
+    String errorMessage =
+        ErrorMessageFactory.create(this.viewListView.context(), errorBundle.getException());
     this.viewListView.showError(errorMessage);
   }
 
-  private void showUsersCollectionInView(Collection<User> usersCollection) {
-    final Collection<UserModel> userModelsCollection =
-        this.userModelDataMapper.transform(usersCollection);
-    this.viewListView.renderUserList(userModelsCollection);
+  private void showMediaCollectionInView(Collection<Media> mediaCollection) {
+    //final Collection<UserModel> userModelsCollection =
+    //    this.mediaModelDataMapper.transform(mediaCollection);
+    //this.viewListView.renderUserList(userModelsCollection);
   }
 
-  private void getUserList() {
-    this.getMediaList.execute(new MediaListObserver(), null);
+  private void getMediaList() {
+    this.searchMediasByArea.execute(new MediaListObserver(), SearchMediasByArea.Params.forArea(
+        39.470574,
+        -0.365920,
+        5000
+    ));
   }
 
-  private final class MediaListObserver extends DefaultObserver<User> {
+  private final class MediaListObserver extends DefaultObserver<List<Media>> {
 
     @Override public void onComplete() {
       MediaListPresenter.this.hideViewLoading();
@@ -123,7 +129,7 @@ public class MediaListPresenter implements Presenter {
       MediaListPresenter.this.showViewRetry();
     }
 
-    @Override public void onNext(User users) {
+    @Override public void onNext(List<Media> mediaList) {
       //MediaListPresenter.this.showUsersCollectionInView(users);
     }
   }

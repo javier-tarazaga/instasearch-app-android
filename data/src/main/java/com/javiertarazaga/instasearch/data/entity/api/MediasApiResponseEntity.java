@@ -2,6 +2,7 @@ package com.javiertarazaga.instasearch.data.entity.api;
 
 import com.google.gson.annotations.SerializedName;
 import com.javiertarazaga.instasearch.data.entity.MediaEntity;
+import java.util.List;
 
 /**
  * Media API Response Entity used in the data layer.
@@ -11,20 +12,20 @@ import com.javiertarazaga.instasearch.data.entity.MediaEntity;
  * type languages!) but anyway, this will do the job for now instead of having to deal with
  * poly-serialization and more complex stuff
  */
-public class MediaApiResponseEntity {
+public class MediasApiResponseEntity {
 
   @SerializedName("data")
-  private MediaEntity data;
+  private List<MediaEntity> data;
 
-  public MediaApiResponseEntity() {
+  public MediasApiResponseEntity() {
     //empty
   }
 
-  public MediaEntity getData() {
+  public List<MediaEntity> getData() {
     return data;
   }
 
-  public void setData(MediaEntity data) {
+  public void setData(List<MediaEntity> data) {
     this.data = data;
   }
 }

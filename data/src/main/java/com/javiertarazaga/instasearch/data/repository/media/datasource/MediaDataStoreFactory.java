@@ -13,12 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.javiertarazaga.instasearch.data.repository.user.datasource;
+package com.javiertarazaga.instasearch.data.repository.media.datasource;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
-import com.javiertarazaga.instasearch.data.cache.UserCache;
 import com.javiertarazaga.instasearch.data.entity.mapper.json.MediaEntityJsonMapper;
 import com.javiertarazaga.instasearch.data.entity.mapper.json.UserEntityJsonMapper;
 import com.javiertarazaga.instasearch.data.net.RestApi;
@@ -27,46 +26,36 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 /**
- * Factory that creates different implementations of {@link UserDataStore}.
+ * Factory that creates different implementations of {@link MediaDataStore}.
  */
-@Singleton public class UserDataStoreFactory {
+@Singleton public class MediaDataStoreFactory {
 
   private final Context context;
-  private final UserCache userCache;
   private final SharedPreferences sharedPreferences;
 
-  @Inject UserDataStoreFactory(@NonNull Context context, @NonNull UserCache userCache,
+  @Inject MediaDataStoreFactory(@NonNull Context context,
       @NonNull SharedPreferences sharedPreferences) {
     this.context = context.getApplicationContext();
-    this.userCache = userCache;
     this.sharedPreferences = sharedPreferences;
   }
 
   /**
-   * Create {@link UserDataStore}
+   * Create {@link MediaDataStore}
    */
-  public UserDataStore create() {
-    UserDataStore userDataStore;
-
-    if (!this.userCache.isExpired() && this.userCache.isCached()) {
-      userDataStore = new UserMemoryDataStore(this.userCache);
-    } else {
-      userDataStore = createCloudDataStore();
-    }
-
-    return userDataStore;
+  public MediaDataStore create() {
+    return createCloudDataStore();
   }
 
   /**
-   * Create {@link UserDataStore} to retrieve data from the Cloud.
+   * Create {@link MediaDataStore} to retrieve data from the Cloud.
    */
-  public UserDataStore createCloudDataStore() {
+  public MediaDataStore createCloudDataStore() {
     final UserEntityJsonMapper userEntityJsonMapper = new UserEntityJsonMapper();
     final MediaEntityJsonMapper mediaEntityJsonMapper = new MediaEntityJsonMapper();
     final RestApi restApi =
         new RestApiImpl(this.context, userEntityJsonMapper, mediaEntityJsonMapper,
             this.sharedPreferences);
 
-    return new UserCloudDataStore(restApi, this.userCache);
+    return new MediaCloudDataStore(restApi);
   }
 }

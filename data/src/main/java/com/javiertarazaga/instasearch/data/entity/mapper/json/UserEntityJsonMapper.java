@@ -41,7 +41,7 @@ public class UserEntityJsonMapper {
    * @return {@link UserApiResponseEntity}.
    * @throws com.google.gson.JsonSyntaxException if the json string is not a valid json structure.
    */
-  public UserApiResponseEntity transformUserApiResponseEntity(String userJsonResponse) throws JsonSyntaxException {
+  public UserApiResponseEntity transformUserApiResponse(String userJsonResponse) throws JsonSyntaxException {
     final Type userEntityType = new TypeToken<UserApiResponseEntity>() {}.getType();
     return this.gson.fromJson(userJsonResponse, userEntityType);
   }

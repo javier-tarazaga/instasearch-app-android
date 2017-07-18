@@ -14,22 +14,22 @@ import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import com.javiertarazaga.instasearch.presentation.R;
-import com.javiertarazaga.instasearch.presentation.model.UserModel;
+import com.javiertarazaga.instasearch.presentation.model.MediaModel;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import javax.inject.Inject;
 
 /**
- * Adaptar that manages a collection of {@link UserModel}.
+ * Adapter that manages a collection of {@link MediaModel}.
  */
-public class MediasAdapter extends RecyclerView.Adapter<MediasAdapter.UserViewHolder> {
+public class MediasAdapter extends RecyclerView.Adapter<MediasAdapter.MediaViewHolder> {
 
   public interface OnItemClickListener {
-    void onUserItemClicked(UserModel userModel);
+    void onMediaItemClicked(MediaModel mediaModel);
   }
 
-  private List<UserModel> usersCollection;
+  private List<MediaModel> mediaCollection;
   private final LayoutInflater layoutInflater;
 
   private OnItemClickListener onItemClickListener;
@@ -37,25 +37,25 @@ public class MediasAdapter extends RecyclerView.Adapter<MediasAdapter.UserViewHo
   @Inject MediasAdapter(Context context) {
     this.layoutInflater =
         (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-    this.usersCollection = Collections.emptyList();
+    this.mediaCollection = Collections.emptyList();
   }
 
   @Override public int getItemCount() {
-    return (this.usersCollection != null) ? this.usersCollection.size() : 0;
+    return (this.mediaCollection != null) ? this.mediaCollection.size() : 0;
   }
 
-  @Override public UserViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+  @Override public MediaViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
     final View view = this.layoutInflater.inflate(R.layout.row_post, parent, false);
-    return new UserViewHolder(view);
+    return new MediaViewHolder(view);
   }
 
-  @Override public void onBindViewHolder(UserViewHolder holder, final int position) {
-    final UserModel userModel = this.usersCollection.get(position);
-    holder.tv_username.setText(userModel.getFullName());
+  @Override public void onBindViewHolder(MediaViewHolder holder, final int position) {
+    final MediaModel mediaModel = this.mediaCollection.get(position);
+    holder.tv_username.setText(mediaModel.getUserModel().getUsername());
     holder.itemView.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
         if (MediasAdapter.this.onItemClickListener != null) {
-          MediasAdapter.this.onItemClickListener.onUserItemClicked(userModel);
+          MediasAdapter.this.onItemClickListener.onMediaItemClicked(mediaModel);
         }
       }
     });
@@ -65,9 +65,9 @@ public class MediasAdapter extends RecyclerView.Adapter<MediasAdapter.UserViewHo
     return position;
   }
 
-  public void setUsersCollection(Collection<UserModel> usersCollection) {
-    this.validateUsersCollection(usersCollection);
-    this.usersCollection = (List<UserModel>) usersCollection;
+  public void setMediaCollection(Collection<MediaModel> mediaCollection) {
+    this.validateMediaCollection(mediaCollection);
+    this.mediaCollection = (List<MediaModel>) mediaCollection;
     this.notifyDataSetChanged();
   }
 
@@ -75,19 +75,19 @@ public class MediasAdapter extends RecyclerView.Adapter<MediasAdapter.UserViewHo
     this.onItemClickListener = onItemClickListener;
   }
 
-  private void validateUsersCollection(Collection<UserModel> usersCollection) {
-    if (usersCollection == null) {
+  private void validateMediaCollection(Collection<MediaModel> mediaCollection) {
+    if (mediaCollection == null) {
       throw new IllegalArgumentException("The list cannot be null");
     }
   }
 
-  static class UserViewHolder extends RecyclerView.ViewHolder {
+  static class MediaViewHolder extends RecyclerView.ViewHolder {
     @Bind(R.id.iv_user_image) ImageView iv_user_image;
     @Bind(R.id.tv_username) TextView tv_username;
     @Bind(R.id.iv_post) ImageView iv_post;
     @Bind(R.id.tv_post_comment) TextView tv_post_comment;
 
-    UserViewHolder(View itemView) {
+    MediaViewHolder(View itemView) {
       super(itemView);
       ButterKnife.bind(this, itemView);
     }

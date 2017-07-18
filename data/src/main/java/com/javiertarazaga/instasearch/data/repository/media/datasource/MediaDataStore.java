@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ *      http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -13,29 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.javiertarazaga.instasearch.data.net;
+package com.javiertarazaga.instasearch.data.repository.media.datasource;
 
 import com.javiertarazaga.instasearch.data.entity.MediaEntity;
-import com.javiertarazaga.instasearch.data.entity.UserEntity;
 import io.reactivex.Observable;
 import java.util.List;
 
 /**
- * RestApi for retrieving data from the network.
+ * Interface that represents a data store from where data is retrieved.
  */
-public interface RestApi {
-  String API_BASE_URL = "https://api.instagram.com/v1/";
-
-  /** Api url for getting self */
-  String API_URL_GET_USER = API_BASE_URL + "users/self";
-
-  /** Api url for searching for medias given a lat and lng (Area) */
-  String API_URL_SEARCH_MEDIA_AREA = API_BASE_URL + "media/search";
-
-  /**
-   * Retrieves an {@link Observable} which will emit a {@link UserEntity}.
-   */
-  Observable<UserEntity> user();
+public interface MediaDataStore {
 
   /**
    * Get an {@link Observable} which will emit a {@link List<MediaEntity>} given a certain area in space
@@ -44,5 +31,5 @@ public interface RestApi {
    * @param lng  Longitude of the center search coordinate. If used, lat is required.
    * @param maxDistance Max distance for radius
    */
-  Observable<List<MediaEntity>> searchMediaByArea(double lat, double lng, int maxDistance);
+  Observable<List<MediaEntity>> searchByArea(double lat, double lng, int maxDistance);
 }

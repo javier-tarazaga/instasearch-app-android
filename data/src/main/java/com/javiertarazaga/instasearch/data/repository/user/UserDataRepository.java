@@ -45,10 +45,6 @@ public class UserDataRepository implements UserRepository {
     this.userEntityDataMapper = userEntityDataMapper;
   }
 
-  @Override public Observable<User> login(String userName, String password) {
-    return null;
-  }
-
   @Override public Observable<User> user() {
     final UserDataStore userDataStore = this.userDataStoreFactory.create();
     return userDataStore.user().map(this.userEntityDataMapper::transform);

@@ -15,20 +15,21 @@
  */
 package com.javiertarazaga.instasearch.domain.repository;
 
-import com.javiertarazaga.instasearch.domain.User;
-import com.javiertarazaga.instasearch.domain.exception.user.UserNeedsAuthenticationException;
+import com.javiertarazaga.instasearch.domain.Media;
 import io.reactivex.Observable;
+import java.util.List;
 
 /**
- * Interface that represents a Repository for getting {@link User} related data.
+ * Interface that represents a Repository for getting {@link Media} related data.
  */
-public interface UserRepository {
+public interface MediaRepository {
 
   /**
-   * Get and observable that will emit a {@link User} or a {@link UserNeedsAuthenticationException}
-   * if the last token session is invalid.
-   *
-   * @return {@link Observable}&lt;{@link User}&gt;
+   * Get an {@link Observable} which will emit a {@link List<Media>} given a certain area in space
+   * and a maxDistance radius.
+   *  @param lat Latitude of the center search coordinate. If used, lng is required.
+   * @param lng  Longitude of the center search coordinate. If used, lat is required.
+   * @param maxDistance Max distance for radius
    */
-  Observable<User> user();
+  Observable<List<Media>> searchByArea(double lat, double lng, int maxDistance);
 }

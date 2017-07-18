@@ -19,14 +19,19 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import com.fernandocejas.arrow.checks.Preconditions;
+import com.javiertarazaga.instasearch.data.entity.MediaEntity;
 import com.javiertarazaga.instasearch.data.entity.UserEntity;
+import com.javiertarazaga.instasearch.data.entity.api.MediasApiResponseEntity;
 import com.javiertarazaga.instasearch.data.entity.api.UserApiResponseEntity;
+import com.javiertarazaga.instasearch.data.entity.mapper.json.MediaEntityJsonMapper;
 import com.javiertarazaga.instasearch.data.entity.mapper.json.UserEntityJsonMapper;
 import com.javiertarazaga.instasearch.data.exception.NetworkConnectionException;
 import com.javiertarazaga.instasearch.domain.exception.user.UserException;
 import com.squareup.okhttp.Response;
 import io.reactivex.Observable;
 import java.net.MalformedURLException;
+import java.util.List;
 
 /**
  * {@link RestApi} implementation for retrieving data from the network.
@@ -36,6 +41,7 @@ public class RestApiImpl implements RestApi {
   private final Context context;
   private final UserEntityJsonMapper userEntityJsonMapper;
   private final SharedPreferences sharedPreferences;
+  private final MediaEntityJsonMapper mediaEntityJsonMapper;
 
   /**
    * Constructor of the class
@@ -44,12 +50,16 @@ public class RestApiImpl implements RestApi {
    * @param userEntityJsonMapper {@link UserEntityJsonMapper}.
    */
   public RestApiImpl(Context context, UserEntityJsonMapper userEntityJsonMapper,
-      SharedPreferences sharedPreferences) {
-    if (context == null || userEntityJsonMapper == null || sharedPreferences == null) {
+      MediaEntityJsonMapper mediaEntityJsonMapper, SharedPreferences sharedPreferences) {
+    if (context == null
+        || userEntityJsonMapper == null
+        || mediaEntityJsonMapper == null
+        || sharedPreferences == null) {
       throw new IllegalArgumentException("The constructor parameters cannot be null!!!");
     }
     this.context = context.getApplicationContext();
     this.userEntityJsonMapper = userEntityJsonMapper;
+    this.mediaEntityJsonMapper = mediaEntityJsonMapper;
     this.sharedPreferences = sharedPreferences;
   }
 
@@ -60,7 +70,33 @@ public class RestApiImpl implements RestApi {
           Response responseUser = getUserFromApi();
           if (responseUser.isSuccessful()) {
             UserApiResponseEntity apiResponse =
-                userEntityJsonMapper.transformUserApiResponseEntity(responseUser.body().string());
+                userEntityJsonMapper.transformUserApiResponse(responseUser.body().string());
+            emitter.onNext(apiResponse.getData());
+            emitter.onComplete();
+          } else {
+            emitter.onError(new UserException());
+          }
+        } catch (Exception e) {
+          emitter.onError(new NetworkConnectionException(e.getCause()));
+        }
+      } else {
+        emitter.onError(new NetworkConnectionException());
+      }
+    });
+  }
+
+  @Override public Observable<List<MediaEntity>> searchMediaByArea(double lat, double lng, int maxDistance) {
+    Preconditions.checkNotNull(lat);
+    Preconditions.checkNotNull(lng);
+
+    return Observable.create(emitter -> {
+      if (isThereInternetConnection()) {
+        try {
+          Response responseUser = searchMediasByArea(lat, lng, maxDistance);
+          if (responseUser.isSuccessful()) {
+
+            MediasApiResponseEntity apiResponse =
+                this.mediaEntityJsonMapper.transformMediaApiResponse(responseUser.body().string());
             emitter.onNext(apiResponse.getData());
             emitter.onComplete();
           } else {
@@ -78,6 +114,16 @@ public class RestApiImpl implements RestApi {
   private Response getUserFromApi() throws MalformedURLException {
     String apiUrl =
         API_URL_GET_USER + "?access_token=" + this.sharedPreferences.getString("access_token", "");
+    return ApiConnection.createGET(apiUrl).requestSyncCall();
+  }
+
+  private Response searchMediasByArea(double lat, double lng, int maxDistance) throws MalformedURLException {
+    String apiUrl =
+        API_URL_SEARCH_MEDIA_AREA
+            + "?lat=" + String.valueOf(lat)
+            + "&lng=" + String.valueOf(lng)
+            + "&distance=" + String.valueOf(maxDistance)
+            + "&access_token=" + this.sharedPreferences.getString("access_token", "");
     return ApiConnection.createGET(apiUrl).requestSyncCall();
   }
 

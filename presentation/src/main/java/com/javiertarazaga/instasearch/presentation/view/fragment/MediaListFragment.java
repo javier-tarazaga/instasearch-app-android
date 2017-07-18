@@ -19,7 +19,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.javiertarazaga.instasearch.presentation.R;
 import com.javiertarazaga.instasearch.presentation.internal.di.components.UserComponent;
-import com.javiertarazaga.instasearch.presentation.model.UserModel;
+import com.javiertarazaga.instasearch.presentation.model.MediaModel;
 import com.javiertarazaga.instasearch.presentation.presenter.MediaListPresenter;
 import com.javiertarazaga.instasearch.presentation.view.MediaListView;
 import com.javiertarazaga.instasearch.presentation.view.adapter.MediasAdapter;
@@ -33,21 +33,21 @@ import javax.inject.Inject;
 public class MediaListFragment extends BaseFragment implements MediaListView {
 
   /**
-   * Interface for listening user list events.
+   * Interface for listening media list events.
    */
-  public interface UserListListener {
-    void onUserClicked(final UserModel userModel);
+  public interface MediaListListener {
+    void onMediaClicked(final MediaModel mediaModel);
   }
 
   @Inject MediaListPresenter mediaListPresenter;
   @Inject MediasAdapter mediasAdapter;
 
-  @Bind(R.id.rv_users) RecyclerView rv_users;
+  @Bind(R.id.rv_medias) RecyclerView rv_medias;
   @Bind(R.id.rl_progress) RelativeLayout rl_progress;
   @Bind(R.id.rl_retry) RelativeLayout rl_retry;
   @Bind(R.id.bt_retry) Button bt_retry;
 
-  private UserListListener userListListener;
+  private MediaListListener mediaListListener;
 
   public MediaListFragment() {
     setRetainInstance(true);
@@ -55,19 +55,19 @@ public class MediaListFragment extends BaseFragment implements MediaListView {
 
   @Override public void onAttach(Activity activity) {
     super.onAttach(activity);
-    if (activity instanceof UserListListener) {
-      this.userListListener = (UserListListener) activity;
+    if (activity instanceof MediaListListener) {
+      this.mediaListListener = (MediaListListener) activity;
     }
   }
 
   @Override public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
+    super.onCreate(gsavedInstanceState);
     this.getComponent(UserComponent.class).inject(this);
   }
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
-    final View fragmentView = inflater.inflate(com.javiertarazaga.instasearch.presentation.R.layout.fragment_user_list, container, false);
+    final View fragmentView = inflater.inflate(com.javiertarazaga.instasearch.presentation.R.layout.fragment_media_list, container, false);
     ButterKnife.bind(this, fragmentView);
     setupRecyclerView();
     return fragmentView;
@@ -93,7 +93,7 @@ public class MediaListFragment extends BaseFragment implements MediaListView {
 
   @Override public void onDestroyView() {
     super.onDestroyView();
-    rv_users.setAdapter(null);
+    rv_medias.setAdapter(null);
     ButterKnife.unbind(this);
   }
 
@@ -104,7 +104,7 @@ public class MediaListFragment extends BaseFragment implements MediaListView {
 
   @Override public void onDetach() {
     super.onDetach();
-    this.userListListener = null;
+    this.mediaListListener = null;
   }
 
   @Override public void showLoading() {
@@ -123,15 +123,15 @@ public class MediaListFragment extends BaseFragment implements MediaListView {
     this.rl_retry.setVisibility(View.GONE);
   }
 
-  @Override public void renderUserList(Collection<UserModel> userModelCollection) {
-    if (userModelCollection != null) {
-      this.mediasAdapter.setUsersCollection(userModelCollection);
+  @Override public void renderMediaList(Collection<MediaModel> mediaModelCollection) {
+    if (mediaModelCollection != null) {
+      this.mediasAdapter.setMediaCollection(mediaModelCollection);
     }
   }
 
-  @Override public void viewUser(UserModel userModel) {
-    if (this.userListListener != null) {
-      this.userListListener.onUserClicked(userModel);
+  @Override public void viewMedia(MediaModel mediaModel) {
+    if (this.mediaListListener != null) {
+      this.mediaListListener.onMediaClicked(mediaModel);
     }
   }
 
@@ -145,12 +145,12 @@ public class MediaListFragment extends BaseFragment implements MediaListView {
 
   private void setupRecyclerView() {
     this.mediasAdapter.setOnItemClickListener(onItemClickListener);
-    this.rv_users.setLayoutManager(new MediasLayoutManager(context()));
-    this.rv_users.setAdapter(mediasAdapter);
+    this.rv_medias.setLayoutManager(new MediasLayoutManager(context()));
+    this.rv_medias.setAdapter(mediasAdapter);
   }
 
   /**
-   * Loads all users.
+   * Loads all medias.
    */
   private void loadUserList() {
     this.mediaListPresenter.initialize();
@@ -162,9 +162,9 @@ public class MediaListFragment extends BaseFragment implements MediaListView {
 
   private MediasAdapter.OnItemClickListener onItemClickListener =
       new MediasAdapter.OnItemClickListener() {
-        @Override public void onUserItemClicked(UserModel userModel) {
-          if (MediaListFragment.this.mediaListPresenter != null && userModel != null) {
-            MediaListFragment.this.mediaListPresenter.onUserClicked(userModel);
+        @Override public void onMediaItemClicked(MediaModel mediaModel) {
+          if (MediaListFragment.this.mediaListPresenter != null && mediaModel != null) {
+            MediaListFragment.this.mediaListPresenter.onUserClicked(mediaModel);
           }
         }
       };

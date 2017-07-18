@@ -19,6 +19,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import com.javiertarazaga.instasearch.domain.executor.PostExecutionThread;
 import com.javiertarazaga.instasearch.domain.executor.ThreadExecutor;
+import com.javiertarazaga.instasearch.domain.repository.MediaRepository;
 import com.javiertarazaga.instasearch.domain.repository.PreferencesRepository;
 import com.javiertarazaga.instasearch.domain.repository.UserRepository;
 import com.javiertarazaga.instasearch.presentation.internal.di.modules.ApplicationModule;
@@ -41,5 +42,5 @@ public interface ApplicationComponent {
   SharedPreferences sharedPreferences();
   PreferencesRepository preferencesRepository();
   UserRepository userRepository();
-  //SharedPreferences authToken();
+  MediaRepository mediaRepository();
 }
