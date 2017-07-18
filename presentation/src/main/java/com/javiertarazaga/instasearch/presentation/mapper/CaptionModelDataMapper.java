@@ -27,7 +27,7 @@ import javax.inject.Inject;
 @PerActivity
 public class CaptionModelDataMapper {
 
-  @Inject CaptionModelDataMapper() {
+  @Inject public CaptionModelDataMapper() {
   }
 
   /**

@@ -27,7 +27,7 @@ import javax.inject.Inject;
 @PerActivity
 public class ImagesModelDataMapper {
 
-  @Inject ImagesModelDataMapper() {}
+  @Inject public ImagesModelDataMapper() {}
 
   /**
    * Transform a {@link Images} into an {@link ImagesModel}.

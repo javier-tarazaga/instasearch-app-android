@@ -19,7 +19,7 @@ public class MediaModelDataMapper {
   private final ImagesModelDataMapper imagesModelDataMapper;
   private final CaptionModelDataMapper captionModelDataMapper;
 
-  @Inject MediaModelDataMapper(UserModelDataMapper userModelDataMapper,
+  @Inject public MediaModelDataMapper(UserModelDataMapper userModelDataMapper,
       ImagesModelDataMapper imagesModelDataMapper,
       CaptionModelDataMapper captionModelDataMapper) {
     this.userModelDataMapper = userModelDataMapper;

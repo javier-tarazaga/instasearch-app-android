@@ -16,8 +16,8 @@
 package com.javiertarazaga.instasearch.test.presenter;
 
 import android.content.Context;
-import com.javiertarazaga.instasearch.domain.interactor.GetUserList;
-import com.javiertarazaga.instasearch.presentation.mapper.UserModelDataMapper;
+import com.javiertarazaga.instasearch.domain.interactor.SearchMediasByArea;
+import com.javiertarazaga.instasearch.presentation.mapper.MediaModelDataMapper;
 import com.javiertarazaga.instasearch.presentation.presenter.MediaListPresenter;
 import com.javiertarazaga.instasearch.presentation.view.MediaListView;
 import io.reactivex.observers.DisposableObserver;
@@ -38,24 +38,24 @@ public class MediaListPresenterTest {
 
   @Mock private Context mockContext;
   @Mock private MediaListView mockMediaListView;
-  @Mock private GetUserList mockGetUserList;
-  @Mock private UserModelDataMapper mockUserModelDataMapper;
+  @Mock private SearchMediasByArea mockSearchMediasByArea;
+  @Mock private MediaModelDataMapper mockMediaModelDataMapper;
 
   @Before
   public void setUp() {
-    mediaListPresenter = new MediaListPresenter(mockGetUserList, mockUserModelDataMapper);
+    mediaListPresenter = new MediaListPresenter(mockSearchMediasByArea, mockMediaModelDataMapper);
     mediaListPresenter.setView(mockMediaListView);
   }
 
   @Test
   @SuppressWarnings("unchecked")
-  public void testUserListPresenterInitialize() {
+  public void testMediaListPresenterInitialize() {
     given(mockMediaListView.context()).willReturn(mockContext);
 
     mediaListPresenter.initialize();
 
     verify(mockMediaListView).hideRetry();
     verify(mockMediaListView).showLoading();
-    verify(mockGetUserList).execute(any(DisposableObserver.class), any(Void.class));
+    verify(mockSearchMediasByArea).execute(any(DisposableObserver.class), any(Void.class));
   }
 }

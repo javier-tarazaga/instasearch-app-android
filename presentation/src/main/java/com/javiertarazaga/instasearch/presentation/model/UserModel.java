@@ -43,7 +43,7 @@ public class UserModel {
     this.profilePicture = profilePicture;
   }
 
-  public String getFullName() {
+  public String getfullname() {
     return fullName;
   }
 

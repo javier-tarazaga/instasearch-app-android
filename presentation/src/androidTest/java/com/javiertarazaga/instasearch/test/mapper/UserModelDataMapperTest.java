@@ -18,56 +18,38 @@ package com.javiertarazaga.instasearch.test.mapper;
 import com.javiertarazaga.instasearch.domain.User;
 import com.javiertarazaga.instasearch.presentation.mapper.UserModelDataMapper;
 import com.javiertarazaga.instasearch.presentation.model.UserModel;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 import junit.framework.TestCase;
+import org.junit.Test;
 
+import static com.javiertarazaga.instasearch.test.mapper.ModelMapperHelper.FAKE_BIO;
+import static com.javiertarazaga.instasearch.test.mapper.ModelMapperHelper.FAKE_FULLNAME;
+import static com.javiertarazaga.instasearch.test.mapper.ModelMapperHelper.FAKE_PROFILE_PICTURE;
+import static com.javiertarazaga.instasearch.test.mapper.ModelMapperHelper.FAKE_USERNAME;
+import static com.javiertarazaga.instasearch.test.mapper.ModelMapperHelper.FAKE_USER_ID;
+import static com.javiertarazaga.instasearch.test.mapper.ModelMapperHelper.createFakeUser;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.mockito.Mockito.mock;
 
 public class UserModelDataMapperTest extends TestCase {
-
-  private static final int FAKE_USER_ID = 123;
-  private static final String FAKE_FULL_NAME = "Tony Stark";
 
   private UserModelDataMapper userModelDataMapper;
 
   @Override protected void setUp() throws Exception {
     super.setUp();
-    userModelDataMapper = new UserModelDataMapper();
+    this.userModelDataMapper = new UserModelDataMapper();
   }
 
+  @Test
   public void testTransformUser() {
     User user = createFakeUser();
-    UserModel userModel = userModelDataMapper.transform(user);
+    UserModel userModel = this.userModelDataMapper.transform(user);
 
     assertThat(userModel, is(instanceOf(UserModel.class)));
     assertThat(userModel.getUserId(), is(FAKE_USER_ID));
-    assertThat(userModel.getFullName(), is(FAKE_FULL_NAME));
-  }
-
-  public void testTransformUserCollection() {
-    User mockUserOne = mock(User.class);
-    User mockUserTwo = mock(User.class);
-
-    List<User> userList = new ArrayList<User>(5);
-    userList.add(mockUserOne);
-    userList.add(mockUserTwo);
-
-    Collection<UserModel> userModelList = userModelDataMapper.transform(userList);
-
-    assertThat(userModelList.toArray()[0], is(instanceOf(UserModel.class)));
-    assertThat(userModelList.toArray()[1], is(instanceOf(UserModel.class)));
-    assertThat(userModelList.size(), is(2));
-  }
-
-  private User createFakeUser() {
-    User user = new User(FAKE_USER_ID);
-    user.setFullName(FAKE_FULL_NAME);
-
-    return user;
+    assertThat(userModel.getUsername(), is(FAKE_USERNAME));
+    assertThat(userModel.getfullname(), is(FAKE_FULLNAME));
+    assertThat(userModel.getProfilePicture(), is(FAKE_PROFILE_PICTURE));
+    assertThat(userModel.getBio(), is(FAKE_BIO));
   }
 }
