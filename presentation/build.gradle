@@ -98,6 +98,7 @@ dependencies {
   compile (presentationDependencies.crashalytics) {
     transitive = true;
   }
+  compile presentationDependencies.picasso
 
   androidTestCompile presentationTestDependencies.mockito
   androidTestCompile presentationTestDependencies.dexmaker

@@ -29,6 +29,7 @@ ext {
   androidAnnotationsVersion = '21.0.3'
   arrowVersion = '1.0.0'
   crashalyticsVersion = '2.6.8@aar'
+  picassoVersion = '2.5.2'
 
   //Testing
   robolectricVersion = '3.1.1'
@@ -53,7 +54,8 @@ ext {
       rxJava:             "io.reactivex.rxjava2:rxjava:${rxJavaVersion}",
       rxAndroid:          "io.reactivex.rxjava2:rxandroid:${rxAndroidVersion}",
       javaxAnnotation:    "javax.annotation:jsr250-api:${javaxAnnotationVersion}",
-      crashalytics:       "com.crashlytics.sdk.android:crashlytics:${crashalyticsVersion}"
+      crashalytics:       "com.crashlytics.sdk.android:crashlytics:${crashalyticsVersion}",
+      picasso:            "com.squareup.picasso:picasso:${picassoVersion}"
   ]
 
   presentationTestDependencies = [
