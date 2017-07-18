@@ -100,7 +100,7 @@ public class LoginFragment extends BaseFragment implements LoginView {
   }
 
   @Override public void loadUrl(String url) {
-
+    wv_login.loadUrl(url);
   }
 
   @Override public void loginSuccessful() {

@@ -21,7 +21,7 @@ import com.google.gson.annotations.SerializedName;
  * User Entity used in the data layer.
  *
  * NOTE: This shouldn't be structured like this, but lets leave it like this for simplicity. Every
- * response from the API has a data and meta objects which contains the real object (damn not hard
+ * response from the API has a data and meta objects which contains the real object (not strongly
  * type languages!) but anyway, this will do the job for now instead of having to deal with
  * poly-serialization and more complex stuff
  */
@@ -42,7 +42,8 @@ public class UserEntity {
     this.data = data;
   }
 
-  public class Data {
+  public static class Data {
+
     @SerializedName("id")
     private String userId;
 
@@ -57,7 +58,6 @@ public class UserEntity {
 
     @SerializedName("bio")
     private String bio;
-
 
     public String getUserId() {
       return userId;

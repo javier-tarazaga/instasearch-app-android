@@ -18,6 +18,7 @@ package com.javiertarazaga.instasearch.data.net;
 import android.support.annotation.Nullable;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
+import com.squareup.okhttp.Response;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -29,13 +30,13 @@ import java.util.concurrent.TimeUnit;
  * Implements {@link java.util.concurrent.Callable} so when executed asynchronously can
  * return a value.
  */
-class ApiConnection implements Callable<String> {
+class ApiConnection implements Callable<Response> {
 
   private static final String CONTENT_TYPE_LABEL = "Content-Type";
   private static final String CONTENT_TYPE_VALUE_JSON = "application/json; charset=utf-8";
 
   private URL url;
-  private String response;
+  private Response response;
 
   private ApiConnection(String url) throws MalformedURLException {
     this.url = new URL(url);
@@ -51,8 +52,7 @@ class ApiConnection implements Callable<String> {
    *
    * @return A string response
    */
-  @Nullable
-  String requestSyncCall() {
+  @Nullable Response requestSyncCall() {
     connectToApi();
     return response;
   }
@@ -66,7 +66,7 @@ class ApiConnection implements Callable<String> {
         .build();
 
     try {
-      this.response = okHttpClient.newCall(request).execute().body().string();
+      this.response = okHttpClient.newCall(request).execute();
     } catch (IOException e) {
       e.printStackTrace();
     }
@@ -80,7 +80,7 @@ class ApiConnection implements Callable<String> {
     return okHttpClient;
   }
 
-  @Override public String call() throws Exception {
+  @Override public Response call() throws Exception {
     return requestSyncCall();
   }
 }

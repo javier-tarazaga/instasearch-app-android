@@ -14,7 +14,7 @@ public class UserMemoryCacheImpl implements UserCache {
 
   private UserEntity cachedItem;
 
-  @Inject public UserMemoryCacheImpl() {
+  @Inject UserMemoryCacheImpl() {
   }
 
   /**
@@ -42,7 +42,7 @@ public class UserMemoryCacheImpl implements UserCache {
    * {@inheritDoc}
    */
   @Override public boolean isExpired() {
-    return cachedItem == null;
+    return cachedItem != null;
   }
 
   /**

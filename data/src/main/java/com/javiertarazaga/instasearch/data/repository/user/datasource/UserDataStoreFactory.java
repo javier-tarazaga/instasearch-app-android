@@ -16,6 +16,7 @@
 package com.javiertarazaga.instasearch.data.repository.user.datasource;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import com.javiertarazaga.instasearch.data.cache.UserCache;
 import com.javiertarazaga.instasearch.data.entity.mapper.UserEntityJsonMapper;
@@ -32,11 +33,14 @@ public class UserDataStoreFactory {
 
   private final Context context;
   private final UserCache userCache;
+  private final SharedPreferences sharedPreferences;
 
   @Inject
-  UserDataStoreFactory(@NonNull Context context, @NonNull UserCache userCache) {
+  UserDataStoreFactory(@NonNull Context context, @NonNull UserCache userCache, @NonNull
+      SharedPreferences sharedPreferences) {
     this.context = context.getApplicationContext();
     this.userCache = userCache;
+    this.sharedPreferences = sharedPreferences;
   }
 
   /**
@@ -59,7 +63,7 @@ public class UserDataStoreFactory {
    */
   public UserDataStore createCloudDataStore() {
     final UserEntityJsonMapper userEntityJsonMapper = new UserEntityJsonMapper();
-    final RestApi restApi = new RestApiImpl(this.context, userEntityJsonMapper);
+    final RestApi restApi = new RestApiImpl(this.context, userEntityJsonMapper, this.sharedPreferences);
 
     return new UserCloudDataStore(restApi, this.userCache);
   }

@@ -19,6 +19,7 @@ import android.support.annotation.NonNull;
 import com.javiertarazaga.instasearch.domain.User;
 import com.javiertarazaga.instasearch.domain.exception.DefaultErrorBundle;
 import com.javiertarazaga.instasearch.domain.exception.ErrorBundle;
+import com.javiertarazaga.instasearch.domain.exception.user.UserException;
 import com.javiertarazaga.instasearch.domain.exception.user.UserNeedsAuthenticationException;
 import com.javiertarazaga.instasearch.domain.interactor.DefaultObserver;
 import com.javiertarazaga.instasearch.domain.interactor.GetUser;
@@ -108,7 +109,7 @@ public class SplashScreenPresenter implements Presenter {
     @Override public void onError(Throwable e) {
       SplashScreenPresenter.this.hideViewLoading();
 
-      if (e instanceof UserNeedsAuthenticationException) {
+      if (e instanceof UserNeedsAuthenticationException || e instanceof UserException) {
         SplashScreenPresenter.this.goToLoginView();
       } else {
         SplashScreenPresenter.this.showErrorMessage(new DefaultErrorBundle((Exception) e));

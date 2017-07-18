@@ -16,11 +16,14 @@
 package com.javiertarazaga.instasearch.data.net;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import com.javiertarazaga.instasearch.data.entity.UserEntity;
 import com.javiertarazaga.instasearch.data.entity.mapper.UserEntityJsonMapper;
 import com.javiertarazaga.instasearch.data.exception.NetworkConnectionException;
+import com.javiertarazaga.instasearch.domain.exception.user.UserException;
+import com.squareup.okhttp.Response;
 import io.reactivex.Observable;
 import java.net.MalformedURLException;
 
@@ -31,6 +34,7 @@ public class RestApiImpl implements RestApi {
 
   private final Context context;
   private final UserEntityJsonMapper userEntityJsonMapper;
+  private final SharedPreferences sharedPreferences;
 
   /**
    * Constructor of the class
@@ -38,24 +42,26 @@ public class RestApiImpl implements RestApi {
    * @param context {@link android.content.Context}.
    * @param userEntityJsonMapper {@link UserEntityJsonMapper}.
    */
-  public RestApiImpl(Context context, UserEntityJsonMapper userEntityJsonMapper) {
-    if (context == null || userEntityJsonMapper == null) {
+  public RestApiImpl(Context context, UserEntityJsonMapper userEntityJsonMapper,
+      SharedPreferences sharedPreferences) {
+    if (context == null || userEntityJsonMapper == null || sharedPreferences == null) {
       throw new IllegalArgumentException("The constructor parameters cannot be null!!!");
     }
     this.context = context.getApplicationContext();
     this.userEntityJsonMapper = userEntityJsonMapper;
+    this.sharedPreferences = sharedPreferences;
   }
 
   @Override public Observable<UserEntity> user() {
     return Observable.create(emitter -> {
       if (isThereInternetConnection()) {
         try {
-          String responseUserDetails = getUserFromApi();
-          if (responseUserDetails != null) {
-            emitter.onNext(userEntityJsonMapper.transformUserEntity(responseUserDetails));
+          Response responseUser = getUserFromApi();
+          if (responseUser.isSuccessful()) {
+            emitter.onNext(userEntityJsonMapper.transformUserEntity(responseUser.body().string()));
             emitter.onComplete();
           } else {
-            emitter.onError(new NetworkConnectionException());
+            emitter.onError(new UserException());
           }
         } catch (Exception e) {
           emitter.onError(new NetworkConnectionException(e.getCause()));
@@ -66,8 +72,9 @@ public class RestApiImpl implements RestApi {
     });
   }
 
-  private String getUserFromApi() throws MalformedURLException {
-    String apiUrl = API_URL_GET_USER  + "?access_token=18754436.974bc37.cbfa1756cf6c444db653af92a2771647";
+  private Response getUserFromApi() throws MalformedURLException {
+    String apiUrl =
+        API_URL_GET_USER + "?access_token=" + this.sharedPreferences.getString("access_token", "");
     return ApiConnection.createGET(apiUrl).requestSyncCall();
   }
 
