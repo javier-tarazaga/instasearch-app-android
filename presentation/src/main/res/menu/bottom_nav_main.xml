@@ -7,20 +7,14 @@
       android:enabled="true"
       android:icon="@drawable/ic_home"
       app:showAsAction="ifRoom"
-      android:title="Home"
+      android:title="@string/bottom_nav_title_home"
       />
-  <item
-      android:id="@+id/action_recents"
-      android:enabled="true"
-      android:icon="@drawable/ic_recents"
-      app:showAsAction="ifRoom"
-      android:title="Recents"
-      />
+
   <item
       android:id="@+id/action_settings"
       android:enabled="true"
       android:icon="@drawable/ic_settings"
       app:showAsAction="ifRoom"
-      android:title="Settings"
+      android:title="@string/bottom_nav_title_settings"
       />
 </menu>

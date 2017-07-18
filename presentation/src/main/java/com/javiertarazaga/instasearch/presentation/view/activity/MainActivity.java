@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.util.Log;
 import android.view.MenuItem;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -14,6 +13,7 @@ import com.javiertarazaga.instasearch.presentation.internal.di.HasComponent;
 import com.javiertarazaga.instasearch.presentation.internal.di.components.DaggerMainComponent;
 import com.javiertarazaga.instasearch.presentation.internal.di.components.MainComponent;
 import com.javiertarazaga.instasearch.presentation.view.fragment.BaseFragment;
+import com.javiertarazaga.instasearch.presentation.view.fragment.MediaListFragment;
 import com.javiertarazaga.instasearch.presentation.view.fragment.PreferencesFragment;
 
 /**
@@ -49,13 +49,9 @@ public class MainActivity extends BaseActivity implements HasComponent<MainCompo
     bottom_nav.setOnNavigationItemSelectedListener(
         new BottomNavigationView.OnNavigationItemSelectedListener() {
           @Override public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            Log.d("Main", "Here!");
             switch (item.getItemId()) {
               case R.id.action_home:
-                switchContent(new PreferencesFragment());
-                break;
-              case R.id.action_recents:
-                switchContent(new PreferencesFragment());
+                switchContent(new MediaListFragment());
                 break;
               case R.id.action_settings:
                 switchContent(new PreferencesFragment());
