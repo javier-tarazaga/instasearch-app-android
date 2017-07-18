@@ -20,7 +20,7 @@ import com.javiertarazaga.instasearch.presentation.internal.di.modules.ActivityM
 import com.javiertarazaga.instasearch.presentation.internal.di.modules.PreferencesModule;
 import com.javiertarazaga.instasearch.presentation.internal.di.modules.UserModule;
 import com.javiertarazaga.instasearch.presentation.view.fragment.LoginFragment;
-import com.javiertarazaga.instasearch.presentation.view.fragment.PostListFragment;
+import com.javiertarazaga.instasearch.presentation.view.fragment.MediaListFragment;
 import com.javiertarazaga.instasearch.presentation.view.fragment.PreferencesFragment;
 import com.javiertarazaga.instasearch.presentation.view.fragment.SplashScreenFragment;
 import dagger.Component;
@@ -34,7 +34,7 @@ import dagger.Component;
     PreferencesModule.class})
 public interface MainComponent extends ActivityComponent {
   void inject(LoginFragment loginFragment);
-  void inject(PostListFragment postListFragment);
+  void inject(MediaListFragment mediaListFragment);
   void inject(PreferencesFragment preferencesFragment);
   void inject(SplashScreenFragment splashScreenFragment);
 }

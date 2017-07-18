@@ -20,14 +20,13 @@ import com.javiertarazaga.instasearch.domain.User;
 import com.javiertarazaga.instasearch.domain.exception.DefaultErrorBundle;
 import com.javiertarazaga.instasearch.domain.exception.ErrorBundle;
 import com.javiertarazaga.instasearch.domain.interactor.DefaultObserver;
-import com.javiertarazaga.instasearch.domain.interactor.GetUserList;
+import com.javiertarazaga.instasearch.domain.interactor.GetMediaList;
 import com.javiertarazaga.instasearch.presentation.exception.ErrorMessageFactory;
 import com.javiertarazaga.instasearch.presentation.internal.di.PerActivity;
 import com.javiertarazaga.instasearch.presentation.mapper.UserModelDataMapper;
 import com.javiertarazaga.instasearch.presentation.model.UserModel;
-import com.javiertarazaga.instasearch.presentation.view.UserListView;
+import com.javiertarazaga.instasearch.presentation.view.MediaListView;
 import java.util.Collection;
-import java.util.List;
 import javax.inject.Inject;
 
 /**
@@ -35,21 +34,21 @@ import javax.inject.Inject;
  * layer.
  */
 @PerActivity
-public class UserListPresenter implements Presenter {
+public class MediaListPresenter implements Presenter {
 
-  private UserListView viewListView;
+  private MediaListView viewListView;
 
-  private final GetUserList getUserListUseCase;
+  private final GetMediaList getMediaList;
   private final UserModelDataMapper userModelDataMapper;
 
   @Inject
-  public UserListPresenter(GetUserList getUserListUserCase,
+  public MediaListPresenter(GetMediaList getMediaList,
       UserModelDataMapper userModelDataMapper) {
-    this.getUserListUseCase = getUserListUserCase;
+    this.getMediaList = getMediaList;
     this.userModelDataMapper = userModelDataMapper;
   }
 
-  public void setView(@NonNull UserListView view) {
+  public void setView(@NonNull MediaListView view) {
     this.viewListView = view;
   }
 
@@ -58,7 +57,7 @@ public class UserListPresenter implements Presenter {
   @Override public void pause() {}
 
   @Override public void destroy() {
-    this.getUserListUseCase.dispose();
+    this.getMediaList.dispose();
     this.viewListView = null;
   }
 
@@ -111,23 +110,23 @@ public class UserListPresenter implements Presenter {
   }
 
   private void getUserList() {
-    this.getUserListUseCase.execute(new UserListObserver(), null);
+    this.getMediaList.execute(new MediaListObserver(), null);
   }
 
-  private final class UserListObserver extends DefaultObserver<List<User>> {
+  private final class MediaListObserver extends DefaultObserver<User> {
 
     @Override public void onComplete() {
-      UserListPresenter.this.hideViewLoading();
+      MediaListPresenter.this.hideViewLoading();
     }
 
     @Override public void onError(Throwable e) {
-      UserListPresenter.this.hideViewLoading();
-      UserListPresenter.this.showErrorMessage(new DefaultErrorBundle((Exception) e));
-      UserListPresenter.this.showViewRetry();
+      MediaListPresenter.this.hideViewLoading();
+      MediaListPresenter.this.showErrorMessage(new DefaultErrorBundle((Exception) e));
+      MediaListPresenter.this.showViewRetry();
     }
 
-    @Override public void onNext(List<User> users) {
-      UserListPresenter.this.showUsersCollectionInView(users);
+    @Override public void onNext(User users) {
+      //MediaListPresenter.this.showUsersCollectionInView(users);
     }
   }
 }

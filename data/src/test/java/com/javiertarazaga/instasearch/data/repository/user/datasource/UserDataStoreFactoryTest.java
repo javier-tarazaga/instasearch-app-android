@@ -64,7 +64,7 @@ public class UserDataStoreFactoryTest extends ApplicationTestCase {
     UserDataStore userDataStore = userDataStoreFactory.create(FAKE_USER_ID);
 
     assertThat(userDataStore, is(notNullValue()));
-    assertThat(userDataStore, is(instanceOf(CloudUserDataStore.class)));
+    assertThat(userDataStore, is(instanceOf(UserCloudDataStore.class)));
 
     verify(mockUserCache).isExpired();
   }

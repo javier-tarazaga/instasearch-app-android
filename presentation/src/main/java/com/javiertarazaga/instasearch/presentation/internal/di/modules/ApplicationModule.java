@@ -18,7 +18,7 @@ package com.javiertarazaga.instasearch.presentation.internal.di.modules;
 import android.content.Context;
 import android.content.SharedPreferences;
 import com.javiertarazaga.instasearch.data.cache.UserCache;
-import com.javiertarazaga.instasearch.data.cache.UserCacheImpl;
+import com.javiertarazaga.instasearch.data.cache.UserMemoryCacheImpl;
 import com.javiertarazaga.instasearch.data.executor.JobExecutor;
 import com.javiertarazaga.instasearch.data.repository.preferences.PreferencesDataRepository;
 import com.javiertarazaga.instasearch.data.repository.user.UserDataRepository;
@@ -60,7 +60,7 @@ import static android.content.Context.MODE_PRIVATE;
     return this.application.getSharedPreferences("Instasearch", MODE_PRIVATE);
   }
 
-  @Provides @Singleton UserCache provideUserCache(UserCacheImpl userCache) {
+  @Provides @Singleton UserCache provideUserCache(UserMemoryCacheImpl userCache) {
     return userCache;
   }
 

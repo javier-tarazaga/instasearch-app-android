@@ -20,7 +20,6 @@ import com.javiertarazaga.instasearch.domain.User;
 import com.javiertarazaga.instasearch.domain.exception.DefaultErrorBundle;
 import com.javiertarazaga.instasearch.domain.exception.ErrorBundle;
 import com.javiertarazaga.instasearch.domain.interactor.DefaultObserver;
-import com.javiertarazaga.instasearch.domain.interactor.GetUserList;
 import com.javiertarazaga.instasearch.presentation.exception.ErrorMessageFactory;
 import com.javiertarazaga.instasearch.presentation.internal.di.PerActivity;
 import com.javiertarazaga.instasearch.presentation.mapper.UserModelDataMapper;
@@ -37,13 +36,10 @@ public class LoginPresenter implements Presenter {
 
   private LoginView loginView;
 
-  private final GetUserList getUserListUseCase;
   private final UserModelDataMapper userModelDataMapper;
 
   @Inject
-  public LoginPresenter(GetUserList getUserListUserCase,
-      UserModelDataMapper userModelDataMapper) {
-    this.getUserListUseCase = getUserListUserCase;
+  public LoginPresenter(UserModelDataMapper userModelDataMapper) {
     this.userModelDataMapper = userModelDataMapper;
   }
 
@@ -56,7 +52,6 @@ public class LoginPresenter implements Presenter {
   @Override public void pause() {}
 
   @Override public void destroy() {
-    this.getUserListUseCase.dispose();
     this.loginView = null;
   }
 
@@ -89,10 +84,6 @@ public class LoginPresenter implements Presenter {
     String errorMessage = ErrorMessageFactory.create(this.loginView.context(),
                                                      errorBundle.getException());
     this.loginView.showError(errorMessage);
-  }
-
-  private void getUserList() {
-    this.getUserListUseCase.execute(new UserListObserver(), null);
   }
 
   private final class UserListObserver extends DefaultObserver<List<User>> {

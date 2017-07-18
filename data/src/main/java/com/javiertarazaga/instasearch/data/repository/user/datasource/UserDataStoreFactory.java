@@ -40,13 +40,13 @@ public class UserDataStoreFactory {
   }
 
   /**
-   * Create {@link UserDataStore} from a user id.
+   * Create {@link UserDataStore}
    */
-  public UserDataStore create(int userId) {
+  public UserDataStore create() {
     UserDataStore userDataStore;
 
-    if (!this.userCache.isExpired() && this.userCache.isCached(userId)) {
-      userDataStore = new DiskUserDataStore(this.userCache);
+    if (!this.userCache.isExpired() && this.userCache.isCached()) {
+      userDataStore = new UserMemoryDataStore(this.userCache);
     } else {
       userDataStore = createCloudDataStore();
     }
@@ -61,6 +61,6 @@ public class UserDataStoreFactory {
     final UserEntityJsonMapper userEntityJsonMapper = new UserEntityJsonMapper();
     final RestApi restApi = new RestApiImpl(this.context, userEntityJsonMapper);
 
-    return new CloudUserDataStore(restApi, this.userCache);
+    return new UserCloudDataStore(restApi, this.userCache);
   }
 }

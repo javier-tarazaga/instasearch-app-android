@@ -23,7 +23,6 @@ import com.javiertarazaga.instasearch.data.entity.mapper.UserEntityJsonMapper;
 import com.javiertarazaga.instasearch.data.exception.NetworkConnectionException;
 import io.reactivex.Observable;
 import java.net.MalformedURLException;
-import java.util.List;
 
 /**
  * {@link RestApi} implementation for retrieving data from the network.
@@ -47,32 +46,11 @@ public class RestApiImpl implements RestApi {
     this.userEntityJsonMapper = userEntityJsonMapper;
   }
 
-  @Override public Observable<List<UserEntity>> userEntityList() {
+  @Override public Observable<UserEntity> user() {
     return Observable.create(emitter -> {
       if (isThereInternetConnection()) {
         try {
-          String responseUserEntities = getUserEntitiesFromApi();
-          if (responseUserEntities != null) {
-            emitter.onNext(userEntityJsonMapper.transformUserEntityCollection(
-                responseUserEntities));
-            emitter.onComplete();
-          } else {
-            emitter.onError(new NetworkConnectionException());
-          }
-        } catch (Exception e) {
-          emitter.onError(new NetworkConnectionException(e.getCause()));
-        }
-      } else {
-        emitter.onError(new NetworkConnectionException());
-      }
-    });
-  }
-
-  @Override public Observable<UserEntity> userEntityById(final int userId) {
-    return Observable.create(emitter -> {
-      if (isThereInternetConnection()) {
-        try {
-          String responseUserDetails = getUserDetailsFromApi(userId);
+          String responseUserDetails = getUserFromApi();
           if (responseUserDetails != null) {
             emitter.onNext(userEntityJsonMapper.transformUserEntity(responseUserDetails));
             emitter.onComplete();
@@ -92,8 +70,8 @@ public class RestApiImpl implements RestApi {
     return ApiConnection.createGET(API_URL_GET_USER_LIST).requestSyncCall();
   }
 
-  private String getUserDetailsFromApi(int userId) throws MalformedURLException {
-    String apiUrl = API_URL_GET_USER_DETAILS + userId + ".json";
+  private String getUserFromApi() throws MalformedURLException {
+    String apiUrl = API_URL_GET_USER_DETAILS  + ".json";
     return ApiConnection.createGET(apiUrl).requestSyncCall();
   }
 

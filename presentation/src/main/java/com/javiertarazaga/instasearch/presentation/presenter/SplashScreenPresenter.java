@@ -21,7 +21,7 @@ import com.javiertarazaga.instasearch.domain.exception.DefaultErrorBundle;
 import com.javiertarazaga.instasearch.domain.exception.ErrorBundle;
 import com.javiertarazaga.instasearch.domain.exception.user.UserNeedsAuthenticationException;
 import com.javiertarazaga.instasearch.domain.interactor.DefaultObserver;
-import com.javiertarazaga.instasearch.domain.interactor.InitApp;
+import com.javiertarazaga.instasearch.domain.interactor.GetUser;
 import com.javiertarazaga.instasearch.presentation.exception.ErrorMessageFactory;
 import com.javiertarazaga.instasearch.presentation.internal.di.PerActivity;
 import com.javiertarazaga.instasearch.presentation.view.SplashScreenView;
@@ -36,11 +36,11 @@ public class SplashScreenPresenter implements Presenter {
 
   private SplashScreenView splashScreenView;
 
-  private final InitApp initApp;
+  private final GetUser getUser;
 
   @Inject
-  public SplashScreenPresenter(InitApp initApp) {
-    this.initApp = initApp;
+  public SplashScreenPresenter(GetUser getUser) {
+    this.getUser = getUser;
   }
 
   public void setView(@NonNull SplashScreenView view) {
@@ -54,7 +54,7 @@ public class SplashScreenPresenter implements Presenter {
   @Override public void pause() {}
 
   @Override public void destroy() {
-    this.initApp.dispose();
+    this.getUser.dispose();
     this.splashScreenView = null;
   }
 
@@ -90,7 +90,7 @@ public class SplashScreenPresenter implements Presenter {
   private void initApp() {
     this.hideViewRetry();
     this.showViewLoading();
-    this.initApp.execute(new IsUserAuthenticatedObserver(), null);
+    this.getUser.execute(new IsUserAuthenticatedObserver(), null);
   }
 
   private void goToMainView() {

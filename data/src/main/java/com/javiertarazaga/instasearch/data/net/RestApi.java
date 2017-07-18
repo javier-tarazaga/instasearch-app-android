@@ -17,7 +17,6 @@ package com.javiertarazaga.instasearch.data.net;
 
 import com.javiertarazaga.instasearch.data.entity.UserEntity;
 import io.reactivex.Observable;
-import java.util.List;
 
 /**
  * RestApi for retrieving data from the network.
@@ -32,14 +31,7 @@ public interface RestApi {
   String API_URL_GET_USER_DETAILS = API_BASE_URL + "user_";
 
   /**
-   * Retrieves an {@link Observable} which will emit a List of {@link UserEntity}.
-   */
-  Observable<List<UserEntity>> userEntityList();
-
-  /**
    * Retrieves an {@link Observable} which will emit a {@link UserEntity}.
-   *
-   * @param userId The user id used to get user data.
    */
-  Observable<UserEntity> userEntityById(final int userId);
+  Observable<UserEntity> user();
 }

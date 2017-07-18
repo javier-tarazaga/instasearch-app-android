@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,43 +16,32 @@
 package com.javiertarazaga.instasearch.domain.interactor;
 
 import com.javiertarazaga.instasearch.domain.User;
+import com.javiertarazaga.instasearch.domain.exception.user.UserException;
+import com.javiertarazaga.instasearch.domain.exception.user.UserNeedsAuthenticationException;
 import com.javiertarazaga.instasearch.domain.executor.PostExecutionThread;
 import com.javiertarazaga.instasearch.domain.executor.ThreadExecutor;
 import com.javiertarazaga.instasearch.domain.repository.UserRepository;
-import com.fernandocejas.arrow.checks.Preconditions;
 import io.reactivex.Observable;
 import javax.inject.Inject;
 
 /**
- * This class is an implementation of {@link UseCase} that represents a use case for
- * retrieving data related to an specific {@link User}.
+ * Interactor that checks if the user is authenticated. If the User has been logged in already it
+ * will return the cached user. If there is no valid cache it will use the last sessions token if it
+ * is stored to attempt to authenticate the user. In the case where the last session token is
+ * invalid it will emit an {@link UserNeedsAuthenticationException}.
+ * When an unknown error occurs it will emit an {@link UserException}
  */
-public class GetUserDetails extends UseCase<User, GetUserDetails.Params> {
+public class GetUser extends UseCase<User, Void> {
 
   private final UserRepository userRepository;
 
-  @Inject
-  GetUserDetails(UserRepository userRepository, ThreadExecutor threadExecutor,
+  @Inject GetUser(UserRepository userRepository, ThreadExecutor threadExecutor,
       PostExecutionThread postExecutionThread) {
     super(threadExecutor, postExecutionThread);
     this.userRepository = userRepository;
   }
 
-  @Override Observable<User> buildUseCaseObservable(Params params) {
-    Preconditions.checkNotNull(params);
-    return this.userRepository.user(params.userId);
-  }
-
-  public static final class Params {
-
-    private final int userId;
-
-    private Params(int userId) {
-      this.userId = userId;
-    }
-
-    public static Params forUser(int userId) {
-      return new Params(userId);
-    }
+  @Override Observable<User> buildUseCaseObservable(Void unused) {
+    return this.userRepository.user();
   }
 }

@@ -18,8 +18,8 @@ package com.javiertarazaga.instasearch.test.presenter;
 import android.content.Context;
 import com.javiertarazaga.instasearch.domain.interactor.GetUserList;
 import com.javiertarazaga.instasearch.presentation.mapper.UserModelDataMapper;
-import com.javiertarazaga.instasearch.presentation.presenter.UserListPresenter;
-import com.javiertarazaga.instasearch.presentation.view.UserListView;
+import com.javiertarazaga.instasearch.presentation.presenter.MediaListPresenter;
+import com.javiertarazaga.instasearch.presentation.view.MediaListView;
 import io.reactivex.observers.DisposableObserver;
 import org.junit.Before;
 import org.junit.Test;
@@ -32,30 +32,30 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
-public class UserListPresenterTest {
+public class MediaListPresenterTest {
 
-  private UserListPresenter userListPresenter;
+  private MediaListPresenter mediaListPresenter;
 
   @Mock private Context mockContext;
-  @Mock private UserListView mockUserListView;
+  @Mock private MediaListView mockMediaListView;
   @Mock private GetUserList mockGetUserList;
   @Mock private UserModelDataMapper mockUserModelDataMapper;
 
   @Before
   public void setUp() {
-    userListPresenter = new UserListPresenter(mockGetUserList, mockUserModelDataMapper);
-    userListPresenter.setView(mockUserListView);
+    mediaListPresenter = new MediaListPresenter(mockGetUserList, mockUserModelDataMapper);
+    mediaListPresenter.setView(mockMediaListView);
   }
 
   @Test
   @SuppressWarnings("unchecked")
   public void testUserListPresenterInitialize() {
-    given(mockUserListView.context()).willReturn(mockContext);
+    given(mockMediaListView.context()).willReturn(mockContext);
 
-    userListPresenter.initialize();
+    mediaListPresenter.initialize();
 
-    verify(mockUserListView).hideRetry();
-    verify(mockUserListView).showLoading();
+    verify(mockMediaListView).hideRetry();
+    verify(mockMediaListView).showLoading();
     verify(mockGetUserList).execute(any(DisposableObserver.class), any(Void.class));
   }
 }

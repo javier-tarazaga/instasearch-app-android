@@ -20,17 +20,17 @@ import butterknife.OnClick;
 import com.javiertarazaga.instasearch.presentation.R;
 import com.javiertarazaga.instasearch.presentation.internal.di.components.UserComponent;
 import com.javiertarazaga.instasearch.presentation.model.UserModel;
-import com.javiertarazaga.instasearch.presentation.presenter.UserListPresenter;
-import com.javiertarazaga.instasearch.presentation.view.UserListView;
-import com.javiertarazaga.instasearch.presentation.view.adapter.UsersAdapter;
-import com.javiertarazaga.instasearch.presentation.view.adapter.UsersLayoutManager;
+import com.javiertarazaga.instasearch.presentation.presenter.MediaListPresenter;
+import com.javiertarazaga.instasearch.presentation.view.MediaListView;
+import com.javiertarazaga.instasearch.presentation.view.adapter.MediasAdapter;
+import com.javiertarazaga.instasearch.presentation.view.adapter.MediasLayoutManager;
 import java.util.Collection;
 import javax.inject.Inject;
 
 /**
  * Fragment that shows a list of Users.
  */
-public class PostListFragment extends BaseFragment implements UserListView {
+public class MediaListFragment extends BaseFragment implements MediaListView {
 
   /**
    * Interface for listening user list events.
@@ -39,8 +39,8 @@ public class PostListFragment extends BaseFragment implements UserListView {
     void onUserClicked(final UserModel userModel);
   }
 
-  @Inject UserListPresenter userListPresenter;
-  @Inject UsersAdapter usersAdapter;
+  @Inject MediaListPresenter mediaListPresenter;
+  @Inject MediasAdapter mediasAdapter;
 
   @Bind(R.id.rv_users) RecyclerView rv_users;
   @Bind(R.id.rl_progress) RelativeLayout rl_progress;
@@ -49,7 +49,7 @@ public class PostListFragment extends BaseFragment implements UserListView {
 
   private UserListListener userListListener;
 
-  public PostListFragment() {
+  public MediaListFragment() {
     setRetainInstance(true);
   }
 
@@ -75,7 +75,7 @@ public class PostListFragment extends BaseFragment implements UserListView {
 
   @Override public void onViewCreated(View view, Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
-    this.userListPresenter.setView(this);
+    this.mediaListPresenter.setView(this);
     if (savedInstanceState == null) {
       this.loadUserList();
     }
@@ -83,12 +83,12 @@ public class PostListFragment extends BaseFragment implements UserListView {
 
   @Override public void onResume() {
     super.onResume();
-    this.userListPresenter.resume();
+    this.mediaListPresenter.resume();
   }
 
   @Override public void onPause() {
     super.onPause();
-    this.userListPresenter.pause();
+    this.mediaListPresenter.pause();
   }
 
   @Override public void onDestroyView() {
@@ -99,7 +99,7 @@ public class PostListFragment extends BaseFragment implements UserListView {
 
   @Override public void onDestroy() {
     super.onDestroy();
-    this.userListPresenter.destroy();
+    this.mediaListPresenter.destroy();
   }
 
   @Override public void onDetach() {
@@ -127,7 +127,7 @@ public class PostListFragment extends BaseFragment implements UserListView {
 
   @Override public void renderUserList(Collection<UserModel> userModelCollection) {
     if (userModelCollection != null) {
-      this.usersAdapter.setUsersCollection(userModelCollection);
+      this.mediasAdapter.setUsersCollection(userModelCollection);
     }
   }
 
@@ -146,27 +146,27 @@ public class PostListFragment extends BaseFragment implements UserListView {
   }
 
   private void setupRecyclerView() {
-    this.usersAdapter.setOnItemClickListener(onItemClickListener);
-    this.rv_users.setLayoutManager(new UsersLayoutManager(context()));
-    this.rv_users.setAdapter(usersAdapter);
+    this.mediasAdapter.setOnItemClickListener(onItemClickListener);
+    this.rv_users.setLayoutManager(new MediasLayoutManager(context()));
+    this.rv_users.setAdapter(mediasAdapter);
   }
 
   /**
    * Loads all users.
    */
   private void loadUserList() {
-    this.userListPresenter.initialize();
+    this.mediaListPresenter.initialize();
   }
 
   @OnClick(R.id.bt_retry) void onButtonRetryClick() {
-    PostListFragment.this.loadUserList();
+    MediaListFragment.this.loadUserList();
   }
 
-  private UsersAdapter.OnItemClickListener onItemClickListener =
-      new UsersAdapter.OnItemClickListener() {
+  private MediasAdapter.OnItemClickListener onItemClickListener =
+      new MediasAdapter.OnItemClickListener() {
         @Override public void onUserItemClicked(UserModel userModel) {
-          if (PostListFragment.this.userListPresenter != null && userModel != null) {
-            PostListFragment.this.userListPresenter.onUserClicked(userModel);
+          if (MediaListFragment.this.mediaListPresenter != null && userModel != null) {
+            MediaListFragment.this.mediaListPresenter.onUserClicked(userModel);
           }
         }
       };

@@ -21,7 +21,6 @@ import com.javiertarazaga.instasearch.data.repository.user.datasource.UserDataSt
 import com.javiertarazaga.instasearch.domain.User;
 import com.javiertarazaga.instasearch.domain.repository.UserRepository;
 import io.reactivex.Observable;
-import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -50,18 +49,8 @@ public class UserDataRepository implements UserRepository {
     return null;
   }
 
-  @Override public Observable<List<User>> users() {
-    //we always get all users from the cloud
-    final UserDataStore userDataStore = this.userDataStoreFactory.createCloudDataStore();
-    return userDataStore.userEntityList().map(this.userEntityDataMapper::transform);
-  }
-
-  @Override public Observable<User> user(int userId) {
-    final UserDataStore userDataStore = this.userDataStoreFactory.create(userId);
-    return userDataStore.userEntityDetails(userId).map(this.userEntityDataMapper::transform);
-  }
-
   @Override public Observable<User> user() {
-    return Observable.create(emitter -> emitter.onError(new RuntimeException("TODO!")));
+    final UserDataStore userDataStore = this.userDataStoreFactory.create();
+    return userDataStore.user().map(this.userEntityDataMapper::transform);
   }
 }

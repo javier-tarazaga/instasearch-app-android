@@ -23,7 +23,7 @@ import javax.inject.Inject;
 /**
  * Adaptar that manages a collection of {@link UserModel}.
  */
-public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UserViewHolder> {
+public class MediasAdapter extends RecyclerView.Adapter<MediasAdapter.UserViewHolder> {
 
   public interface OnItemClickListener {
     void onUserItemClicked(UserModel userModel);
@@ -34,8 +34,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UserViewHold
 
   private OnItemClickListener onItemClickListener;
 
-  @Inject
-  UsersAdapter(Context context) {
+  @Inject MediasAdapter(Context context) {
     this.layoutInflater =
         (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     this.usersCollection = Collections.emptyList();
@@ -55,8 +54,8 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UserViewHold
     holder.tv_username.setText(userModel.getFullName());
     holder.itemView.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
-        if (UsersAdapter.this.onItemClickListener != null) {
-          UsersAdapter.this.onItemClickListener.onUserItemClicked(userModel);
+        if (MediasAdapter.this.onItemClickListener != null) {
+          MediasAdapter.this.onItemClickListener.onUserItemClicked(userModel);
         }
       }
     });

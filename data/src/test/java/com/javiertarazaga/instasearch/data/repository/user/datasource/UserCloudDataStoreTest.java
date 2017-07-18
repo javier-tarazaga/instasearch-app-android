@@ -29,23 +29,23 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
-public class CloudUserDataStoreTest {
+public class UserCloudDataStoreTest {
 
   private static final int FAKE_USER_ID = 765;
 
-  private CloudUserDataStore cloudUserDataStore;
+  private UserCloudDataStore userCloudDataStore;
 
   @Mock private RestApi mockRestApi;
   @Mock private UserCache mockUserCache;
 
   @Before
   public void setUp() {
-    cloudUserDataStore = new CloudUserDataStore(mockRestApi, mockUserCache);
+    userCloudDataStore = new UserCloudDataStore(mockRestApi, mockUserCache);
   }
 
   @Test
   public void testGetUserEntityListFromApi() {
-    cloudUserDataStore.userEntityList();
+    userCloudDataStore.userEntityList();
     verify(mockRestApi).userEntityList();
   }
 
@@ -55,7 +55,7 @@ public class CloudUserDataStoreTest {
     Observable<UserEntity> fakeObservable = Observable.just(fakeUserEntity);
     given(mockRestApi.userEntityById(FAKE_USER_ID)).willReturn(fakeObservable);
 
-    cloudUserDataStore.userEntityDetails(FAKE_USER_ID);
+    userCloudDataStore.userEntityDetails(FAKE_USER_ID);
 
     verify(mockRestApi).userEntityById(FAKE_USER_ID);
   }

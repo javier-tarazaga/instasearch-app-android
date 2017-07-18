@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,8 +16,8 @@
 package com.javiertarazaga.instasearch.domain.repository;
 
 import com.javiertarazaga.instasearch.domain.User;
+import com.javiertarazaga.instasearch.domain.exception.user.UserNeedsAuthenticationException;
 import io.reactivex.Observable;
-import java.util.List;
 
 /**
  * Interface that represents a Repository for getting {@link User} related data.
@@ -33,19 +33,10 @@ public interface UserRepository {
   Observable<User> login(final String userName, final String password);
 
   /**
-   * Get an {@link Observable} which will emit a List of {@link User}.
-   */
-  Observable<List<User>> users();
-
-  /**
-   * Get an {@link Observable} which will emit a {@link User}.
+   * Get and observable that will emit a {@link User} or a {@link UserNeedsAuthenticationException}
+   * if the last token session is invalid.
    *
-   * @param userId The user id used to retrieve user data.
-   */
-  Observable<User> user(final int userId);
-
-  /**
-   * Get an {@link Observable} which will emit a {@link User}.
+   * @return {@link Observable}&lt;{@link User}&gt;
    */
   Observable<User> user();
 }

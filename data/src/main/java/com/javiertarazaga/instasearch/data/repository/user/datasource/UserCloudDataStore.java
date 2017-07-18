@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -17,31 +17,29 @@ package com.javiertarazaga.instasearch.data.repository.user.datasource;
 
 import com.javiertarazaga.instasearch.data.cache.UserCache;
 import com.javiertarazaga.instasearch.data.entity.UserEntity;
+import com.javiertarazaga.instasearch.data.net.RestApi;
 import io.reactivex.Observable;
-import java.util.List;
 
 /**
- * {@link UserDataStore} implementation based on file system data store.
+ * {@link UserDataStore} implementation based on connections to the api (Cloud).
  */
-class DiskUserDataStore implements UserDataStore {
+class UserCloudDataStore implements UserDataStore {
 
+  private final RestApi restApi;
   private final UserCache userCache;
 
   /**
-   * Construct a {@link UserDataStore} based file system data store.
+   * Construct a {@link UserDataStore} based on connections to the api (Cloud).
    *
+   * @param restApi The {@link RestApi} implementation to use.
    * @param userCache A {@link UserCache} to cache data retrieved from the api.
    */
-  DiskUserDataStore(UserCache userCache) {
+  UserCloudDataStore(RestApi restApi, UserCache userCache) {
+    this.restApi = restApi;
     this.userCache = userCache;
   }
 
-  @Override public Observable<List<UserEntity>> userEntityList() {
-    //TODO: implement simple cache for storing/retrieving collections of users.
-    throw new UnsupportedOperationException("Operation is not available!!!");
-  }
-
-  @Override public Observable<UserEntity> userEntityDetails(final int userId) {
-     return this.userCache.get(userId);
+  @Override public Observable<UserEntity> user() {
+    return this.restApi.user().doOnNext(UserCloudDataStore.this.userCache::put);
   }
 }
