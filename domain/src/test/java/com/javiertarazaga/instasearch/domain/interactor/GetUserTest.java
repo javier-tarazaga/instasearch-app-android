@@ -17,7 +17,6 @@ package com.javiertarazaga.instasearch.domain.interactor;
 
 import com.javiertarazaga.instasearch.domain.executor.PostExecutionThread;
 import com.javiertarazaga.instasearch.domain.executor.ThreadExecutor;
-import com.javiertarazaga.instasearch.domain.interactor.GetUserDetails.Params;
 import com.javiertarazaga.instasearch.domain.repository.UserRepository;
 import org.junit.Before;
 import org.junit.Rule;
@@ -32,11 +31,9 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.verifyZeroInteractions;
 
 @RunWith(MockitoJUnitRunner.class)
-public class GetUserDetailsTest {
+public class GetUserTest {
 
-  private static final int USER_ID = 123;
-
-  private GetUserDetails getUserDetails;
+  private GetUser getUser;
 
   @Mock private UserRepository mockUserRepository;
   @Mock private ThreadExecutor mockThreadExecutor;
@@ -46,23 +43,16 @@ public class GetUserDetailsTest {
 
   @Before
   public void setUp() {
-    getUserDetails = new GetUserDetails(mockUserRepository, mockThreadExecutor,
-        mockPostExecutionThread);
+    getUser = new GetUser(mockUserRepository, mockThreadExecutor, mockPostExecutionThread);
   }
 
   @Test
-  public void testGetUserDetailsUseCaseObservableHappyCase() {
-    getUserDetails.buildUseCaseObservable(Params.forUser(USER_ID));
+  public void testGetMaxDistanceUseCaseObservableHappyCase() {
+    getUser.buildUseCaseObservable(null);
 
-    verify(mockUserRepository).user(USER_ID);
+    verify(mockUserRepository).user();
     verifyNoMoreInteractions(mockUserRepository);
     verifyZeroInteractions(mockPostExecutionThread);
     verifyZeroInteractions(mockThreadExecutor);
-  }
-
-  @Test
-  public void testShouldFailWhenNoOrEmptyParameters() {
-    expectedException.expect(NullPointerException.class);
-    getUserDetails.buildUseCaseObservable(null);
   }
 }

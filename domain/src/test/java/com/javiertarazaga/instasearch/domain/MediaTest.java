@@ -20,21 +20,21 @@ import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class UserTest {
+public class MediaTest {
 
-  private static final String FAKE_USER_ID = "123";
+  private static final String FAKE_MEDIA_ID = "123";
 
-  private User user;
+  private Media media;
 
   @Before
   public void setUp() {
-    user = new User(FAKE_USER_ID);
+    media = new Media(FAKE_MEDIA_ID);
   }
 
   @Test
-  public void testUserConstructorHappyCase() {
-    final String userId = user.getUserId();
+  public void testMediaConstructorHappyCase() {
+    final String mediaId = media.getMediaId();
 
-    assertThat(userId).isEqualTo(FAKE_USER_ID);
+    assertThat(mediaId).isEqualTo(FAKE_MEDIA_ID);
   }
 }

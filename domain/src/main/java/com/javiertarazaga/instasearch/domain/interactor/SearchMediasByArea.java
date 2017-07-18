@@ -32,6 +32,9 @@ import javax.inject.Inject;
  */
 public class SearchMediasByArea extends UseCase<List<Media>, Void> {
 
+  static final double LAT_HOME = 39.470574;
+  static final double LNG_HOME = -0.365920;
+
   private final PreferencesRepository preferencesRepository;
   private final MediaRepository mediaRepository;
 
@@ -46,8 +49,9 @@ public class SearchMediasByArea extends UseCase<List<Media>, Void> {
   @Override Observable<List<Media>> buildUseCaseObservable(Void aVoid) {
     return this.preferencesRepository.getDistance()
         .flatMap(new Function<Integer, ObservableSource<List<Media>>>() {
-          @Override public ObservableSource<List<Media>> apply(Integer maxDistance) throws Exception {
-            return SearchMediasByArea.this.mediaRepository.searchByArea(39.470574, -0.365920,
+          @Override public ObservableSource<List<Media>> apply(Integer maxDistance)
+              throws Exception {
+            return SearchMediasByArea.this.mediaRepository.searchByArea(LAT_HOME, LNG_HOME,
                 maxDistance);
           }
         });
