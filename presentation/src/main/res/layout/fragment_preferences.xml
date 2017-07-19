@@ -8,10 +8,11 @@
 
   <TextView
       android:id="@+id/header_preferences"
-      style="@style/Theme.InstaSearch.ViewMainHeader"
+      style="@style/Theme.InstaSearch.ViewPreferencesHeader"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:textAllCaps="false"
+      android:text="@string/activity_title_preferences"
       tools:text="Preferences"
       />
 
