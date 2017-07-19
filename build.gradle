@@ -1,7 +1,7 @@
 // Manifest version information!
-def versionMajor = 0
+def versionMajor = 1
 def versionMinor = 0
-def versionPatch = 4
+def versionPatch = 0
 def versionCodeApp = versionMajor * 10000 + versionMinor * 1000 + versionPatch * 100
 
 apply from: 'buildsystem/ci.gradle'

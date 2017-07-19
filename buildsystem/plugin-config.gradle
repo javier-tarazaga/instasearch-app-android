@@ -14,7 +14,7 @@ hockeyapp {
     status = 2
     notesType = 1
     apiToken = "5bd88f774e5f41e9ad40f66d28926d01"
-    // notes = rootProject.file('mobile/CHANGELOG.md').getText('UTF-8')
+    notes = rootProject.file('CHANGELOG.md').getText('UTF-8')
     variantToApplicationId = [
         "debug": "c6720c02a0b943b588aac446fd995a34"
     ]
