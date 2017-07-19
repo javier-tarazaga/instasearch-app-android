@@ -1,5 +1,8 @@
 InstaSearch Application [![CircleCI](https://circleci.com/gh/javier-tarazaga/instasearch-app-android.svg?style=shield)](https://circleci.com/gh/javier-tarazaga/instasearch-app-android)
 =========================
+Simple app where people can see what Instagram post have been posted near their area.
+
+As a result from the search, the app displays posts from the area. The search is by default to 500 meters around the users current location but the app allows the user to extend the search radius.
 
 Changelog Version 1.0.0
 --------
