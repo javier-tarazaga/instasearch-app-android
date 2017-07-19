@@ -55,6 +55,6 @@ import static org.mockito.Mockito.verify;
 
     this.sharedPreferencesDataStore.saveDistance(FAKE_DISTANCE);
     verify(mockSharedPreferencesEditor).putInt("distance", FAKE_DISTANCE);
-    verify(mockSharedPreferencesEditor).apply();
+    verify(mockSharedPreferencesEditor).commit();
   }
 }
