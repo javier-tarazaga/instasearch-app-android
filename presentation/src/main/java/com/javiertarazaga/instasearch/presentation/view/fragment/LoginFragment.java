@@ -8,6 +8,7 @@ package com.javiertarazaga.instasearch.presentation.view.fragment;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,6 +40,7 @@ public class LoginFragment extends BaseFragment implements LoginView {
 
   @Inject LoginPresenter loginPresenter;
 
+  @Bind(R.id.tb_login) Toolbar toolbar;
   @Bind(R.id.rl_progress) RelativeLayout rl_progress;
   @Bind(R.id.rl_retry) RelativeLayout rl_retry;
   @Bind(R.id.wv_login) WebView wv_login;
@@ -66,7 +68,7 @@ public class LoginFragment extends BaseFragment implements LoginView {
       Bundle savedInstanceState) {
     final View fragmentView = inflater.inflate(R.layout.fragment_login, container, false);
     ButterKnife.bind(this, fragmentView);
-    initWebView();
+    initView();
     return fragmentView;
   }
 
@@ -140,6 +142,15 @@ public class LoginFragment extends BaseFragment implements LoginView {
 
   @Override public Context context() {
     return this.getActivity().getApplicationContext();
+  }
+
+  private void initView() {
+    initToolbar();
+    initWebView();
+  }
+
+  private void initToolbar() {
+    toolbar.setTitle(getString(R.string.activity_title_login));
   }
 
   private void initWebView() {

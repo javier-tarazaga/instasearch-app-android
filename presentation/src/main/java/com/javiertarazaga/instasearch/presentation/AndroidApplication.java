@@ -33,6 +33,12 @@ public class AndroidApplication extends Application {
   @Override public void onCreate() {
     super.onCreate();
 
+    if (LeakCanary.isInAnalyzerProcess(this)) {
+      // This process is dedicated to LeakCanary for heap analysis.
+      // You should not init your app in this process.
+      return;
+    }
+
     this.initializeCrashReporting();
     this.initializeInjector();
     this.initializeLeakDetection();
@@ -53,8 +59,6 @@ public class AndroidApplication extends Application {
   }
 
   private void initializeLeakDetection() {
-    if (BuildConfig.DEBUG) {
-      LeakCanary.install(this);
-    }
+    LeakCanary.install(this);
   }
 }

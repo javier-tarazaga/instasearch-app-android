@@ -95,7 +95,7 @@ dependencies {
   compile presentationDependencies.rxJava
   compile presentationDependencies.rxAndroid
   provided presentationDependencies.javaxAnnotation
-  compile (presentationDependencies.crashalytics) {
+  compile(presentationDependencies.crashalytics) {
     transitive = true;
   }
   compile presentationDependencies.picasso
@@ -107,7 +107,9 @@ dependencies {
   androidTestCompile presentationTestDependencies.testingSupportLib
 
   //Development
-  compile developmentDependencies.leakCanary
+  debugCompile developmentDependencies.leakCanary
+  releaseCompile developmentDependencies.leakCanaryNoOp
+  testCompile developmentDependencies.leakCanaryNoOp
 }
 
 task publishToHockey(type: Exec) {

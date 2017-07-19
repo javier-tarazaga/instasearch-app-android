@@ -4,10 +4,15 @@
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
+  <include
+      android:id="@+id/tb_login"
+      layout="@layout/toolbar"/>
+
   <WebView
       android:id="@+id/wv_login"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
+      android:layout_below="@+id/tb_login"
       />
 
   <include layout="@layout/view_progress"/>
