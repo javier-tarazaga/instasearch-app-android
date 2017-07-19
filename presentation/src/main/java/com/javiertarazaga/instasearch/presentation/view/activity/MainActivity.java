@@ -81,6 +81,6 @@ public class MainActivity extends BaseActivity implements HasComponent<MainCompo
   }
 
   @Override public void logoutSuccessful() {
-    this.navigator.navigateToSplashScreen(this);
+    this.navigator.navigateToLogin(this);
   }
 }

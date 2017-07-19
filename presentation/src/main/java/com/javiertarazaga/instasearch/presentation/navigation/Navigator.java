@@ -17,10 +17,8 @@ package com.javiertarazaga.instasearch.presentation.navigation;
 
 import android.content.Context;
 import android.content.Intent;
-import com.jakewharton.processphoenix.ProcessPhoenix;
 import com.javiertarazaga.instasearch.presentation.view.activity.LoginActivity;
 import com.javiertarazaga.instasearch.presentation.view.activity.MainActivity;
-import com.javiertarazaga.instasearch.presentation.view.activity.SplashScreenActivity;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -36,16 +34,14 @@ public class Navigator {
   }
 
   /**
-   * Goes to the splash screen.
+   * Goes to the login screen.
    *
    * @param context A Context needed to open the destiny activity.
    */
-  public void navigateToSplashScreen(Context context) {
+  public void navigateToLogin(Context context) {
     if (context != null) {
-      Intent intentToLaunch = SplashScreenActivity.getCallingIntent(context);
-      // BOOM! Lets kill completely the app just to make sure. Maybe a bit drastic for a production
-      // app  but will work for now.
-      ProcessPhoenix.triggerRebirth(context, intentToLaunch);
+      Intent intentToLaunch = LoginActivity.getCallingIntent(context);
+      context.startActivity(intentToLaunch);
     }
   }
 

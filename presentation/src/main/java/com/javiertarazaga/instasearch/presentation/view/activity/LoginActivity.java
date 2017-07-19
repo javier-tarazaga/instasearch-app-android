@@ -49,5 +49,6 @@ public class LoginActivity extends BaseActivity implements HasComponent<UserComp
 
   @Override public void loginSuccessful() {
     this.navigator.navigateToMainView(this);
+    this.finish();
   }
 }

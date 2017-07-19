@@ -8,7 +8,6 @@ package com.javiertarazaga.instasearch.presentation.view.fragment;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.RequiresApi;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -109,7 +108,7 @@ public class LoginFragment extends BaseFragment implements LoginView {
     wv_login.loadUrl(url);
   }
 
-  @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP) @Override public void loginSuccessful() {
+  @Override public void loginSuccessful() {
     // Make sure we don't get any info cached here, otherwise the app does not manage to logout
     // correctly. We will manage the access_token ourselves.
     this.clearWebView();
@@ -148,8 +147,6 @@ public class LoginFragment extends BaseFragment implements LoginView {
     wv_login.setWebViewClient(new WebViewClient() {
 
       @Override public boolean shouldOverrideUrlLoading(WebView view, String url) {
-
-        // TODO - Fix double shouldOverrideUrlLoading call
         return LoginFragment.this.loginPresenter.shouldOverrideUrlLoading(url)
             && super.shouldOverrideUrlLoading(view, url);
       }
@@ -161,11 +158,23 @@ public class LoginFragment extends BaseFragment implements LoginView {
   }
 
   private void clearWebView() {
+
+    // For some weird reason seems url loading gets called twice after login. This will fix this
+    // issue for now.
+    wv_login.setWebViewClient(new WebViewClient() {
+      @Override public boolean shouldOverrideUrlLoading(WebView view, String url) {
+        return super.shouldOverrideUrlLoading(view, url);
+      }
+    });
     wv_login.clearCache(true);
     wv_login.clearFormData();
     wv_login.clearHistory();
 
-    // This one seems to do the trick ¯\_(ツ)_/¯
+    this.clearCookies();
+  }
+
+  private void clearCookies() {
+    // This one seems to do the trick ¯\_(ツ)_/¯ to not hold the login state in the wv
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
       CookieManager.getInstance().removeAllCookies(null);
     } else {
