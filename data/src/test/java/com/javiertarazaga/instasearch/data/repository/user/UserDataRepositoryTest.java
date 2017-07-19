@@ -44,17 +44,15 @@ public class UserDataRepositoryTest {
   @Before
   public void setUp() {
     userDataRepository = new UserDataRepository(mockUserDataStoreFactory, mockUserEntityDataMapper);
-    given(mockUserDataStoreFactory.create()).willReturn(mockUserDataStore);
-    given(mockUserDataStoreFactory.createCloudDataStore()).willReturn(mockUserDataStore);
+    given(mockUserDataStoreFactory.createSharedDataStore()).willReturn(mockUserDataStore);
   }
 
   @Test
-  public void testGetUserHappyCase() {
-    UserEntity userEntity = new UserEntity();
-    given(mockUserDataStore.user()).willReturn(Observable.just(userEntity));
-    userDataRepository.user();
+  public void testLogoutHappyCase() {
+    given(mockUserDataStore.logout()).willReturn(Observable.just(true));
+    userDataRepository.logout();
 
-    verify(mockUserDataStoreFactory).create();
-    verify(mockUserDataStore).user();
+    verify(mockUserDataStoreFactory).createSharedDataStore();
+    verify(mockUserDataStore).logout();
   }
 }

@@ -45,7 +45,8 @@ public class MediaListPresenterTest {
   @Test
   @SuppressWarnings("unchecked")
   public void testMediaListPresenterInitialize() {
-    // TODO - Weird issue with unknown source and proxy?
+    // TODO - Weird issue with unknown source and proxy? Does not work right now but you can get the
+    // point
     //given(mockMediaListView.context()).willReturn(mockContext);
     //
     //mediaListPresenter.initialize();

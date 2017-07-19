@@ -69,4 +69,11 @@ import javax.inject.Singleton;
 
     return new UserCloudDataStore(restApi, this.userCache);
   }
+
+  /**
+   * Create {@link UserDataStore} to handle data from the SharedPrefs.
+   */
+  public UserDataStore createSharedDataStore() {
+    return new UserSharedDataStore(this.sharedPreferences);
+  }
 }

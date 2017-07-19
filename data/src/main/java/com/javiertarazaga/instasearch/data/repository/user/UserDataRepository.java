@@ -49,4 +49,9 @@ public class UserDataRepository implements UserRepository {
     final UserDataStore userDataStore = this.userDataStoreFactory.create();
     return userDataStore.user().map(this.userEntityDataMapper::transform);
   }
+
+  @Override public Observable<Boolean> logout() {
+    final UserDataStore userDataStore = this.userDataStoreFactory.createSharedDataStore();
+    return userDataStore.logout();
+  }
 }

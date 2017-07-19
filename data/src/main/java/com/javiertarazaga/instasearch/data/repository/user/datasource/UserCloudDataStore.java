@@ -42,4 +42,8 @@ class UserCloudDataStore implements UserDataStore {
   @Override public Observable<UserEntity> user() {
     return this.restApi.user().doOnNext(UserCloudDataStore.this.userCache::put);
   }
+
+  @Override public Observable<Boolean> logout() {
+    throw new RuntimeException("Not implemented!");
+  }
 }

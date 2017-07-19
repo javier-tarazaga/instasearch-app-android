@@ -69,10 +69,6 @@ public class PreferencesPresenter implements Presenter {
     this.getMaxDistance.execute(new DistanceObserver(), null);
   }
 
-  private void updateDistance(int distance) {
-    this.preferencesView.updateDistance(distance);
-  }
-
   public void setDistance(int distance) {
     if (distance >= 1000) {
       float distanceKm = (float) distance / 1000;
@@ -80,6 +76,14 @@ public class PreferencesPresenter implements Presenter {
     } else {
       this.preferencesView.setDistanceInM(distance);
     }
+  }
+
+  public void logoutClicked() {
+
+  }
+
+  private void updateDistance(int distance) {
+    this.preferencesView.updateDistance(distance);
   }
 
   private final class DistanceObserver extends DefaultObserver<Integer> {

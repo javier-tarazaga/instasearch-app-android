@@ -14,6 +14,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import com.javiertarazaga.instasearch.presentation.R;
 import com.javiertarazaga.instasearch.presentation.internal.di.components.MainComponent;
 import com.javiertarazaga.instasearch.presentation.presenter.PreferencesPresenter;
@@ -133,5 +134,9 @@ public class PreferencesFragment extends BaseFragment implements PreferencesView
 
   private void saveDistance(int distance) {
     this.presenter.saveDistance(distance);
+  }
+
+  @OnClick(R.id.bt_logout) void onButtonLogoutClick() {
+    this.presenter.logoutClicked();
   }
 }

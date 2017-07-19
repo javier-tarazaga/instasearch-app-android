@@ -15,23 +15,29 @@
  */
 package com.javiertarazaga.instasearch.data.repository.user.datasource;
 
+import android.content.SharedPreferences;
 import com.javiertarazaga.instasearch.data.entity.UserEntity;
 import io.reactivex.Observable;
 
 /**
- * Interface that represents a data store from where data is retrieved.
+ * {@link UserDataStore} based on connections to the shared preferences
  */
-public interface UserDataStore {
+class UserSharedDataStore implements UserDataStore {
+
+  private final SharedPreferences sharedPreferences;
 
   /**
-   * @return An {@link Observable<UserEntity>} that emits a User
+   * Construct a {@link UserDataStore} based shared preferences
    */
-  Observable<UserEntity> user();
+  UserSharedDataStore(SharedPreferences sharedPreferences) {
+    this.sharedPreferences = sharedPreferences;
+  }
 
-  /**
-   * Get and observable that will emit a {@link Boolean} once logged out from the api
-   *
-   * @return {@link Observable}&lt;{@link Boolean}&gt;
-   */
-  Observable<Boolean> logout();
+  @Override public Observable<UserEntity> user() {
+    throw new RuntimeException("Not implemented!");
+  }
+
+  @Override public Observable<Boolean> logout() {
+    return Observable.just(this.sharedPreferences.edit().remove("access_token").commit());
+  }
 }

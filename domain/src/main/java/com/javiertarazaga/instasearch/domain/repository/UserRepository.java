@@ -31,4 +31,11 @@ public interface UserRepository {
    * @return {@link Observable}&lt;{@link User}&gt;
    */
   Observable<User> user();
+
+  /**
+   * Get and observable that will emit a {@link Boolean} once logged out from the api
+   *
+   * @return {@link Observable}&lt;{@link Boolean}&gt;
+   */
+  Observable<Boolean> logout();
 }

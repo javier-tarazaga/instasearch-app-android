@@ -38,4 +38,8 @@ class UserMemoryDataStore implements UserDataStore {
   @Override public Observable<UserEntity> user() {
     return userCache.get();
   }
+
+  @Override public Observable<Boolean> logout() {
+    throw new RuntimeException("Not implemented!");
+  }
 }
