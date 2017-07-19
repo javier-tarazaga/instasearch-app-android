@@ -55,7 +55,7 @@ import static org.mockito.Mockito.verifyZeroInteractions;
 
     verify(this.mockPreferencesRepository).getDistance();
 
-    // TODO - Fix this verification
+    // TODO - Fix this verification, as it is called later in the road, small workaround is needed
     // verify(this.mockMediaRepository).searchByArea(LAT_HOME, LNG_HOME, FAKE_MAX_DISTANCE);
     verifyNoMoreInteractions(this.mockMediaRepository);
     verifyNoMoreInteractions(this.mockPreferencesRepository);

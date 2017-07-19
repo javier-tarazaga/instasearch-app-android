@@ -16,10 +16,14 @@
 package com.javiertarazaga.instasearch.presentation.presenter;
 
 import android.support.annotation.NonNull;
+import com.javiertarazaga.instasearch.domain.exception.DefaultErrorBundle;
+import com.javiertarazaga.instasearch.domain.exception.ErrorBundle;
+import com.javiertarazaga.instasearch.domain.exception.user.LogoutNotPossibleException;
 import com.javiertarazaga.instasearch.domain.interactor.DefaultObserver;
 import com.javiertarazaga.instasearch.domain.interactor.GetMaxDistance;
 import com.javiertarazaga.instasearch.domain.interactor.Logout;
 import com.javiertarazaga.instasearch.domain.interactor.SaveMaxDistance;
+import com.javiertarazaga.instasearch.presentation.exception.ErrorMessageFactory;
 import com.javiertarazaga.instasearch.presentation.view.PreferencesView;
 import javax.inject.Inject;
 
@@ -96,6 +100,12 @@ public class PreferencesPresenter implements Presenter {
     this.preferencesView.logoutSuccessful();
   }
 
+  private void showErrorMessage(ErrorBundle errorBundle) {
+    String errorMessage =
+        ErrorMessageFactory.create(this.preferencesView.context(), errorBundle.getException());
+    this.preferencesView.showError(errorMessage);
+  }
+
   private final class DistanceObserver extends DefaultObserver<Integer> {
 
     @Override public void onNext(Integer distance) {
@@ -105,12 +115,19 @@ public class PreferencesPresenter implements Presenter {
 
   private final class LogoutObserver extends DefaultObserver<Boolean> {
 
+    @Override public void onError(Throwable exception) {
+      super.onError(exception);
+
+      PreferencesPresenter.this.showErrorMessage(new DefaultErrorBundle((Exception) exception));
+    }
+
     @Override public void onNext(Boolean loggedOut) {
       if (loggedOut) {
         PreferencesPresenter.this.logoutSuccessful();
+      } else {
+        PreferencesPresenter.this.showErrorMessage(
+            new DefaultErrorBundle(new LogoutNotPossibleException()));
       }
-
-      // TODO - Later handle the rare case that this could return a false instead
     }
   }
 }

@@ -118,6 +118,14 @@ public class PreferencesFragment extends BaseFragment implements PreferencesView
     }
   }
 
+  @Override public void showError(String message) {
+    this.showToastMessage(message);
+  }
+
+  @Override public Context context() {
+    return this.getActivity().getApplicationContext();
+  }
+
   @Override public void setDistanceInKm(float distanceInKm) {
     this.tv_distance.setText(
         getResources().getString(R.string.view_text_preferences_distance_km, distanceInKm));

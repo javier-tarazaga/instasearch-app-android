@@ -80,7 +80,7 @@ import javax.inject.Inject;
       if (url.contains("access_token")) {
         String accessToken = this.extractAccessToken(url);
 
-        // TODO - change for StringPreference!
+        // TODO - change for StringPreference later on!
         this.sharedPreferences.edit().putString("access_token", accessToken).apply();
 
         this.loadUserData();

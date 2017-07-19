@@ -1,5 +1,7 @@
 package com.javiertarazaga.instasearch.presentation.view;
 
+import android.content.Context;
+
 /**
  * Interface representing the preferences view.
  */
@@ -30,4 +32,16 @@ public interface PreferencesView {
    * The logout was completed successfully.
    */
   void logoutSuccessful();
+
+  /**
+   * Show an error message
+   *
+   * @param message A string representing an error.
+   */
+  void showError(String message);
+
+  /**
+   * Get a {@link android.content.Context}.
+   */
+  Context context();
 }
