@@ -6,7 +6,9 @@
 package com.javiertarazaga.instasearch.presentation.view.fragment;
 
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -105,7 +107,13 @@ public class LoginFragment extends BaseFragment implements LoginView {
     wv_login.loadUrl(url);
   }
 
-  @Override public void loginSuccessful() {
+  @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP) @Override public void loginSuccessful() {
+    // Make sure we don't get any info cached here, otherwise the app does not manage to logout
+    // correctly. We will manage the access_token ourselves.
+    wv_login.clearCache(true);
+    wv_login.clearFormData();
+    wv_login.clearHistory();
+
     if (this.loginFragmentListener != null) {
       LoginFragment.this.loginFragmentListener.loginSuccessful();
     }
@@ -136,6 +144,7 @@ public class LoginFragment extends BaseFragment implements LoginView {
   }
 
   private void initWebView() {
+    wv_login.getSettings().setAppCacheEnabled(false);
     wv_login.setWebViewClient(new WebViewClient() {
 
       @Override public boolean shouldOverrideUrlLoading(WebView view, String url) {

@@ -42,9 +42,7 @@ class UserSharedDataStore implements UserDataStore {
 
   @Override public Observable<Boolean> logout() {
     return Observable.just(this.sharedPreferences.edit().remove("access_token").commit())
-        .doOnNext(deleted -> {
-          this.userCache.evictAll();
-        });
+        .doOnNext(deleted -> this.userCache.evictAll());
   }
 }
 
