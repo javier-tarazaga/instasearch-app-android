@@ -1,5 +1,7 @@
 package com.javiertarazaga.instasearch.presentation.view.activity;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import butterknife.ButterKnife;
 import com.javiertarazaga.instasearch.presentation.R;
@@ -13,6 +15,10 @@ import com.javiertarazaga.instasearch.presentation.view.fragment.SplashScreenFra
  */
 public class SplashScreenActivity extends BaseActivity implements HasComponent<MainComponent>,
     SplashScreenFragment.SplashFragmentListener {
+
+  public static Intent getCallingIntent(Context context) {
+    return new Intent(context, SplashScreenActivity.class);
+  }
 
   private MainComponent mainComponent;
 

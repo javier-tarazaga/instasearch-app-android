@@ -19,6 +19,7 @@
 //import android.content.Intent;
 //import android.test.ActivityInstrumentationTestCase2;
 //import com.javiertarazaga.instasearch.presentation.R;
+//import com.javiertarazaga.instasearch.presentation.view.activity.SplashScreenActivity;
 //import com.javiertarazaga.instasearch.presentation.view.activity.UserDetailsActivity;
 //
 //import static android.support.test.espresso.Espresso.onView;
@@ -31,20 +32,18 @@
 //import static org.hamcrest.MatcherAssert.assertThat;
 //import static org.hamcrest.Matchers.not;
 //
-//public class UserDetailsActivityTest extends ActivityInstrumentationTestCase2<UserDetailsActivity> {
+//public class SplashScreenActivity2Test extends ActivityInstrumentationTestCase2<SplashScreenActivity> {
 //
-//  private static final int FAKE_USER_ID = 10;
+//  private SplashScreenActivity splashScreenActivity;
 //
-//  private UserDetailsActivity userDetailsActivity;
-//
-//  public UserDetailsActivityTest() {
-//    super(UserDetailsActivity.class);
+//  public SplashScreenActivity2Test() {
+//    super(SplashScreenActivity.class);
 //  }
 //
 //  @Override protected void setUp() throws Exception {
 //    super.setUp();
 //    this.setActivityIntent(createTargetIntent());
-//    this.userDetailsActivity = getActivity();
+//    this.splashScreenActivity = getActivity();
 //  }
 //
 //  @Override protected void tearDown() throws Exception {
@@ -53,12 +52,12 @@
 //
 //  public void testContainsUserDetailsFragment() {
 //    Fragment userDetailsFragment =
-//        userDetailsActivity.getFragmentManager().findFragmentById(R.id.fragment_container);
+//        splashScreenActivity.getFragmentManager().findFragmentById(R.id.fragment_container);
 //    assertThat(userDetailsFragment, is(notNullValue()));
 //  }
 //
 //  public void testContainsProperTitle() {
-//    String actualTitle = this.userDetailsActivity.getTitle().toString().trim();
+//    String actualTitle = this.splashScreenActivity.getTitle().toString().trim();
 //
 //    assertThat(actualTitle, is("User Details"));
 //  }
@@ -79,9 +78,6 @@
 //  }
 //
 //  private Intent createTargetIntent() {
-//    Intent intentLaunchActivity =
-//        UserDetailsActivity.getCallingIntent(getInstrumentation().getTargetContext(), FAKE_USER_ID);
-//
-//    return intentLaunchActivity;
+//    return SplashScreenActivity.getCallingIntent(getInstrumentation().getTargetContext());
 //  }
 //}

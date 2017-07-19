@@ -32,6 +32,9 @@ import javax.inject.Inject;
  */
 public class SearchMediasByArea extends UseCase<List<Media>, Void> {
 
+  // TODO - Obviously this values should not be hardcoded but taken by the user's current location.
+  // Due to restrictions in Instagram's Sandbox environment we hardcode this value to make sure we
+  // always have data available when running the app.
   static final double LAT_HOME = 39.470574;
   static final double LNG_HOME = -0.365920;
 

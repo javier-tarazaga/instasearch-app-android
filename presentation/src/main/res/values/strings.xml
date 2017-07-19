@@ -3,6 +3,8 @@
   <string name="app_name">InstaSearch</string>
   <string name="url">http://www.android10.org/</string>
 
+  <string name="activity_title_splash">Splash Screen</string>
+  <string name="activity_title_main">Home</string>
   <string name="activity_title_login">Login</string>
   <string name="activity_title_preferences">Preferences</string>
   <string name="activity_title_user_list">Users List</string>
