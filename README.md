@@ -25,6 +25,7 @@ Systems in Use
 
 Future Improvements
 --------
+* Substitue the Client-Side (Implicit) Authentication method for the Server-side (Explicit) Flow.
 * Make more extensive usage of Dagger2. Take a look at project [U2020](https://github.com/JakeWharton/u2020). Has a ton of useful features for both development and production. This project shows many really advanced techniques which will be really handy any project. This could be used per example to prepare and configure in more detail external libraries (Picasso, OkHttp, etc) according to scopes (global, perActivity, etc). 
 * When API interaction gets more complex might be handy to add Retrofit to handle all that for us. 
 * Add more tests. There is never enough tests so adding more will never harm. The app is pretty extensively tested right now but specially is lacking testing for the UI and flow around it (instrumental testing). Might be handy to use Roboelectric for some UI unitary testing as well. 
