@@ -21,13 +21,10 @@ import com.javiertarazaga.instasearch.domain.User;
 import com.javiertarazaga.instasearch.domain.exception.DefaultErrorBundle;
 import com.javiertarazaga.instasearch.domain.exception.ErrorBundle;
 import com.javiertarazaga.instasearch.domain.exception.user.InstagramAuthErrorException;
-import com.javiertarazaga.instasearch.domain.exception.user.UserException;
-import com.javiertarazaga.instasearch.domain.exception.user.UserNeedsAuthenticationException;
 import com.javiertarazaga.instasearch.domain.interactor.DefaultObserver;
 import com.javiertarazaga.instasearch.domain.interactor.GetUser;
 import com.javiertarazaga.instasearch.presentation.exception.ErrorMessageFactory;
 import com.javiertarazaga.instasearch.presentation.internal.di.PerActivity;
-import com.javiertarazaga.instasearch.presentation.mapper.UserModelDataMapper;
 import com.javiertarazaga.instasearch.presentation.view.LoginView;
 import javax.inject.Inject;
 
@@ -49,13 +46,10 @@ import javax.inject.Inject;
   private LoginView loginView;
 
   private final GetUser getUser;
-  private final UserModelDataMapper userModelDataMapper;
   private final SharedPreferences sharedPreferences;
 
-  @Inject public LoginPresenter(GetUser getUser, UserModelDataMapper userModelDataMapper,
-      SharedPreferences sharedPreferences) {
+  @Inject public LoginPresenter(GetUser getUser, SharedPreferences sharedPreferences) {
     this.getUser = getUser;
-    this.userModelDataMapper = userModelDataMapper;
     this.sharedPreferences = sharedPreferences;
   }
 
@@ -108,7 +102,9 @@ import javax.inject.Inject;
     return false;
   }
 
-  private void loadUserData() {
+  public void loadUserData() {
+    this.hideViewRetry();
+    this.showViewLoading();
     this.getUser.execute(new UserObserver(), null);
   }
 
@@ -150,13 +146,8 @@ import javax.inject.Inject;
 
     @Override public void onError(Throwable e) {
       LoginPresenter.this.hideViewLoading();
-
-      if (e instanceof UserNeedsAuthenticationException || e instanceof UserException) {
-        // LoginPresenter.this.goToLoginView();
-      } else {
-        LoginPresenter.this.showErrorMessage(new DefaultErrorBundle((Exception) e));
-        LoginPresenter.this.showViewRetry();
-      }
+      LoginPresenter.this.showErrorMessage(new DefaultErrorBundle((Exception) e));
+      LoginPresenter.this.showViewRetry();
     }
 
     @Override public void onNext(User user) {

@@ -12,8 +12,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.RelativeLayout;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import com.javiertarazaga.instasearch.presentation.R;
 import com.javiertarazaga.instasearch.presentation.internal.di.components.UserComponent;
 import com.javiertarazaga.instasearch.presentation.presenter.LoginPresenter;
@@ -34,6 +36,8 @@ public class LoginFragment extends BaseFragment implements LoginView {
 
   @Inject LoginPresenter loginPresenter;
 
+  @Bind(R.id.rl_progress) RelativeLayout rl_progress;
+  @Bind(R.id.rl_retry) RelativeLayout rl_retry;
   @Bind(R.id.wv_login) WebView wv_login;
 
   private LoginFragmentListener loginFragmentListener;
@@ -103,23 +107,23 @@ public class LoginFragment extends BaseFragment implements LoginView {
   }
 
   @Override public void showLoading() {
-
+    rl_progress.setVisibility(View.VISIBLE);
   }
 
   @Override public void hideLoading() {
-
+    rl_progress.setVisibility(View.GONE);
   }
 
   @Override public void showRetry() {
-
+    this.rl_retry.setVisibility(View.VISIBLE);
   }
 
   @Override public void hideRetry() {
-
+    this.rl_retry.setVisibility(View.GONE);
   }
 
   @Override public void showError(String message) {
-
+    this.showToastMessage(message);
   }
 
   @Override public Context context() {
@@ -140,5 +144,11 @@ public class LoginFragment extends BaseFragment implements LoginView {
 
   private void initialize() {
     this.loginPresenter.initialize();
+  }
+
+  @OnClick(R.id.bt_retry) void onButtonRetryClick() {
+    // This would only be in the case that we get the token and there has been an issue fetching
+    // the user
+    this.loginPresenter.loadUserData();
   }
 }
