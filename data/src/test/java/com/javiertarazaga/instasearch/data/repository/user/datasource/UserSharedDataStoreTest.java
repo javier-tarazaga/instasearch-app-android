@@ -17,6 +17,7 @@ package com.javiertarazaga.instasearch.data.repository.user.datasource;
 
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
+import com.javiertarazaga.instasearch.data.cache.UserCache;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -31,11 +32,12 @@ import static org.mockito.Mockito.verify;
 
   private UserSharedDataStore userSharedDataStore;
 
+  @Mock private UserCache mockUserCache;
   @Mock private SharedPreferences mockSharedPreferences;
   @Mock private SharedPreferences.Editor mockSharedPreferencesEditor;
 
   @Before public void setUp() {
-    userSharedDataStore = new UserSharedDataStore(mockSharedPreferences);
+    userSharedDataStore = new UserSharedDataStore(mockSharedPreferences, mockUserCache);
   }
 
   @SuppressLint("CommitPrefEdits") @Test public void testRemoveTokenFromSharedPrefs() {

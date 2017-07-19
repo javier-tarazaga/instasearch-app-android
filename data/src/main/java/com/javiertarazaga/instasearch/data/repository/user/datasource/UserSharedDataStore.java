@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,6 +16,7 @@
 package com.javiertarazaga.instasearch.data.repository.user.datasource;
 
 import android.content.SharedPreferences;
+import com.javiertarazaga.instasearch.data.cache.UserCache;
 import com.javiertarazaga.instasearch.data.entity.UserEntity;
 import io.reactivex.Observable;
 
@@ -25,12 +26,14 @@ import io.reactivex.Observable;
 class UserSharedDataStore implements UserDataStore {
 
   private final SharedPreferences sharedPreferences;
+  private final UserCache userCache;
 
   /**
    * Construct a {@link UserDataStore} based shared preferences
    */
-  UserSharedDataStore(SharedPreferences sharedPreferences) {
+  UserSharedDataStore(SharedPreferences sharedPreferences, UserCache userCache) {
     this.sharedPreferences = sharedPreferences;
+    this.userCache = userCache;
   }
 
   @Override public Observable<UserEntity> user() {
@@ -38,6 +41,11 @@ class UserSharedDataStore implements UserDataStore {
   }
 
   @Override public Observable<Boolean> logout() {
-    return Observable.just(this.sharedPreferences.edit().remove("access_token").commit());
+    return Observable.just(this.sharedPreferences.edit().remove("access_token").commit())
+        .doOnNext(deleted -> {
+          this.userCache.evictAll();
+        });
   }
 }
+
+

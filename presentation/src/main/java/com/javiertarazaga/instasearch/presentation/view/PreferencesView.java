@@ -25,4 +25,9 @@ public interface PreferencesView {
    * @param distance The distance selected by the user
    */
   void updateDistance(int distance);
+
+  /**
+   * The logout was completed successfully.
+   */
+  void logoutSuccessful();
 }

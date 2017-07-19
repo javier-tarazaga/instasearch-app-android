@@ -74,6 +74,6 @@ import javax.inject.Singleton;
    * Create {@link UserDataStore} to handle data from the SharedPrefs.
    */
   public UserDataStore createSharedDataStore() {
-    return new UserSharedDataStore(this.sharedPreferences);
+    return new UserSharedDataStore(this.sharedPreferences, this.userCache);
   }
 }

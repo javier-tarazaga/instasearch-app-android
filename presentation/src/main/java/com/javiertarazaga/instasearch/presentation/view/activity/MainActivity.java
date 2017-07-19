@@ -19,7 +19,8 @@ import com.javiertarazaga.instasearch.presentation.view.fragment.PreferencesFrag
 /**
  * Main application screen. This is the main interaction view of the app.
  */
-public class MainActivity extends BaseActivity implements HasComponent<MainComponent> {
+public class MainActivity extends BaseActivity implements HasComponent<MainComponent>,
+    PreferencesFragment.PreferenceFragmentListener {
 
   @Bind(R.id.bottom_navigation) BottomNavigationView bottom_nav;
 
@@ -77,5 +78,9 @@ public class MainActivity extends BaseActivity implements HasComponent<MainCompo
 
   @Override public MainComponent getComponent() {
     return this.mainComponent;
+  }
+
+  @Override public void logoutSuccessful() {
+    this.navigator.navigateToSplashScreen(this);
   }
 }

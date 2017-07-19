@@ -96,6 +96,11 @@ public class LoginFragment extends BaseFragment implements LoginView {
     this.loginPresenter.destroy();
   }
 
+  @Override public void onDetach() {
+    super.onDetach();
+    this.loginFragmentListener = null;
+  }
+
   @Override public void loadUrl(String url) {
     wv_login.loadUrl(url);
   }

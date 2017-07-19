@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -18,6 +18,7 @@ package com.javiertarazaga.instasearch.presentation.presenter;
 import android.support.annotation.NonNull;
 import com.javiertarazaga.instasearch.domain.interactor.DefaultObserver;
 import com.javiertarazaga.instasearch.domain.interactor.GetMaxDistance;
+import com.javiertarazaga.instasearch.domain.interactor.Logout;
 import com.javiertarazaga.instasearch.domain.interactor.SaveMaxDistance;
 import com.javiertarazaga.instasearch.presentation.view.PreferencesView;
 import javax.inject.Inject;
@@ -32,11 +33,12 @@ public class PreferencesPresenter implements Presenter {
 
   private final GetMaxDistance getMaxDistance;
   private final SaveMaxDistance saveMaxDistance;
+  private final Logout logout;
 
-  @Inject
-  public PreferencesPresenter(GetMaxDistance getMaxDistance,
+  @Inject public PreferencesPresenter(GetMaxDistance getMaxDistance, Logout logout,
       SaveMaxDistance saveMaxDistance) {
     this.getMaxDistance = getMaxDistance;
+    this.logout = logout;
     this.saveMaxDistance = saveMaxDistance;
   }
 
@@ -44,13 +46,16 @@ public class PreferencesPresenter implements Presenter {
     this.preferencesView = view;
   }
 
-  @Override public void resume() {}
+  @Override public void resume() {
+  }
 
-  @Override public void pause() {}
+  @Override public void pause() {
+  }
 
   @Override public void destroy() {
     this.getMaxDistance.dispose();
     this.saveMaxDistance.dispose();
+    this.logout.dispose();
     this.preferencesView = null;
   }
 
@@ -62,7 +67,8 @@ public class PreferencesPresenter implements Presenter {
   }
 
   public void saveDistance(int distance) {
-    this.saveMaxDistance.execute(new DistanceObserver(), SaveMaxDistance.Params.forDistance(distance));
+    this.saveMaxDistance.execute(new DistanceObserver(),
+        SaveMaxDistance.Params.forDistance(distance));
   }
 
   private void getDistance() {
@@ -79,17 +85,32 @@ public class PreferencesPresenter implements Presenter {
   }
 
   public void logoutClicked() {
-
+    this.logout.execute(new LogoutObserver(), null);
   }
 
   private void updateDistance(int distance) {
     this.preferencesView.updateDistance(distance);
   }
 
+  private void logoutSuccessful() {
+    this.preferencesView.logoutSuccessful();
+  }
+
   private final class DistanceObserver extends DefaultObserver<Integer> {
 
     @Override public void onNext(Integer distance) {
       PreferencesPresenter.this.updateDistance(distance);
+    }
+  }
+
+  private final class LogoutObserver extends DefaultObserver<Boolean> {
+
+    @Override public void onNext(Boolean loggedOut) {
+      if (loggedOut) {
+        PreferencesPresenter.this.logoutSuccessful();
+      }
+
+      // TODO - Later handle the rare case that this could return a false instead
     }
   }
 }

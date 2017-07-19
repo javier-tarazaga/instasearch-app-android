@@ -44,7 +44,7 @@ public class PreferencesPresenterTest {
 
   @Before
   public void setUp() {
-    preferencesPresenter = new PreferencesPresenter(mockGetMaxDistance, mockSaveMaxDistance);
+    preferencesPresenter = new PreferencesPresenter(mockGetMaxDistance, logout, mockSaveMaxDistance);
     preferencesPresenter.setView(mockPreferencesView);
   }
 

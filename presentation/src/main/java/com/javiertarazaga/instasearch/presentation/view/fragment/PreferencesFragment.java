@@ -5,6 +5,7 @@
  */
 package com.javiertarazaga.instasearch.presentation.view.fragment;
 
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -26,14 +27,31 @@ import javax.inject.Inject;
  */
 public class PreferencesFragment extends BaseFragment implements PreferencesView {
 
+  /**
+   * Interface for listening preferences events.
+   */
+  public interface PreferenceFragmentListener {
+    void logoutSuccessful();
+  }
+
   @Inject PreferencesPresenter presenter;
 
   @Bind(R.id.tv_distance) TextView tv_distance;
   @Bind(R.id.sb_distance) SeekBar sb_distance;
   @Bind(R.id.tv_app_version) TextView tv_app_version;
 
+  private PreferenceFragmentListener preferenceFragmentListener;
+
   public PreferencesFragment() {
     setRetainInstance(true);
+  }
+
+  @Override public void onAttach(Context context) {
+    super.onAttach(context);
+
+    if (context instanceof PreferenceFragmentListener) {
+      this.preferenceFragmentListener = (PreferenceFragmentListener) context;
+    }
   }
 
   @Override public void onCreate(Bundle savedInstanceState) {
@@ -78,6 +96,11 @@ public class PreferencesFragment extends BaseFragment implements PreferencesView
     this.presenter.destroy();
   }
 
+  @Override public void onDetach() {
+    super.onDetach();
+    this.preferenceFragmentListener = null;
+  }
+
   @Override public void updateDistance(int distance) {
 
     // This case requires this special treat as when progress is 0, OnProgressChanged of the Seekbar
@@ -87,6 +110,12 @@ public class PreferencesFragment extends BaseFragment implements PreferencesView
     }
 
     this.sb_distance.setProgress(distance);
+  }
+
+  @Override public void logoutSuccessful() {
+    if (this.preferenceFragmentListener != null) {
+      this.preferenceFragmentListener.logoutSuccessful();
+    }
   }
 
   @Override public void setDistanceInKm(float distanceInKm) {

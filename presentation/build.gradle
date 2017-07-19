@@ -99,6 +99,7 @@ dependencies {
     transitive = true;
   }
   compile presentationDependencies.picasso
+  compile 'com.jakewharton:process-phoenix:2.0.0'
 
   androidTestCompile presentationTestDependencies.mockito
   androidTestCompile presentationTestDependencies.dexmaker
