@@ -4,6 +4,8 @@ Simple app where people can see what Instagram post have been posted near their 
 
 As a result from the search, the app displays posts from the area. The search is by default to 500 meters around the users current location but the app allows the user to extend the search radius.
 
+For the API I have used Instagram's own API (in Sandbox mode) Check their [Developer Portal](https://www.instagram.com/developer/) for more info. 
+
 Changelog Version 1.0.0
 --------
 * First release of the application
@@ -33,10 +35,11 @@ Future Improvements
 * When API interaction gets more complex might be handy to add Retrofit to handle all that for us. 
 * Add more tests. There is never enough tests so adding more will never harm. The app is pretty extensively tested right now but specially is lacking testing for the UI and flow around it (instrumental testing). Might be handy to use Roboelectric for some UI unitary testing as well. 
 * Don't use Picasso the way I did it :) Simply expose an instance through Dagger as we can then configure it optimally in a global scope. 
-* Of course, improve the UI and add a ton more of features which might be useful (Account management, search persistance, etc). 
-* Make usage of Code Coverage tools with pre-commit hooks to make sure if the coverage drops belows certain %, don't allow to commit. 
-* Make useage of pre-commit hooks to check for lint/code style errors (and even if you go really hardcore, to test with every commit)
+* Use of Code Coverage tools with pre-commit hooks to make sure if the coverage drops belows certain %, don't allow to commit. Also use Coveralls or something similar to see tha trajectory of your Code Coverage and code quality over time. 
+* Use Testdroid/Test Lab/AWS Device Farm or any other similar system to execute all our tests in real devices (SPECIALLY BEFORE LAUNCHING TO PRODUCTION). 
+* Use of pre-commit hooks to check for lint/code style errors (and even if you go really hardcore, to test with every commit)
 * Fix the TODOs left in the app which are not relevant for the moment (BUT AN APP SHOULD BE ALWAYS TODO FREE!!!) 
+* Of course, improve the UI and add a ton more of features which might be useful (Account management, search persistance, etc). 
 * And many other things I can't think of right now but sure will come up in the future :D
 
 
