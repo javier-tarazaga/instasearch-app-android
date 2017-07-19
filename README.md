@@ -1,7 +1,45 @@
-Android-CleanArchitecture [![CircleCI](https://circleci.com/gh/javier-tarazaga/instasearch-app-android.svg?style=shield)](https://circleci.com/gh/javier-tarazaga/instasearch-app-android)
+InstaSearch Application [![CircleCI](https://circleci.com/gh/javier-tarazaga/instasearch-app-android.svg?style=shield)](https://circleci.com/gh/javier-tarazaga/instasearch-app-android)
 =========================
 
-This is a sample app that is part of a blog post I have written about how to architect android application using the Uncle Bob's clean architecture approach. 
+Changelog Version 1.0.0
+--------
+* First release of the application
+* Follow Clean Architecture principles with a 3 tier layered architecture
+* Added Dagger2 for DI
+* Usage of RxJava and RxAndroid for composing asynchronous and event-based programs using observable sequences for the Java VM.
+* Added multiple libraries to handle network, images, memory leaks, etc
+* Possibility to login/logout from instagram
+* Display latest posts from people around you given a certain maxDistance
+* Possibility to change maxDistance from app preferences.
+* Hardcoded Lat/Lng to Valencia for API data purposes.
+* Added multiple tests for all layers
+* Added integration with Fabric, HockeyApp and CircleCI
+* Added automatic CD option to automatically release new versions to HockeyApp when pushed to Github
+* Many other small details!
+
+Systems in Use
+--------
+* HockeyApp for App Distribution (https://rink.hockeyapp.net/apps/c6720c02a0b943b588aac446fd995a34)
+* CircleCI for CI and CD (https://circleci.com/gh/javier-tarazaga/instasearch-app-android)
+* Fabric for analytics, insights and crash reporting (has many other features available) (https://fabric.io/home)
+
+Future Improvements
+--------
+* Make more extensive usage of Dagger2. Take a look at project [U2020](https://github.com/JakeWharton/u2020). Has a ton of useful features for both development and production. This project shows many really advanced techniques which will be really handy any project. This could be used per example to prepare and configure in more detail external libraries (Picasso, OkHttp, etc) according to scopes (global, perActivity, etc). 
+* When API interaction gets more complex might be handy to add Retrofit to handle all that for us. 
+* Add more tests. There is never enough tests so adding more will never harm. The app is pretty extensively tested right now but specially is lacking testing for the UI and flow around it (instrumental testing). Might be handy to use Roboelectric for some UI unitary testing as well. 
+* Don't use Picasso the way I did it :) Simply expose an instance through Dagger as we can then configure it optimally in a global scope. 
+* Of course, improve the UI and add a ton more of features which might be useful (Account management, search persistance, etc). 
+* Make usage of Code Coverage tools with pre-commit hooks to make sure if the coverage drops belows certain %, don't allow to commit. 
+* Make useage of pre-commit hooks to check for lint/code style errors (and even if you go really hardcore, to test with every commit)
+* Fix the TODOs left in the app which are not relevant for the moment (BUT AN APP SHOULD BE ALWAYS TODO FREE!!!) 
+* And many other things I can't think of right now but sure will come up in the future :D
+
+
+Android-CleanArchitecture [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Android--CleanArchitecture-brightgreen.svg?style=flat)](https://android-arsenal.com/details/3/909) 
+=========================
+
+This application is based in the Android Architecture example done by Fernando Cejas. For more information about the architecuture principles used in this application, please refer to the articles below.
 
 [Architecting Android…The clean way?](http://fernandocejas.com/2014/09/03/architecting-android-the-clean-way/)
 
@@ -35,37 +73,8 @@ Here are some useful Gradle/adb commands for executing this example:
  * `./gradlew runUnitTests` - Execute domain and data layer tests (both unit and integration).
  * `./gradlew runAcceptanceTests` - Execute espresso and instrumentation acceptance tests.
  
-Discussions
------------------
-
-Refer to the issues section: https://github.com/android10/Android-CleanArchitecture/issues
- 
-
 Code style
 -----------
 
 Here you can download and install the java codestyle.
 https://github.com/android10/java-code-styles
-
-
-License
---------
-
-    Copyright 2016 Fernando Cejas
-
-    Licensed under the Apache License, Version 2.0 (the "License");
-    you may not use this file except in compliance with the License.
-    You may obtain a copy of the License at
-
-       http://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing, software
-    distributed under the License is distributed on an "AS IS" BASIS,
-    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-    See the License for the specific language governing permissions and
-    limitations under the License.
-
-
-![http://www.fernandocejas.com](https://github.com/android10/Sample-Data/blob/master/android10/android10_logo_big.png)
-
-[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Android--CleanArchitecture-brightgreen.svg?style=flat)](https://android-arsenal.com/details/3/909)
