@@ -38,6 +38,7 @@ Future Improvements
 * Use of Code Coverage tools with pre-commit hooks to make sure if the coverage drops belows certain %, don't allow to commit. Also use Coveralls or something similar to see tha trajectory of your Code Coverage and code quality over time. 
 * Use Testdroid/Test Lab/AWS Device Farm or any other similar system to execute all our tests in real devices (SPECIALLY BEFORE LAUNCHING TO PRODUCTION). 
 * Use of pre-commit hooks to check for lint/code style errors (and even if you go really hardcore, to test with every commit)
+* Use a clear branching model and make sure our CD rules apply to such. 
 * Fix the TODOs left in the app which are not relevant for the moment (BUT AN APP SHOULD BE ALWAYS TODO FREE!!!) 
 * Of course, improve the UI and add a ton more of features which might be useful (Account management, search persistance, etc). 
 * And many other things I can't think of right now but sure will come up in the future :D
