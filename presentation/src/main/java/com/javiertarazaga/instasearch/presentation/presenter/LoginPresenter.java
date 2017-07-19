@@ -84,8 +84,6 @@ import javax.inject.Inject;
         this.sharedPreferences.edit().putString("access_token", accessToken).apply();
 
         this.loadUserData();
-        // Save the token and notify the view
-        this.loginView.loginSuccessful();
       } else if (url.contains("error_reason")) {
         String error = url.contains("user_denied") ? "User denied access" : "Authentication failed";
 

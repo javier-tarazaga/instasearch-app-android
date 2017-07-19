@@ -12,6 +12,8 @@ import android.support.annotation.RequiresApi;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.CookieManager;
+import android.webkit.CookieSyncManager;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.RelativeLayout;
@@ -110,9 +112,7 @@ public class LoginFragment extends BaseFragment implements LoginView {
   @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP) @Override public void loginSuccessful() {
     // Make sure we don't get any info cached here, otherwise the app does not manage to logout
     // correctly. We will manage the access_token ourselves.
-    wv_login.clearCache(true);
-    wv_login.clearFormData();
-    wv_login.clearHistory();
+    this.clearWebView();
 
     if (this.loginFragmentListener != null) {
       LoginFragment.this.loginFragmentListener.loginSuccessful();
@@ -158,6 +158,24 @@ public class LoginFragment extends BaseFragment implements LoginView {
 
   private void initialize() {
     this.loginPresenter.initialize();
+  }
+
+  private void clearWebView() {
+    wv_login.clearCache(true);
+    wv_login.clearFormData();
+    wv_login.clearHistory();
+
+    // This one seems to do the trick ¯\_(ツ)_/¯
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+      CookieManager.getInstance().removeAllCookies(null);
+    } else {
+      CookieSyncManager.createInstance(context());
+      CookieManager cookieManager = CookieManager.getInstance();
+      if (cookieManager != null) {
+        cookieManager.removeAllCookie();
+      }
+      CookieSyncManager.getInstance().sync();
+    }
   }
 
   @OnClick(R.id.bt_retry) void onButtonRetryClick() {
